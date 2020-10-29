@@ -16,7 +16,6 @@ class Login extends Component {
         this.handleUserChange = this.handleUserChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.dismissError = this.dismissError.bind(this);
-        this.redirectToTarget = this.redirectToTarget.bind(this);
     }
 
     dismissError() {
@@ -52,16 +51,11 @@ class Login extends Component {
         });
     }
 
-    redirectToTarget() {
-        this.props.history.push("/");
-    }
-
     render() {
         const {loginResponse} = this.props
-        console.log("render response " + JSON.stringify(loginResponse))
         if (loginResponse.code === 200) {
             return (
-                <Redirect to='/dashboard'/>
+                <Redirect to='/employee'/>
             )
         }
         return (
@@ -86,7 +80,7 @@ class Login extends Component {
                                                        onChange={this.handleUserChange}/>
                                                 <div className="input-group-append">
                                                     <span className="input-group-text">
-                                                        <i className="mdi mdi-check-circle-outline"></i>
+                                                        <i className="mdi mdi-check-circle-outline"/>
                                                     </span>
                                                 </div>
                                             </div>
@@ -100,7 +94,7 @@ class Login extends Component {
                                                        onChange={this.handlePassChange}/>
                                                 <div className="input-group-append">
                                                   <span className="input-group-text">
-                                                    <i className="mdi mdi-check-circle-outline"></i>
+                                                    <i className="mdi mdi-check-circle-outline"/>
                                                   </span>
                                                 </div>
                                             </div>
@@ -159,8 +153,7 @@ class Login extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log("response from redux in component " + JSON.stringify(state.loginResponse))
-    if(state.loginResponse.code === 200) {
+    if (state.loginResponse.code === 200) {
         localStorage.setItem('user', JSON.stringify(state.loginResponse.result))
     }
     return {

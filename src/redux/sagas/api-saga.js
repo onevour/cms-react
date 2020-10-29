@@ -1,20 +1,29 @@
-import { takeEvery, call, put } from "redux-saga/effects";
-import {LOGIN, LOGIN_RESPONSE} from "../constants/action-types";
+import {takeEvery, call, put} from "redux-saga/effects";
+import {LOGIN, LOGIN_RESPONSE, LOGOUT, LOGOUT_RESPONSE} from "../constants/action-types";
 
 export default function* watcherSaga() {
     console.log("watcher saga")
     yield takeEvery("DATA_REQUESTED", workerSaga);
     yield takeEvery(LOGIN, workerSagaLogin);
+    yield takeEvery(LOGOUT, workerSagaLogout);
 }
 
 function* workerSagaLogin(action) {
     try {
 
         const payload = yield call(postData, action.payload);
-        console.log("worker login "+JSON.stringify(payload))
-        yield put({ type: LOGIN_RESPONSE, payload });
+        yield put({type: LOGIN_RESPONSE, payload});
     } catch (e) {
-        yield put({ type: "API_ERRORED", payload: e });
+        yield put({type: "API_ERRORED", payload: e});
+    }
+}
+
+function* workerSagaLogout(action) {
+    try {
+        const payload = {code: 401}
+        yield put({type: LOGOUT_RESPONSE, payload});
+    } catch (e) {
+        yield put({type: "API_ERRORED", payload: e});
     }
 }
 
@@ -22,9 +31,9 @@ function* workerSaga(action) {
     try {
         console.log("worker saga")
         const payload = yield call(getData, action.payload.url);
-        yield put({ type: "DATA_LOADED", payload });
+        yield put({type: "DATA_LOADED", payload});
     } catch (e) {
-        yield put({ type: "API_ERRORED", payload: e });
+        yield put({type: "API_ERRORED", payload: e});
     }
 }
 
@@ -37,7 +46,7 @@ function getData(url) {
 function postData(payload) {
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(payload.body)
     };
     return fetch(payload.url, requestOptions).then(response =>

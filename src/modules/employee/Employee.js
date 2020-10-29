@@ -1,22 +1,70 @@
 import React, {Component, Fragment} from "react";
 import Pagination from "../../plugins/Pagination";
+import moment from 'moment';
 
 class Employee extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            familyTab: [1, 0, 0, 0, 0],
+            user: JSON.parse(localStorage.getItem('user')),
+            familyVal: []
+        }
+        this.dateFormat = this.dateFormat.bind(this);
+        this.filterFamily = this.filterFamily.bind(this);
+        this.familyValue = this.familyValue.bind(this);
+        this.state.familyVal = this.familyValue(0)
+    }
+
+    dateFormat(timestamp) {
+        if (null == timestamp) return "-"
+        console.info(timestamp);
+        const date = new Date(timestamp * 1000);
+        return moment(date).format('DD-MMM-YYYY')
+    }
+
+    filterFamily(e) {
+        e.preventDefault();
+        let tag = parseInt(e.currentTarget.dataset.tag)
+        this.familyValue(tag)
+        const tmp = [0, 0, 0, 0, 0]
+        this.state.familyTab.map((item, index) => {
+            if (index === tag) tmp[index] = 1
+        })
+        this.setState({familyTab: tmp, familyVal: this.familyValue(tag)})
+    }
+
+    familyValue(tag) {
+        const val = []
+        if (this.state.user === null) return []
+        if (this.state.user.families === null) return []
+        this.state.user.families.map((item, index) => {
+            if (item.type === (tag + 1)) val.push(item)
+        })
+        return val
+    }
+
     render() {
+        const {user, familyTab, familyVal} = this.state
+        if (user === null) {
+            return (<></>)
+        }
         return (
             <Fragment>
                 <div className="row">
                     <div className="col-md-2 mb-3">
                         <div className="card">
-                            <div className="card-body text-center">
+                            <div className="card-body text-center" style={{padding: 20}}>
                                 <img className="img-fluid"
-                                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
+                                     src={user.picture}
                                      alt=""/>
-                                <h4 className="card-title" style={{marginTop: 30}}>John Dou</h4>
-                                <p className="card-description">111222333444</p>
+                                <p style={{marginTop: 30, fontSize: 12}}>{user.name}</p>
+                                <p style={{fontSize: 12}}>{user.nip}</p>
                             </div>
                         </div>
                     </div>
+
                     <div className="col-md-10">
                         <div className="card mb-3">
                             <div className="card-body">
@@ -25,44 +73,56 @@ class Employee extends Component {
                                         <h4 className="card-title">Data Umum</h4>
                                     </div>
                                     <div className="col">
-                                        <button type="submit" className="btn btn-success btn-sm mr-2 float-right">Download</button>
+                                        <button type="submit"
+                                                className="btn btn-success btn-sm mr-2 float-right">Download
+                                        </button>
                                     </div>
                                 </div>
-
-
                                 <div className="row">
                                     <div className="table-responsive">
                                         <table className="table">
                                             <tbody>
                                             <tr>
                                                 <td>Nama</td>
-                                                <td>john doe</td>
-                                                <td></td>
-                                                <td>
-
-                                                </td>
+                                                <td>{user.name}</td>
+                                                <td/>
+                                                <td/>
                                             </tr>
                                             <tr>
                                                 <td>Tempat, Tgl Lahir</td>
-                                                <td>Jakarta, 15 May 2017</td>
-                                                <td></td>
-                                                <td></td>
+                                                <td>{user.pob + ", "} {this.dateFormat(user.dob)}</td>
+                                                <td/>
+                                                <td/>
                                             </tr>
                                             <tr>
                                                 <td>Status Perkawinan</td>
-                                                <td>Menikah</td>
+                                                <td>{user.marital_status}</td>
                                                 <td>Tgl. Pernikahan</td>
-                                                <td>20 May 2017</td>
+                                                <td>{this.dateFormat(user.marital_date)}</td>
                                             </tr>
                                             <tr>
                                                 <td>Telepon</td>
-                                                <td>021-7878781</td>
+                                                <td>
+                                                    {user.contacts.map((o, i) =>
+                                                        <>
+                                                            {o.type === 1 ? o.value : ""}
+                                                            {o.type === 1 && <br/>}
+                                                        </>
+                                                    )}
+                                                </td>
                                                 <td>Email</td>
-                                                <td>johndoe@gmail.com</td>
+                                                <td>
+                                                    {user.contacts.map((o, i) =>
+                                                        <>
+                                                            {o.type === 2 ? o.value : ""}
+                                                            {o.type === 2 && <br/>}
+                                                        </>
+                                                    )}
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>Alamat</td>
-                                                <td colSpan="3">53275533</td>
+                                                <td colSpan="3">{user.address}</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -80,19 +140,29 @@ class Employee extends Component {
 
                                         <ul className="nav nav-tabs">
                                             <li className="nav-item">
-                                                <a className="nav-link active" href="#">Pasangan</a>
+                                                <a data-tag="0"
+                                                   className={familyTab[0] === 1 ? "nav-link active" : "nav-link"}
+                                                   onClick={this.filterFamily} href="#">Pasangan</a>
                                             </li>
                                             <li className="nav-item">
-                                                <a className="nav-link" href="#">Anak</a>
+                                                <a data-tag="1"
+                                                   className={familyTab[1] === 1 ? "nav-link active" : "nav-link"}
+                                                   onClick={this.filterFamily} href="#">Anak</a>
                                             </li>
                                             <li className="nav-item">
-                                                <a className="nav-link" href="#">Orang Tua</a>
+                                                <a data-tag="2"
+                                                   className={familyTab[2] === 1 ? "nav-link active" : "nav-link"}
+                                                   onClick={this.filterFamily} href="#">Orang Tua</a>
                                             </li>
                                             <li className="nav-item">
-                                                <a className="nav-link" href="#">Mertua</a>
+                                                <a data-tag="3"
+                                                   className={familyTab[3] === 1 ? "nav-link active" : "nav-link"}
+                                                   onClick={this.filterFamily} href="#">Mertua</a>
                                             </li>
                                             <li className="nav-item">
-                                                <a className="nav-link" href="#">Saudara</a>
+                                                <a data-tag="4"
+                                                   className={familyTab[4] === 1 ? "nav-link active" : "nav-link"}
+                                                   onClick={this.filterFamily} href="#">Saudara</a>
                                             </li>
 
                                         </ul>
@@ -104,40 +174,18 @@ class Employee extends Component {
                                                     <th>No.</th>
                                                     <th>Hubungan</th>
                                                     <th>Nama</th>
-                                                    <th>Tempat, Tgl. Lahir</th>
                                                     <th>Pekerjaan</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                </tbody>
-                                            </table>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="row gutters-sm">
-                            <div className="col-sm-12 mb-3">
-                                <div className="card h-100">
-                                    <div className="card-body">
-                                        <h4 className="card-title">Keterangan Perorangan</h4>
-                                        <div className="table-responsive">
-                                            <table className="table">
-                                                <tbody>
-                                                <tr>
-                                                    <td>Nama</td>
-                                                    <td></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>NIP</td>
-                                                    <td></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Status Pegawai (Aktif/Pensiun/Pindah/CTLN)</td>
-                                                    <td></td>
-                                                </tr>
+                                                {familyVal.map((o, i) =>
+                                                    <tr>
+                                                        <td>{i + 1}</td>
+                                                        <td>{o.family_status}</td>
+                                                        <td>{o.name}</td>
+                                                        <td>{o.occupation}</td>
+                                                    </tr>
+                                                )}
                                                 </tbody>
                                             </table>
                                         </div>
@@ -163,6 +211,14 @@ class Employee extends Component {
                                                 </tr>
                                                 </thead>
                                                 <tbody>
+                                                {user.educations.map((o, i) =>
+                                                    <tr>
+                                                        <td>{i + 1}</td>
+                                                        <td>{o.type}</td>
+                                                        <td>{o.value}</td>
+                                                        <td>{o.graduated}</td>
+                                                    </tr>
+                                                )}
                                                 </tbody>
                                             </table>
                                         </div>
