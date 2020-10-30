@@ -16721,3 +16721,22 @@ ul li {
 
 
 ul.pagination {margin-top: 16px;}
+
+.select-tmd {
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  border-top-width: 0px;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+  border-right-width: 0px;
+}
+
+.rdtPicker{
+  font-size: 12px;
+}
+
+span.text-danger {
+  font-size: 10px;
+}

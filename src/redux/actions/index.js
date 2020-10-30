@@ -1,4 +1,4 @@
-import {ADD_ARTICLE, LOGIN, LOGOUT} from "../constants/action-types";
+import {BASE_URL, ADD_ARTICLE, LOGIN, LOGOUT, CUTI_SUBMIT, CUTI_LOAD_USER} from "../constants/action-types";
 
 export function addArticle(payload) {
     return {type: ADD_ARTICLE, payload}
@@ -11,16 +11,35 @@ export function getData(url) {
 
 export function login(param) {
     const payload = {
-        url: "http://5.181.217.229:8081/api/v1/login",
+        url: BASE_URL + "/api/v1/login",
         body: param
     }
-    console.log("action " + LOGIN)
     return {type: LOGIN, payload: payload};
 }
 
 export function logout(param) {
-    const payload = {
-    }
-    console.log("action " + LOGOUT)
+    const payload = {}
     return {type: LOGOUT, payload: payload};
+}
+
+// cuti
+export function submitCuti(param) {
+    const user = JSON.parse(localStorage.getItem('user'))
+    param.nip = user.nip
+    const payload = {
+        url: BASE_URL + "/api/v1/cuti",
+        body: param
+    }
+    return {type: CUTI_SUBMIT, payload: payload};
+}
+
+export function loadCutiUserLogin() {
+    const user = JSON.parse(localStorage.getItem('user'))
+    const payload = {
+        url: BASE_URL + "/api/v1/cuti/user",
+        body: {
+            nip: user.nip
+        }
+    }
+    return {type: CUTI_LOAD_USER, payload: payload};
 }

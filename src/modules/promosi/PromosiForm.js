@@ -9,6 +9,7 @@ class PromosiForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            siapa: '',
             showHide: false,
             direct: false,
             startDate: new Date().toISOString()
@@ -16,10 +17,11 @@ class PromosiForm extends Component {
         this.handleChange = this.handleChange.bind(this)
         this.componentDidUpdate = this.componentDidUpdate.bind(this)
         this.handleModalShowHide = this.handleModalShowHide.bind(this)
+        this.handleChangeText = this.handleChangeText.bind(this)
     }
 
     handleModalShowHide() {
-        this.setState({ direct: true })
+        this.setState({direct: true})
         this.renderRedirect()
     }
 
@@ -43,6 +45,11 @@ class PromosiForm extends Component {
         });
     }
 
+    handleChangeText(e){
+        console.log(e)
+        this.setState({siapa: e.target.value})
+    }
+
     componentDidUpdate() {
     }
 
@@ -57,6 +64,15 @@ class PromosiForm extends Component {
                                 <p className="card-description">
                                     History promosi pegawai
                                 </p>
+                                <form className="forms-sample">
+                                    <div className="form-group">
+                                        <label htmlFor="exampleInputEmail1">Email address</label>
+                                        <input type="text" className="form-control" id="exampleInputEmail1"
+                                               placeholder="Enter email" value={this.state.siapa} onChange={this.handleChangeText}/>
+                                    </div>
+                                    <button type="submit" className="btn btn-success mr-2">Submit</button>
+                                    <button className="btn btn-light">Cancel</button>
+                                </form>
                                 <div className="table-responsive">
                                     <table className="table table-hover">
                                         <thead>
@@ -90,6 +106,8 @@ class PromosiForm extends Component {
                             </div>
                         </div>
                     </div>
+
+
                 </div>
                 <Modal show={this.state.showHide}>
                     <Modal.Header closeButton onClick={() => this.handleModalShowHide()}>
@@ -106,6 +124,7 @@ class PromosiForm extends Component {
                     </Modal.Footer>
                 </Modal>
                 {this.renderRedirect()}
+
             </Fragment>
         );
     }

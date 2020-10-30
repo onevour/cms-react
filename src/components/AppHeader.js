@@ -43,15 +43,17 @@ class AppHeader extends Component {
      * Alert if clicked on outside of element
      */
     handleClickOutside(event) {
-        event.preventDefault()
+        // event.preventDefault()
         const domNode = ReactDOM.findDOMNode(this);
         if (!domNode || !domNode.contains(event.target)) {
-            console.log("outer, hide " + this.state.user)
+            // console.log("outer, hide " + this.state.user)
             if ("nav-item dropdown d-none d-xl-inline-block" !== this.state.menuUserClass) {
                 this.setState({menuUserClass: "nav-item dropdown d-none d-xl-inline-block"})
                 this.setState({menuUserDropdownClass: "dropdown-menu dropdown-menu-right navbar-dropdown"})
+                console.log("hide menu profile")
             }
         } else console.log("inner")
+        return true
     }
 
     minimizeBNavBody() {
