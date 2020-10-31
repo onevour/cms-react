@@ -16740,3 +16740,11 @@ ul.pagination {margin-top: 16px;}
 span.text-danger {
   font-size: 10px;
 }
+
+.rdtPicker .rdtDays td:first-child, .rdtPicker .rdtDays td:last-child {
+  color: #cc5151!important;
+}
+
+.btn-option {
+  padding: 0.25rem 0.30rem!important;
+}

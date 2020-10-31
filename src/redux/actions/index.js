@@ -1,4 +1,14 @@
-import {BASE_URL, ADD_ARTICLE, LOGIN, LOGOUT, CUTI_SUBMIT, CUTI_LOAD_USER} from "../constants/action-types";
+import {
+    BASE_URL,
+    ADD_ARTICLE,
+    LOGIN,
+    LOGOUT,
+    CUTI_SUBMIT,
+    CUTI_LOAD_USER,
+    HOLIDAYS_SUBMIT,
+    HOLIDAYS_REMOVE,
+    HOLIDAYS_LOAD
+} from "../constants/action-types";
 
 export function addArticle(payload) {
     return {type: ADD_ARTICLE, payload}
@@ -42,4 +52,31 @@ export function loadCutiUserLogin() {
         }
     }
     return {type: CUTI_LOAD_USER, payload: payload};
+}
+
+export function submitDateHoliday(param) {
+    const user = JSON.parse(localStorage.getItem('user'))
+    param.nip = user.nip
+    const payload = {
+        url: BASE_URL + "/api/v1/cuti/holiday/create",
+        body: param
+    }
+    return {type: HOLIDAYS_SUBMIT, payload: payload};
+}
+
+export function removeDateHoliday(param) {
+    const user = JSON.parse(localStorage.getItem('user'))
+    param.nip = user.nip
+    const payload = {
+        url: BASE_URL + "/api/v1/cuti/holiday/remove",
+        body: param
+    }
+    return {type: HOLIDAYS_REMOVE, payload: payload};
+}
+
+export function loadHolidays() {
+    const payload = {
+        url: BASE_URL + "/api/v1/cuti/holiday/list"
+    }
+    return {type: HOLIDAYS_LOAD, payload: payload};
 }

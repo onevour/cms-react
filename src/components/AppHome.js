@@ -10,6 +10,7 @@ import PromosiForm from "../modules/promosi/PromosiForm";
 import PromosiDokumenForm from "../modules/promosi/PromosiDokumenForm";
 import ProyeksiGaji from "../modules/proyeksigaji/ProyeksiGaji";
 import Pensiun from "../modules/pensiun/Pensiun";
+import CalendarHoliday from "../modules/calendar/CalendarHoliday";
 
 class AppHome extends Component {
 
@@ -30,6 +31,7 @@ class AppHome extends Component {
                             <Route path="/promosi" component={PromosiForm}/>
                             <Route path="/pensiun" component={Pensiun} exact/>
                             <Route path="/proyeksi_gaji" component={ProyeksiGaji} exact/>
+                            <Route path="/calendar" component={CalendarHoliday} exact/>
                         </div>
                         <AppFooter/>
                     </div>

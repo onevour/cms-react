@@ -18,10 +18,7 @@ class Employee extends Component {
     }
 
     dateFormat(timestamp) {
-        if (null == timestamp) return "-"
-        console.info(timestamp);
-        const date = new Date(timestamp * 1000);
-        return moment(date).format('DD-MMM-YYYY')
+        return moment(timestamp).format('DD-MMM-YYYY')
     }
 
     filterFamily(e) {
@@ -70,11 +67,11 @@ class Employee extends Component {
                             <div className="card-body">
                                 <div className="row">
                                     <div className="col">
-                                        <h4 className="card-title">Data Umum</h4>
+                                        <h4 className="card-title">Data Probadi</h4>
                                     </div>
                                     <div className="col">
                                         <button type="submit"
-                                                className="btn btn-success btn-sm mr-2 float-right">Download
+                                                className="btn btn-success btn-sm mr-2 float-right">Cetak CV
                                         </button>
                                     </div>
                                 </div>
@@ -408,31 +405,6 @@ class Employee extends Component {
                                 <div className="card h-100">
                                     <div className="card-body">
                                         <h4 className="card-title">Riwayat Satya Lencana</h4>
-                                        <div className="table-responsive">
-                                            <table className="table">
-                                                <thead>
-                                                <tr>
-                                                    <th>No.</th>
-                                                    <th>Jenjang</th>
-                                                    <th>Nama Instansi</th>
-                                                    <th>TMT</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-                                            </table>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="row gutters-sm">
-                            <div className="col-sm-12 mb-3">
-                                <div className="card h-100">
-                                    <div className="card-body">
-                                        <h4 className="card-title">Riwayat Cuti</h4>
                                         <div className="table-responsive">
                                             <table className="table">
                                                 <thead>

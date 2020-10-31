@@ -5,7 +5,12 @@ import {
     LOGOUT,
     LOGOUT_RESPONSE,
     CUTI_SUBMIT,
-    CUTI_SUBMIT_RESPONSE, CUTI_LOAD_USER, CUTI_LOAD_USER_RESPONSE
+    CUTI_SUBMIT_RESPONSE,
+    CUTI_LOAD_USER,
+    CUTI_LOAD_USER_RESPONSE,
+    HOLIDAYS_LOAD,
+    HOLIDAYS_LOAD_RESPONSE,
+    HOLIDAYS_SUBMIT, HOLIDAYS_REMOVE, HOLIDAYS_SUBMIT_RESPONSE, HOLIDAYS_REMOVE_RESPONSE
 } from "../constants/action-types";
 
 export default function* watcherSaga() {
@@ -15,6 +20,9 @@ export default function* watcherSaga() {
     yield takeEvery(LOGOUT, workerSagaLogout);
     yield takeEvery(CUTI_SUBMIT, workerSagaSubmitCuti);
     yield takeEvery(CUTI_LOAD_USER, workerSagaLoadCuti);
+    yield takeEvery(HOLIDAYS_SUBMIT, workerSagaLoadHolidays);
+    yield takeEvery(HOLIDAYS_REMOVE, workerSagaLoadHolidays);
+    yield takeEvery(HOLIDAYS_LOAD, workerSagaLoadHolidays);
 }
 
 function* workerSagaLogin(action) {
@@ -55,6 +63,26 @@ function* workerSagaLoadCuti(action) {
     }
 }
 
+function* workerSagaLoadHolidays(action) {
+    try {
+        if (HOLIDAYS_SUBMIT === action.type) {
+            const payload = yield call(postData, action.payload);
+            yield put({type: HOLIDAYS_SUBMIT_RESPONSE, payload});
+        }
+        if (HOLIDAYS_REMOVE === action.type) {
+            const payload = yield call(postData, action.payload);
+            yield put({type: HOLIDAYS_REMOVE_RESPONSE, payload});
+        }
+        if (HOLIDAYS_LOAD === action.type) {
+            const payload = yield call(getData, action.payload);
+            yield put({type: HOLIDAYS_LOAD_RESPONSE, payload});
+        }
+        console.log("load holiday from saga", action.type)
+    } catch (e) {
+        yield put({type: "API_ERRORED", payload: e});
+    }
+}
+
 function* workerSaga(action) {
     try {
         console.log("worker saga")
@@ -65,8 +93,8 @@ function* workerSaga(action) {
     }
 }
 
-function getData(url) {
-    return fetch(url).then(response =>
+function getData(payload) {
+    return fetch(payload.url).then(response =>
         response.json()
     );
 }

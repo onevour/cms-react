@@ -1,21 +1,25 @@
 import React, {Component, Fragment} from "react";
-import {Button, Modal} from 'react-bootstrap'
+import {Button, Modal} from 'react-bootstrap';
+import ReactDOM from 'react-dom';
 import Datetime from 'react-datetime';
 import Select from "react-select";
+import swal from 'sweetalert';
 import "react-datetime/css/react-datetime.css";
 import {JENIS_CUTI} from "../../application/AppConstant";
 import {submitCuti, loadCutiUserLogin} from "../../redux/actions/index";
 import {connect} from "react-redux";
-import {cutiLabel, formatDate, formatStatusCuti} from "../../application/AppCommons";
+import {clearInput, cutiLabel, disableBeforeDay, formatDate, formatStatusCuti} from "../../application/AppCommons";
 
 class CutiForm extends Component {
 
     constructor(props) {
         super(props);
+        require("moment-business-days")
         this.state = {
             showHide: false,
             // form variable
             startDate: null,
+            startDateValue: null,
             finishDate: null,
             totalDays: 0,
             jenisCuti: null,
@@ -31,6 +35,9 @@ class CutiForm extends Component {
             // table
 
         }
+        this.formRef = null;
+        this.startDateRef = React.createRef();
+        this.finishDateRef = React.createRef();
         this.handleChange = this.handleChange.bind(this)
         this.componentDidUpdate = this.componentDidUpdate.bind(this)
         this.handleChangeCuti = this.handleChangeCuti.bind(this)
@@ -40,11 +47,11 @@ class CutiForm extends Component {
         this.handleChangeDescription = this.handleChangeDescription.bind(this)
         this.handleChangeTelepon = this.handleChangeTelepon.bind(this)
         this.handleChangeAddress = this.handleChangeAddress.bind(this)
-        this.submitCuti = this.submitCuti.bind(this)
+        this.renderInput = this.renderInput.bind(this)
+        this.submitFormCuti = this.submitFormCuti.bind(this)
         // load cuti
         this.props.loadCutiUserLogin();
     }
-
 
     handleChangeCuti(event) {
         console.log(event)
@@ -57,13 +64,27 @@ class CutiForm extends Component {
     }
 
     handleSelectStartDate(e) {
-        console.log(e)
         this.setState({startDate: e})
+        const {finishDate} = this.state
+        if (finishDate) {
+            const totalDays = (finishDate.businessDiff(e, 'days')) + 1
+            this.setState({totalDays: totalDays})
+            if (0 >= totalDays) {
+                this.setState({errorFinishDate: 'Finish date after start Date!'});
+            } else this.setState({errorFinishDate: null});
+        }
     }
 
     handleSelectFinishDate(e) {
+        this.setState({finishDate: e})
         const {startDate} = this.state
-        this.setState({finishDate: e, totalDays: (e.diff(this.state.startDate, 'days')) + 1})
+        if (startDate) {
+            const totalDays = (e.businessDiff(startDate, 'days')) + 1
+            this.setState({totalDays: totalDays})
+            if (0 >= totalDays) {
+                this.setState({errorFinishDate: 'Finish date after start Date!'});
+            } else this.setState({errorFinishDate: null});
+        }
     }
 
     handleModalShowHide() {
@@ -92,7 +113,7 @@ class CutiForm extends Component {
         this.setState({cutiAddress: event.target.value});
     }
 
-    submitCuti(event) {
+    submitFormCuti(event) {
         event.preventDefault()
         // error
         var hasError = false
@@ -136,31 +157,62 @@ class CutiForm extends Component {
             cuti_address: this.state.cutiAddress,
         }
         this.props.submitCuti(request);
+
     }
 
     componentDidUpdate(props) {
         // if(prevProps.value !== this.props.value){ alert(prevProps.value) }
         if (props.cutiResponse !== this.props.cutiResponse) {
             console.log("update redux trigger")
+            swal("Cuti", "Pengajuan cuti berhasil!", "success");
+            // clear
+            this.setState({
+                loading: true,
+                startDate: '',
+                startDateValue: '',
+                finishDate: null,
+                totalDays: 0,
+                jenisCuti: null,
+                description: '',
+                tlpAddress: '',
+                cutiAddress: ''
+            })
+            this.formRef.reset();
+            clearInput(this.startDateRef)
+            clearInput(this.finishDateRef)
             this.props.loadCutiUserLogin()
         }
     }
 
+    renderInput(props, openCalendar, closeCalendar) {
+        function clear() {
+            props.onChange({target: {value: ''}});
+        }
+
+        return (
+            <div>
+                <input {...props} />
+            </div>
+        );
+    }
+
     render() {
         const {cutiUserResponse} = this.props
-        console.log(cutiUserResponse)
-        const {cutiUserList, jenisCuti, description, totalDays, tlpAddress, cutiAddress} = this.state
+        // console.log(cutiUserResponse)
+        const {startDate, startDateValue, jenisCuti, description, totalDays, tlpAddress, cutiAddress} = this.state
         return (
             <Fragment>
                 <div className="row">
                     <div className="col-md-3 grid-margin">
                         <div className="card">
                             <div className="card-body">
-                                <h4 className="card-title">Cuti form</h4>
+                                <h4 className="card-title">Pengajuan Cuti</h4>
                                 <p className="card-description">
                                     Sisa cuti anda(0)
                                 </p>
-                                <form className="forms-sample" onSubmit={this.submitCuti} noValidate>
+                                <form className="forms-sample" ref={(ref) => this.formRef = ref}
+                                      onSubmit={this.submitFormCuti}
+                                      noValidate>
                                     <div className="form-group">
                                         <label htmlFor="jenisCuti">Jenis Cuti</label>
                                         <Select className="form-control select-tmd" options={JENIS_CUTI}
@@ -174,14 +226,18 @@ class CutiForm extends Component {
                                     <div className="form-group">
                                         <label>Tgl. Mulai</label>
                                         <Datetime dateFormat="DD-MM-YYYY" timeFormat={false} closeOnSelect={true}
+                                                  isValidDate={disableBeforeDay}
+                                                  value={startDate}
+                                                  ref={this.startDateRef}
                                                   onChange={this.handleSelectStartDate}/>
                                         <span className="text-danger">{this.state.errorStartDate}</span>
 
                                     </div>
                                     <div className="form-group">
                                         <label>Tgl. Selesai</label>
-                                        <Datetime name="startDate" dateFormat="DD-MM-YYYY" timeFormat={false}
-                                                  closeOnSelect={true}
+                                        <Datetime dateFormat="DD-MM-YYYY" timeFormat={false} closeOnSelect={true}
+                                                  isValidDate={disableBeforeDay}
+                                                  ref={this.finishDateRef}
                                                   onChange={this.handleSelectFinishDate}/>
                                         <span className="text-danger">{this.state.errorFinishDate}</span>
                                     </div>
@@ -220,7 +276,7 @@ class CutiForm extends Component {
                             <div className="card-body">
                                 <h4 className="card-title">Cuti</h4>
                                 <p className="card-description">
-                                    History cuti
+                                    Cuti Anda
                                 </p>
                                 <div className="table-responsive">
                                     <table className="table table-hover">

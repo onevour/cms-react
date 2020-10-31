@@ -66,9 +66,7 @@ class SampleTable extends Component {
                                     </thead>
                                     <tbody>
                                     <tr>
-                                        <td className="py-1">
-                                            <button type="button" className="btn btn-primary btn-sm"><AddIcon style={{ fontSize: 15 }}/></button>
-                                        </td>
+                                        <td className="py-1"><button type="button" className="btn btn-primary btn-sm"><AddIcon style={{ fontSize: 15 }}/></button></td>
                                         <td>
                                             Herman Beck
                                         </td>

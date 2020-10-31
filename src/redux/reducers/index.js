@@ -3,13 +3,16 @@ import {
     LOGIN_RESPONSE,
     LOGOUT_RESPONSE,
     CUTI_SUBMIT_RESPONSE,
-    CUTI_LOAD_USER_RESPONSE
+    CUTI_LOAD_USER_RESPONSE, HOLIDAYS_LOAD_RESPONSE, HOLIDAYS_SUBMIT_RESPONSE, HOLIDAYS_REMOVE_RESPONSE
 } from "../constants/action-types";
 
 const initialState = {
     loginResponse: {code: 0},
     cutiResponse: {code: 0},
-    cutiUserResponse: {code: 0, result: []}
+    cutiUserResponse: {code: 0, result: []},
+    holidaySubmitResponse: {code: 0},
+    holidayRemoveResponse: {code: 0},
+    holidaysResponse: {code: 0, result: []}
 };
 
 function rootReducer(state = initialState, action) {
@@ -30,9 +33,23 @@ function rootReducer(state = initialState, action) {
         });
     }
     if (CUTI_LOAD_USER_RESPONSE === action.type) {
-        console.log("response load cuti user", action.payload)
         return Object.assign({}, state, {
             cutiUserResponse: action.payload
+        });
+    }
+    if (HOLIDAYS_SUBMIT_RESPONSE === action.type) {
+        return Object.assign({}, state, {
+            holidaySubmitResponse: action.payload
+        });
+    }
+    if (HOLIDAYS_REMOVE_RESPONSE === action.type) {
+        return Object.assign({}, state, {
+            holidayRemoveResponse: action.payload
+        });
+    }
+    if (HOLIDAYS_LOAD_RESPONSE === action.type) {
+        return Object.assign({}, state, {
+            holidaysResponse: action.payload
         });
     }
     return state;
