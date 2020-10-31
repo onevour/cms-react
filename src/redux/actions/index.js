@@ -7,7 +7,7 @@ import {
     CUTI_LOAD_USER,
     HOLIDAYS_SUBMIT,
     HOLIDAYS_REMOVE,
-    HOLIDAYS_LOAD
+    HOLIDAYS_LOAD, CUTI_CANCEL_SUBMIT, CUTI_APPROVE_ATASAN_SUBMIT, CUTI_APPROVE_PEJABAT_SUBMIT
 } from "../constants/action-types";
 
 export function addArticle(payload) {
@@ -41,6 +41,37 @@ export function submitCuti(param) {
         body: param
     }
     return {type: CUTI_SUBMIT, payload: payload};
+}
+
+export function cancelCuti(param) {
+    const user = JSON.parse(localStorage.getItem('user'))
+    param.nip = user.nip
+    const payload = {
+        url: BASE_URL + "/api/v1/cuti/cancel",
+        body: param
+    }
+    console.log("event cancel cuti", payload)
+    return {type: CUTI_CANCEL_SUBMIT, payload: payload};
+}
+
+export function approveAtasanCuti(param) {
+    const user = JSON.parse(localStorage.getItem('user'))
+    param.nip = user.nip
+    const payload = {
+        url: BASE_URL + "/api/v1/cuti/approve/atasan",
+        body: param
+    }
+    return {type: CUTI_APPROVE_ATASAN_SUBMIT, payload: payload};
+}
+
+export function approvePejabatCuti(param) {
+    const user = JSON.parse(localStorage.getItem('user'))
+    param.nip = user.nip
+    const payload = {
+        url: BASE_URL + "/api/v1/cuti/approve/pejabat",
+        body: param
+    }
+    return {type: CUTI_APPROVE_PEJABAT_SUBMIT, payload: payload};
 }
 
 export function loadCutiUserLogin() {

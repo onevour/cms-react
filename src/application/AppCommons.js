@@ -13,14 +13,23 @@ export function cutiLabel(index) {
 
 export function formatDate(value) {
     if (null === value || undefined === value) return '-'
-    return moment(value).format('DD-MM-YYYY')
+    return moment(value).format('DD MMM YYYY') //dd mmm yyyy
 }
 
 export function formatStatusCuti(value) {
     if (undefined === value) return <label className="badge badge-info">Unknown</label>
-    if (value === 1 || value === 2) {
+    if (value === 1) {
+        return <label className="badge badge-info">Batal</label>
+    }
+    if (value === 2) {
+        return <label className="badge badge-danger">Ditolak</label>
+    }
+    if (value === 3) {
         return <label className="badge badge-warning">In progress</label>
-    } else return <label className="badge badge-success">Success</label>
+    }
+    if (value === 4) {
+        return <label className="badge badge-warning">Approve</label>
+    } else return <label className="badge badge-success">Approved</label>
     // return <label className="badge badge-danger">Suspend</label>
 }
 

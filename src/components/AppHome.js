@@ -11,6 +11,12 @@ import PromosiDokumenForm from "../modules/promosi/PromosiDokumenForm";
 import ProyeksiGaji from "../modules/proyeksigaji/ProyeksiGaji";
 import Pensiun from "../modules/pensiun/Pensiun";
 import CalendarHoliday from "../modules/calendar/CalendarHoliday";
+import CutiDetail from "../modules/cuti/CutiDetail";
+import CutiTable from "../modules/cuti/CutiTableAtasan";
+import CutiTableAtasan from "../modules/cuti/CutiTableAtasan";
+import CutiTablePejabat from "../modules/cuti/CutiTablePejabat";
+import CutiDetailAtasan from "../modules/cuti/CutiDetailAtasan";
+import CutiDetailPejabat from "../modules/cuti/CutiDetailPejabat";
 
 class AppHome extends Component {
 
@@ -27,6 +33,11 @@ class AppHome extends Component {
                             <Route path="/employee" component={Employee} exact/>
                             <Route path="/sample_table" component={SampleTable} exact/>
                             <Route path="/cuti" component={CutiForm} exact/>
+                            <Route path="/cuti_approval_atasan" component={CutiTableAtasan} exact/>
+                            <Route path="/cuti_approval_pejabat" component={CutiTablePejabat} exact/>
+                            <Route path="/cuti_detail" render={(props) => <CutiDetail {...props}/>} exact/>
+                            <Route path="/cuti_approval_atasan_detail" render={(props) => <CutiDetailAtasan {...props}/>} exact/>
+                            <Route path="/cuti_approval_pejabat_detail" render={(props) => <CutiDetailPejabat {...props}/>} exact/>
                             <Route path="/promosi_dokumen" render={(props) => <PromosiDokumenForm {...props}/>} exact/>
                             <Route path="/promosi" component={PromosiForm}/>
                             <Route path="/pensiun" component={Pensiun} exact/>

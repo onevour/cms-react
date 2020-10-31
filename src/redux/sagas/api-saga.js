@@ -10,7 +10,12 @@ import {
     CUTI_LOAD_USER_RESPONSE,
     HOLIDAYS_LOAD,
     HOLIDAYS_LOAD_RESPONSE,
-    HOLIDAYS_SUBMIT, HOLIDAYS_REMOVE, HOLIDAYS_SUBMIT_RESPONSE, HOLIDAYS_REMOVE_RESPONSE
+    HOLIDAYS_SUBMIT,
+    HOLIDAYS_REMOVE,
+    HOLIDAYS_SUBMIT_RESPONSE,
+    HOLIDAYS_REMOVE_RESPONSE,
+    CUTI_CANCEL_SUBMIT,
+    CUTI_UPDATE_RESPONSE, CUTI_APPROVE_PEJABAT_SUBMIT, CUTI_APPROVE_ATASAN_SUBMIT
 } from "../constants/action-types";
 
 export default function* watcherSaga() {
@@ -18,8 +23,11 @@ export default function* watcherSaga() {
     yield takeEvery("DATA_REQUESTED", workerSaga);
     yield takeEvery(LOGIN, workerSagaLogin);
     yield takeEvery(LOGOUT, workerSagaLogout);
-    yield takeEvery(CUTI_SUBMIT, workerSagaSubmitCuti);
-    yield takeEvery(CUTI_LOAD_USER, workerSagaLoadCuti);
+    yield takeEvery(CUTI_SUBMIT, workerSagaCuti);
+    yield takeEvery(CUTI_CANCEL_SUBMIT, workerSagaCuti);
+    yield takeEvery(CUTI_APPROVE_ATASAN_SUBMIT, workerSagaCuti);
+    yield takeEvery(CUTI_APPROVE_PEJABAT_SUBMIT, workerSagaCuti);
+    yield takeEvery(CUTI_LOAD_USER, workerSagaCuti);
     yield takeEvery(HOLIDAYS_SUBMIT, workerSagaLoadHolidays);
     yield takeEvery(HOLIDAYS_REMOVE, workerSagaLoadHolidays);
     yield takeEvery(HOLIDAYS_LOAD, workerSagaLoadHolidays);
@@ -44,24 +52,29 @@ function* workerSagaLogout(action) {
     }
 }
 
-function* workerSagaSubmitCuti(action) {
+function* workerSagaCuti(action) {
     try {
-        const payload = yield call(postData, action.payload);
-        yield put({type: CUTI_SUBMIT_RESPONSE, payload});
+        if (CUTI_SUBMIT === action.type) {
+            const payload = yield call(postData, action.payload);
+            yield put({type: CUTI_SUBMIT_RESPONSE, payload});
+        }
+        if (CUTI_LOAD_USER === action.type) {
+            const payload = yield call(postData, action.payload);
+            yield put({type: CUTI_LOAD_USER_RESPONSE, payload});
+        }
+        if (CUTI_CANCEL_SUBMIT === action.type
+            || CUTI_APPROVE_PEJABAT_SUBMIT === action.type
+            || CUTI_APPROVE_ATASAN_SUBMIT === action.type
+        ) {
+            console.log("api request", action.payload)
+            const payload = yield call(postData, action.payload);
+            yield put({type: CUTI_UPDATE_RESPONSE, payload});
+        }
     } catch (e) {
         yield put({type: "API_ERRORED", payload: e});
     }
 }
 
-function* workerSagaLoadCuti(action) {
-    try {
-        const payload = yield call(postData, action.payload);
-        yield put({type: CUTI_LOAD_USER_RESPONSE, payload});
-        console.log("load cuti from saga")
-    } catch (e) {
-        yield put({type: "API_ERRORED", payload: e});
-    }
-}
 
 function* workerSagaLoadHolidays(action) {
     try {
@@ -100,6 +113,7 @@ function getData(payload) {
 }
 
 function postData(payload) {
+    console.log(payload.url)
     const requestOptions = {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},

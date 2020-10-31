@@ -23,6 +23,7 @@ class AppHeader extends Component {
         this.handleClickOutside = this.handleClickOutside.bind(this);
         this.logout = this.logout.bind(this);
         this.state.isLogin = (this.state.user === null ? 0 : 1)
+        document.body.className = "sidebar-icon-only"
     }
 
     componentDidMount() {

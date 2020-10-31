@@ -10,7 +10,7 @@ import {connect} from "react-redux";
 import {clearInput, cutiLabel, disableBeforeDay, formatDate, formatStatusCuti} from "../../application/AppCommons";
 import {Redirect} from "react-router-dom";
 
-class CutiForm extends Component {
+class CutiTableAtasan extends Component {
 
     constructor(props) {
         super(props);
@@ -19,23 +19,6 @@ class CutiForm extends Component {
             direct: false,
             directBody: null,
             showHide: false,
-            // form variable
-            startDate: null,
-            startDateValue: null,
-            finishDate: null,
-            totalDays: 0,
-            jenisCuti: null,
-            description: '',
-            tlpAddress: '',
-            cutiAddress: '',
-            // valid
-            errorStartDate: '',
-            errorFinishDate: '',
-            errorDescription: '',
-            errorPhone: '',
-            errorAddress: '',
-            // table
-
         }
         this.formRef = null;
         this.startDateRef = React.createRef();
@@ -96,7 +79,7 @@ class CutiForm extends Component {
     renderRedirect(){
         if (this.state.direct) {
             return <Redirect to={{
-                pathname: '/cuti_detail',
+                pathname: '/cuti_approval_atasan_detail',
                 state: {body: JSON.stringify(this.state.directBody)}
             }}/>
         }
@@ -218,80 +201,12 @@ class CutiForm extends Component {
         return (
             <Fragment>
                 <div className="row">
-                    <div className="col-md-3 grid-margin">
-                        <div className="card">
+                    <div className="col-md-12 grid-margin">
+                        <div className="card mb-3">
                             <div className="card-body">
                                 <h4 className="card-title">Pengajuan Cuti</h4>
                                 <p className="card-description">
-                                    Sisa cuti anda(0)
-                                </p>
-                                <form className="forms-sample" ref={(ref) => this.formRef = ref}
-                                      onSubmit={this.submitFormCuti}
-                                      noValidate>
-                                    <div className="form-group">
-                                        <label htmlFor="jenisCuti">Jenis Cuti</label>
-                                        <Select className="form-control select-tmd" options={JENIS_CUTI}
-                                                onChange={this.handleChangeCuti}
-                                                value={JENIS_CUTI.filter(function (option) {
-                                                    return option.value === jenisCuti
-                                                })}
-                                                label="Single select"
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Tgl. Mulai</label>
-                                        <Datetime dateFormat="DD-MM-YYYY" timeFormat={false} closeOnSelect={true}
-                                                  isValidDate={disableBeforeDay}
-                                                  value={startDate}
-                                                  ref={this.startDateRef}
-                                                  onChange={this.handleSelectStartDate}/>
-                                        <span className="text-danger">{this.state.errorStartDate}</span>
-
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Tgl. Selesai</label>
-                                        <Datetime dateFormat="DD-MM-YYYY" timeFormat={false} closeOnSelect={true}
-                                                  isValidDate={disableBeforeDay}
-                                                  ref={this.finishDateRef}
-                                                  onChange={this.handleSelectFinishDate}/>
-                                        <span className="text-danger">{this.state.errorFinishDate}</span>
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Total Hari</label>
-                                        <input readOnly type="text" className="form-control" placeholder="Durasi Cuti"
-                                               value={totalDays}/>
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Keterangan</label>
-                                        <textarea className="form-control" rows="4" value={description}
-                                                  onChange={this.handleChangeDescription}/>
-                                        <span className="text-danger">{this.state.errorDescription}</span>
-                                    </div>
-                                    <div className="form-group">
-                                        <label>No. Telp Selama Cuti</label>
-                                        <input type="text" className="form-control" placeholder="No. Telp selama cuti"
-                                               value={tlpAddress} onChange={this.handleChangeTelepon}/>
-                                        <span className="text-danger">{this.state.errorPhone}</span>
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Alamat Selama Cuti</label>
-                                        <textarea className="form-control" rows="4" value={cutiAddress}
-                                                  onChange={this.handleChangeAddress}/>
-                                        <span className="text-danger">{this.state.errorAddress}</span>
-                                    </div>
-                                    <button type="submit" className="btn btn-success mr-2">Submit</button>
-                                    <button className="btn btn-light">Cancel</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="col-md-9 grid-margin">
-                        <div className="card mb-3">
-                            <div className="card-body">
-                                <h4 className="card-title">Cuti</h4>
-                                <p className="card-description">
-                                    Cuti Anda
+                                    Verifikasi cuti pegawai (Atasan)
                                 </p>
                                 <div className="table-responsive">
                                     <table className="table table-hover">
@@ -369,4 +284,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, {submitCuti, loadCutiUserLogin})(CutiForm);
+export default connect(mapStateToProps, {submitCuti, loadCutiUserLogin})(CutiTableAtasan);
