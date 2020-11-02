@@ -4,6 +4,7 @@ import Datetime from 'react-datetime';
 import Select from "react-select";
 import swal from 'sweetalert';
 import "react-datetime/css/react-datetime.css";
+import moment from "moment-timezone";
 import {JENIS_CUTI} from "../../application/AppConstant";
 import {submitCuti, loadCutiUserLogin, calculateDays} from "../../redux/actions/index";
 import {connect} from "react-redux";
@@ -14,6 +15,7 @@ class CutiForm extends Component {
 
     constructor(props) {
         super(props);
+        moment.tz.setDefault("Asia/Jakarta");
         require("moment-business-days")
         this.state = {
             direct: false,
@@ -75,9 +77,10 @@ class CutiForm extends Component {
                 this.setState({errorFinishDate: 'Finish date after start Date!'});
             } else this.setState({errorFinishDate: null});
             const request = {
-                start_date: e,
-                finish_date: finishDate
+                start_date: e.format(),
+                finish_date: finishDate.format()
             }
+            console.log(request)
             this.props.calculateDays(request)
         } else {
             this.setState({totalDays: 0})
@@ -88,16 +91,17 @@ class CutiForm extends Component {
         this.setState({finishDate: e})
         const {startDate} = this.state
         if (startDate) {
-            const totalDays = (e.businessDiff(startDate, 'days')) + 1
-            this.setState({totalDays: totalDays})
-            if (0 >= totalDays) {
-                this.setState({errorFinishDate: 'Finish date after start Date!'});
-            } else this.setState({errorFinishDate: null});
+            // const totalDays = (e.businessDiff(startDate, 'days')) + 1
+            // this.setState({totalDays: totalDays})
+            // if (0 >= totalDays) {
+            //     this.setState({errorFinishDate: 'Finish date after start Date!'});
+            // } else this.setState({errorFinishDate: null});
             const request = {
-                start_date: startDate,
-                finish_date: e
+                start_date: startDate.format(),
+                finish_date: e.format()
             }
             this.props.calculateDays(request)
+            console.log(request)
         } else {
             this.setState({totalDays: 0})
         }

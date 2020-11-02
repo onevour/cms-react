@@ -32,7 +32,7 @@ class PromosiForm extends Component {
         }
         if (this.state.direct) {
             return <Redirect to={{
-                pathname: '/promosi_dokumen',
+                pathname: '/kenaikan_pangkat_dokumen',
                 state: {body: JSON.stringify(body)}
             }}/>
         }
@@ -60,9 +60,9 @@ class PromosiForm extends Component {
                     <div className="col-md-12 grid-margin">
                         <div className="card mb-3">
                             <div className="card-body">
-                                <h4 className="card-title">Pomosi</h4>
+                                <h4 className="card-title">Kenaikan Pangkat</h4>
                                 <p className="card-description">
-                                    History promosi pegawai
+                                    History Kenaikan Pangkat
                                 </p>
                                 <form className="forms-sample">
                                     <div className="form-group">

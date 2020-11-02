@@ -38,8 +38,8 @@ class AppHome extends Component {
                             <Route path="/cuti_detail" render={(props) => <CutiDetail {...props}/>} exact/>
                             <Route path="/cuti_approval_atasan_detail" render={(props) => <CutiDetailAtasan {...props}/>} exact/>
                             <Route path="/cuti_approval_pejabat_detail" render={(props) => <CutiDetailPejabat {...props}/>} exact/>
-                            <Route path="/promosi_dokumen" render={(props) => <PromosiDokumenForm {...props}/>} exact/>
-                            <Route path="/promosi" component={PromosiForm}/>
+                            <Route path="/kenaikan_pangkat_dokumen" render={(props) => <PromosiDokumenForm {...props}/>} exact/>
+                            <Route path="/kenaikan_pangkat" component={PromosiForm}/>
                             <Route path="/pensiun" component={Pensiun} exact/>
                             <Route path="/proyeksi_gaji" component={ProyeksiGaji} exact/>
                             <Route path="/calendar" component={CalendarHoliday} exact/>

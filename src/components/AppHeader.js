@@ -1,6 +1,5 @@
 import React, {Component, useState} from 'react';
-import moment from "moment";
-import 'moment-timezone';
+import moment from "moment-timezone";
 import ReactDOM from 'react-dom'
 import {AccessAlarm, Menu} from '@material-ui/icons';
 import {Redirect, useHistory} from "react-router-dom";
@@ -20,7 +19,6 @@ class AppHeader extends Component {
             menuUserDropdownClass: "dropdown-menu dropdown-menu-right navbar-dropdown",
             user: JSON.parse(localStorage.getItem('user'))
         }
-        moment.tz.setDefault("Asia/Jakarta");
         this.minimizeBNavBody = this.minimizeBNavBody.bind(this)
         this.showMenuUser = this.showMenuUser.bind(this)
         this.handleClickOutside = this.handleClickOutside.bind(this);

@@ -124,6 +124,7 @@ function postData(payload) {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(payload.body)
     };
+    console.log(requestOptions)
     return fetch(payload.url, requestOptions).then(response =>
         response.json()
     );

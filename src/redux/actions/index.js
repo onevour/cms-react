@@ -82,6 +82,7 @@ export function calculateDays(param) {
         url: BASE_URL + "/api/v1/cuti/day",
         body: param
     }
+    console.log("cal date action", payload)
     return {type: CUTI_DAYS, payload: payload};
 }
 

@@ -13,7 +13,7 @@ class NavItem extends Component {
                 {name: "Cuti", path: "/cuti"},
                 {name: "Cuti Approval Atasan", path: "/cuti_approval_atasan"},
                 {name: "Cuti Approval Pejabat", path: "/cuti_approval_pejabat"},
-                {name: "Promosi", path: "/promosi"},
+                {name: "Kenaikan Pangkat", path: "/kenaikan_pangkat"},
                 {name: "Pensiun", path: "/pensiun"},
 //                 {name: "Proyeksi Gaji", path: "/proyeksi_gaji"},
                 {name: "Calendar", path: "/calendar"},
