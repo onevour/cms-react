@@ -157,10 +157,6 @@ class CutiForm extends Component {
             hasError = true
         } else this.setState({errorFinishDate: null})
 
-        if (0 >= this.state.totalDays) {
-            this.setState({errorFinishDate: 'Finish date after start Date!'});
-            hasError = true
-        }
         if (null === this.state.description || '' === this.state.description.trim()) {
             this.setState({errorDescription: 'Input keterangan cuti!'});
             hasError = true
