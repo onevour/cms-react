@@ -7,12 +7,13 @@ import {
     HOLIDAYS_LOAD_RESPONSE,
     HOLIDAYS_SUBMIT_RESPONSE,
     HOLIDAYS_REMOVE_RESPONSE,
-    CUTI_CANCEL_SUBMIT, CUTI_APPROVE_PEJABAT_SUBMIT, CUTI_APPROVE_ATASAN_SUBMIT
+    CUTI_CANCEL_SUBMIT, CUTI_APPROVE_PEJABAT_SUBMIT, CUTI_APPROVE_ATASAN_SUBMIT, CUTI_DAYS_RESPONSE
 } from "../constants/action-types";
 
 const initialState = {
     loginResponse: {code: 0},
     cutiResponse: {code: 0},
+    cutiDaysResponse: {code: 0, result: 0},
     cutiUserResponse: {code: 0, result: []},
     cutiUpdateResponse: {code: 0},
     holidaySubmitResponse: {code: 0},
@@ -40,6 +41,11 @@ function rootReducer(state = initialState, action) {
     if (CUTI_LOAD_USER_RESPONSE === action.type) {
         return Object.assign({}, state, {
             cutiUserResponse: action.payload
+        });
+    }
+    if (CUTI_DAYS_RESPONSE === action.type) {
+        return Object.assign({}, state, {
+            cutiDaysResponse: action.payload
         });
     }
     if (HOLIDAYS_SUBMIT_RESPONSE === action.type) {

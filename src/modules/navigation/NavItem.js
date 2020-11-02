@@ -15,7 +15,7 @@ class NavItem extends Component {
                 {name: "Cuti Approval Pejabat", path: "/cuti_approval_pejabat"},
                 {name: "Promosi", path: "/promosi"},
                 {name: "Pensiun", path: "/pensiun"},
-                {name: "Proyeksi Gaji", path: "/proyeksi_gaji"},
+//                 {name: "Proyeksi Gaji", path: "/proyeksi_gaji"},
                 {name: "Calendar", path: "/calendar"},
             ]
         }

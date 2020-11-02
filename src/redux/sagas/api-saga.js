@@ -15,7 +15,7 @@ import {
     HOLIDAYS_SUBMIT_RESPONSE,
     HOLIDAYS_REMOVE_RESPONSE,
     CUTI_CANCEL_SUBMIT,
-    CUTI_UPDATE_RESPONSE, CUTI_APPROVE_PEJABAT_SUBMIT, CUTI_APPROVE_ATASAN_SUBMIT
+    CUTI_UPDATE_RESPONSE, CUTI_APPROVE_PEJABAT_SUBMIT, CUTI_APPROVE_ATASAN_SUBMIT, CUTI_DAYS, CUTI_DAYS_RESPONSE
 } from "../constants/action-types";
 
 export default function* watcherSaga() {
@@ -27,6 +27,7 @@ export default function* watcherSaga() {
     yield takeEvery(CUTI_CANCEL_SUBMIT, workerSagaCuti);
     yield takeEvery(CUTI_APPROVE_ATASAN_SUBMIT, workerSagaCuti);
     yield takeEvery(CUTI_APPROVE_PEJABAT_SUBMIT, workerSagaCuti);
+    yield takeEvery(CUTI_DAYS, workerSagaCuti);
     yield takeEvery(CUTI_LOAD_USER, workerSagaCuti);
     yield takeEvery(HOLIDAYS_SUBMIT, workerSagaLoadHolidays);
     yield takeEvery(HOLIDAYS_REMOVE, workerSagaLoadHolidays);
@@ -54,6 +55,10 @@ function* workerSagaLogout(action) {
 
 function* workerSagaCuti(action) {
     try {
+        if (CUTI_DAYS === action.type) {
+            const payload = yield call(postData, action.payload);
+            yield put({type: CUTI_DAYS_RESPONSE, payload});
+        }
         if (CUTI_SUBMIT === action.type) {
             const payload = yield call(postData, action.payload);
             yield put({type: CUTI_SUBMIT_RESPONSE, payload});

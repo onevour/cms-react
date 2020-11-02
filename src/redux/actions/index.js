@@ -3,6 +3,7 @@ import {
     ADD_ARTICLE,
     LOGIN,
     LOGOUT,
+    CUTI_DAYS,
     CUTI_SUBMIT,
     CUTI_LOAD_USER,
     HOLIDAYS_SUBMIT,
@@ -72,6 +73,16 @@ export function approvePejabatCuti(param) {
         body: param
     }
     return {type: CUTI_APPROVE_PEJABAT_SUBMIT, payload: payload};
+}
+
+export function calculateDays(param) {
+    const user = JSON.parse(localStorage.getItem('user'))
+    param.nip = user.nip
+    const payload = {
+        url: BASE_URL + "/api/v1/cuti/day",
+        body: param
+    }
+    return {type: CUTI_DAYS, payload: payload};
 }
 
 export function loadCutiUserLogin() {

@@ -5,7 +5,7 @@ import Select from "react-select";
 import swal from 'sweetalert';
 import "react-datetime/css/react-datetime.css";
 import {JENIS_CUTI} from "../../application/AppConstant";
-import {submitCuti, loadCutiUserLogin} from "../../redux/actions/index";
+import {submitCuti, loadCutiUserLogin, calculateDays} from "../../redux/actions/index";
 import {connect} from "react-redux";
 import {clearInput, cutiLabel, disableBeforeDay, formatDate, formatStatusCuti} from "../../application/AppCommons";
 import {Redirect} from "react-router-dom";
@@ -34,6 +34,7 @@ class CutiForm extends Component {
             errorDescription: '',
             errorPhone: '',
             errorAddress: '',
+            errorServer: '',
             // table
 
         }
@@ -73,6 +74,13 @@ class CutiForm extends Component {
             if (0 >= totalDays) {
                 this.setState({errorFinishDate: 'Finish date after start Date!'});
             } else this.setState({errorFinishDate: null});
+            const request = {
+                start_date: e,
+                finish_date: finishDate
+            }
+            this.props.calculateDays(request)
+        } else {
+            this.setState({totalDays: 0})
         }
     }
 
@@ -85,15 +93,22 @@ class CutiForm extends Component {
             if (0 >= totalDays) {
                 this.setState({errorFinishDate: 'Finish date after start Date!'});
             } else this.setState({errorFinishDate: null});
+            const request = {
+                start_date: startDate,
+                finish_date: e
+            }
+            this.props.calculateDays(request)
+        } else {
+            this.setState({totalDays: 0})
         }
     }
 
     handleModalShowHide(body) {
-        this.setState({direct: true, directBody:body})
+        this.setState({direct: true, directBody: body})
         this.renderRedirect()
     }
 
-    renderRedirect(){
+    renderRedirect() {
         if (this.state.direct) {
             return <Redirect to={{
                 pathname: '/cuti_detail',
@@ -174,29 +189,37 @@ class CutiForm extends Component {
     componentDidUpdate(props) {
         // if(prevProps.value !== this.props.value){ alert(prevProps.value) }
         if (props.cutiResponse !== this.props.cutiResponse) {
-            console.log("update redux trigger")
-            swal("Cuti", "Pengajuan cuti berhasil!", "success");
-            // clear
-            this.setState({
-                loading: true,
-                startDate: '',
-                startDateValue: '',
-                finishDate: null,
-                totalDays: 0,
-                jenisCuti: null,
-                description: '',
-                tlpAddress: '',
-                cutiAddress: ''
-            })
-            this.formRef.reset();
-            clearInput(this.startDateRef)
-            clearInput(this.finishDateRef)
-            this.props.loadCutiUserLogin()
+            if (this.props.cutiResponse.code === 200) {
+                swal("Cuti", "Pengajuan cuti berhasil!", "success");
+                // clear
+                this.setState({
+                    loading: true,
+                    startDate: '',
+                    startDateValue: '',
+                    finishDate: '',
+                    totalDays: 0,
+                    jenisCuti: '',
+                    description: '',
+                    tlpAddress: '',
+                    cutiAddress: ''
+                })
+
+                this.formRef.reset();
+                clearInput(this.startDateRef)
+                clearInput(this.finishDateRef)
+                this.setState({errorServer: ''})
+                this.props.loadCutiUserLogin()
+                this.props.calculateDays({})
+            } else {
+                console.log("update redux trigger error message", this.props.cutiResponse)
+                this.setState({errorServer: this.props.cutiResponse.message})
+            }
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.props.loadCutiUserLogin();
+        this.props.calculateDays({})
     }
 
     renderInput(props, openCalendar, closeCalendar) {
@@ -212,8 +235,7 @@ class CutiForm extends Component {
     }
 
     render() {
-        const {cutiUserResponse} = this.props
-        // console.log(cutiUserResponse)
+        const {cutiUserResponse, cutiDaysResponse} = this.props
         const {startDate, startDateValue, jenisCuti, description, totalDays, tlpAddress, cutiAddress} = this.state
         return (
             <Fragment>
@@ -259,7 +281,7 @@ class CutiForm extends Component {
                                     <div className="form-group">
                                         <label>Total Hari</label>
                                         <input readOnly type="text" className="form-control" placeholder="Durasi Cuti"
-                                               value={totalDays}/>
+                                               value={cutiDaysResponse.result}/>
                                     </div>
                                     <div className="form-group">
                                         <label>Keterangan</label>
@@ -278,6 +300,9 @@ class CutiForm extends Component {
                                         <textarea className="form-control" rows="4" value={cutiAddress}
                                                   onChange={this.handleChangeAddress}/>
                                         <span className="text-danger">{this.state.errorAddress}</span>
+                                    </div>
+                                    <div className="form-group">
+                                        <span className="text-danger">{this.state.errorServer}</span>
                                     </div>
                                     <button type="submit" className="btn btn-success mr-2">Submit</button>
                                     <button className="btn btn-light">Cancel</button>
@@ -323,10 +348,11 @@ class CutiForm extends Component {
                                         <tbody>
                                         {
                                             cutiUserResponse.result.map((o, i) =>
-                                                <tr key={i} onClick={() => this.handleModalShowHide(o)}>
+                                                <tr className="clickable" key={i}
+                                                    onClick={() => this.handleModalShowHide(o)}>
                                                     <td>{cutiLabel(o.jenis_cuti)}</td>
                                                     <td>{formatDate(o.start_date)}</td>
-                                                    <td>{formatDate(o.start_date)}</td>
+                                                    <td>{formatDate(o.finish_date)}</td>
                                                     <td>{o.total_days}</td>
                                                     <td>{formatStatusCuti(o.cuti_status)}</td>
                                                     <td>{formatDate(o.approve_atasan_date)}</td>
@@ -362,11 +388,11 @@ class CutiForm extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log("state cuti form", state)
     return {
         cutiResponse: state.cutiResponse,
+        cutiDaysResponse: state.cutiDaysResponse,
         cutiUserResponse: state.cutiUserResponse,
     }
 }
 
-export default connect(mapStateToProps, {submitCuti, loadCutiUserLogin})(CutiForm);
+export default connect(mapStateToProps, {submitCuti, loadCutiUserLogin, calculateDays})(CutiForm);

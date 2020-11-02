@@ -91,7 +91,7 @@ class CalendarHoliday extends Component {
         // if(prevProps.value !== this.props.value){ alert(prevProps.value) }
         if (props.holidaySubmitResponse !== this.props.holidaySubmitResponse) {
             console.log("update redux trigger")
-            swal("Good job!", "You clicked the button!", "success");
+            swal("Hari libur", "Penambahan tanggal berhasil!", "success");
             // clear
             this.setState({
                 loading: true,
@@ -103,7 +103,7 @@ class CalendarHoliday extends Component {
             this.props.loadHolidays()
         }
         if (props.holidayRemoveResponse !== this.props.holidayRemoveResponse) {
-            swal("Good job!", "You clicked the button!", "success");
+            swal("Hari libur", "Tanggal berhasil dihapus!", "success");
             this.props.loadHolidays()
         }
     }

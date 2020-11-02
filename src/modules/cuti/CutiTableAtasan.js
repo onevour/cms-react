@@ -238,7 +238,7 @@ class CutiTableAtasan extends Component {
                                         <tbody>
                                         {
                                             cutiUserResponse.result.map((o, i) =>
-                                                <tr key={i} onClick={() => this.handleModalShowHide(o)}>
+                                                <tr className="clickable" key={i} onClick={() => this.handleModalShowHide(o)}>
                                                     <td>{cutiLabel(o.jenis_cuti)}</td>
                                                     <td>{formatDate(o.start_date)}</td>
                                                     <td>{formatDate(o.start_date)}</td>

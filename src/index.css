@@ -16748,3 +16748,7 @@ span.text-danger {
 .btn-option {
   padding: 0.25rem 0.30rem!important;
 }
+
+tr.clickable {
+  cursor: pointer;
+}
