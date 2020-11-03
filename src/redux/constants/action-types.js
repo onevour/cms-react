@@ -1,5 +1,5 @@
-export const BASE_URL = "http://5.181.217.229:8081";
-// export const BASE_URL = "http://localhost:8081";
+// export const BASE_URL = "http://5.181.217.229:8081";
+export const BASE_URL = "http://localhost:8081";
 
 export const ADD_ARTICLE = "ADD_ARTICLE";
 export const LOGIN = "LOGIN";
@@ -13,6 +13,7 @@ export const CUTI_DAYS = "CUTI_DAYS";
 export const HOLIDAYS_SUBMIT = "HOLIDAYS_SUBMIT";
 export const HOLIDAYS_REMOVE = "HOLIDAYS_REMOVE";
 export const HOLIDAYS_LOAD = "HOLIDAYS_LOAD";
+export const HOLIDAYS_LOAD_FUTURE = "HOLIDAYS_LOAD_FUTURE";
 
 
 // response

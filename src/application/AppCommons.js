@@ -30,7 +30,6 @@ export function formatStatusCuti(value) {
     if (value === 4) {
         return <label className="badge badge-warning">Approve</label>
     } else return <label className="badge badge-success">Approved</label>
-    // return <label className="badge badge-danger">Suspend</label>
 }
 
 export function usernameTrim(value) {
@@ -76,6 +75,13 @@ export function clearInput(domRef) {
 // siable before and weekend
 export function disableBeforeDay(current) {
     const today = moment();
-    return current.isAfter(today) && current.day() !== 0 && current.day() !== 6;
+    const isAfter = current.isAfter(today);
+    const isWeekend = current.day() !== 0 && current.day() !== 6;
+    const result = (isAfter && isWeekend)
+    return result
+}
 
+export function disableBeforeDayAndHoliday(current) {
+    const today = moment();
+    return current.isAfter(today) && current.day() !== 0 && current.day() !== 6;
 }

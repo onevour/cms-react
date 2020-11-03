@@ -99,46 +99,17 @@ class Login extends Component {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="form-group">
+                                        <div className="form-group" style={{marginTop:30, marginBottom:30}}>
                                             <p className="text-danger">{loginResponse.code > 200 ? loginResponse.message : ""}</p>
                                             <button className="btn btn-primary submit-btn btn-block">Login</button>
                                         </div>
-                                        <div className="form-group d-flex justify-content-between">
-                                            <div className="form-check form-check-flat mt-0">
-                                                <label className="form-check-label">
-                                                    <input type="checkbox" className="form-check-input"/> Keep
-                                                    me
-                                                    signed in
-                                                </label>
-                                            </div>
-                                            <a href="#" className="text-small forgot-password text-black">Forgot
-                                                Password</a>
-                                        </div>
-                                        <div className="form-group">
-                                            <button className="btn btn-block g-login">
-                                                <img className="mr-3" src="../../images/file-icons/icon-google.svg"
-                                                     alt=""/>Log in with Google
-                                            </button>
-                                        </div>
-                                        <div className="text-block text-center my-3">
-                                            <span className="text-small font-weight-semibold">Not a member ?</span>
-                                            <a href="register.html" className="text-black text-small">Create new
-                                                account</a>
-                                        </div>
                                     </form>
                                 </div>
+
                                 <ul className="auth-footer">
-                                    <li>
-                                        <a href="#">Conditions</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Help</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Terms</a>
-                                    </li>
+
                                 </ul>
-                                <p className="footer-text text-center">copyright © 2018 Bootstrapdash. All rights
+                                <p className="footer-text text-center">copyright © 2020 Teman Dawai. All rights
                                     reserved.</p>
                             </div>
                         </div>

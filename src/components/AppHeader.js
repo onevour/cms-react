@@ -1,5 +1,4 @@
 import React, {Component, useState} from 'react';
-import moment from "moment-timezone";
 import ReactDOM from 'react-dom'
 import {AccessAlarm, Menu} from '@material-ui/icons';
 import {Redirect, useHistory} from "react-router-dom";

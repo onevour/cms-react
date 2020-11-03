@@ -8,6 +8,7 @@ import {
     CUTI_LOAD_USER,
     HOLIDAYS_SUBMIT,
     HOLIDAYS_REMOVE,
+    HOLIDAYS_LOAD_FUTURE,
     HOLIDAYS_LOAD, CUTI_CANCEL_SUBMIT, CUTI_APPROVE_ATASAN_SUBMIT, CUTI_APPROVE_PEJABAT_SUBMIT
 } from "../constants/action-types";
 
@@ -82,7 +83,7 @@ export function calculateDays(param) {
         url: BASE_URL + "/api/v1/cuti/day",
         body: param
     }
-    console.log("cal date action", payload)
+    // console.log("cal date action", payload)
     return {type: CUTI_DAYS, payload: payload};
 }
 
@@ -122,4 +123,11 @@ export function loadHolidays() {
         url: BASE_URL + "/api/v1/cuti/holiday/list"
     }
     return {type: HOLIDAYS_LOAD, payload: payload};
+}
+
+export function loadHolidaysFuture() {
+    const payload = {
+        url: BASE_URL + "/api/v1/cuti/holiday/future"
+    }
+    return {type: HOLIDAYS_LOAD_FUTURE, payload: payload};
 }

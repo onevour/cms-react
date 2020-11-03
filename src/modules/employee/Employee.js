@@ -18,6 +18,10 @@ class Employee extends Component {
     }
 
     dateFormat(timestamp) {
+        if (timestamp === null || timestamp.length === 0) {
+            return "-"
+        }
+        console.log("marital date", timestamp)
         return moment(timestamp).format('DD-MMM-YYYY')
     }
 
@@ -63,11 +67,78 @@ class Employee extends Component {
                     </div>
 
                     <div className="col-md-10">
+
                         <div className="card mb-3">
                             <div className="card-body">
                                 <div className="row">
                                     <div className="col">
-                                        <h4 className="card-title">Data Probadi</h4>
+                                        <h4 className="card-title">Data Pribadi</h4>
+                                    </div>
+                                    <div className="col">
+                                        <button type="submit"
+                                                className="btn btn-success btn-sm mr-2 float-right">Cetak CV
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="table-responsive">
+                                        <table className="table">
+                                            <tbody>
+                                            <tr>
+                                                <td>Nama</td>
+                                                <td>{user.name}</td>
+                                                <td/>
+                                                <td/>
+                                            </tr>
+                                            <tr>
+                                                <td>Tempat, Tgl Lahir</td>
+                                                <td>{user.pob + ", "} {this.dateFormat(user.dob)}</td>
+                                                <td/>
+                                                <td/>
+                                            </tr>
+                                            <tr>
+                                                <td>Status Perkawinan</td>
+                                                <td>{user.marital_status}</td>
+                                                <td>Tgl. Pernikahan</td>
+                                                <td>{this.dateFormat(user.marital_date)}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Telepon</td>
+                                                <td>
+                                                    {user.contacts.map((o, i) =>
+                                                        <>
+                                                            {o.type === 1 ? o.value : ""}
+                                                            {o.type === 1 && <br/>}
+                                                        </>
+                                                    )}
+                                                </td>
+                                                <td>Email</td>
+                                                <td>
+                                                    {user.contacts.map((o, i) =>
+                                                        <>
+                                                            {o.type === 2 ? o.value : ""}
+                                                            {o.type === 2 && <br/>}
+                                                        </>
+                                                    )}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Alamat</td>
+                                                <td colSpan="3">{user.address}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div className="card mb-3">
+                            <div className="card-body">
+                                <div className="row">
+                                    <div className="col">
+                                        <h4 className="card-title">Data Pegawai</h4>
                                     </div>
                                     <div className="col">
                                         <button type="submit"
@@ -450,6 +521,7 @@ class Employee extends Component {
                             </div>
                         </div>
                     </div>
+
                 </div>
             </Fragment>
         );

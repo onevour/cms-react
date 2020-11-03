@@ -15,7 +15,12 @@ import {
     HOLIDAYS_SUBMIT_RESPONSE,
     HOLIDAYS_REMOVE_RESPONSE,
     CUTI_CANCEL_SUBMIT,
-    CUTI_UPDATE_RESPONSE, CUTI_APPROVE_PEJABAT_SUBMIT, CUTI_APPROVE_ATASAN_SUBMIT, CUTI_DAYS, CUTI_DAYS_RESPONSE
+    CUTI_UPDATE_RESPONSE,
+    CUTI_APPROVE_PEJABAT_SUBMIT,
+    CUTI_APPROVE_ATASAN_SUBMIT,
+    CUTI_DAYS,
+    CUTI_DAYS_RESPONSE,
+    HOLIDAYS_LOAD_FUTURE
 } from "../constants/action-types";
 
 export default function* watcherSaga() {
@@ -32,6 +37,7 @@ export default function* watcherSaga() {
     yield takeEvery(HOLIDAYS_SUBMIT, workerSagaLoadHolidays);
     yield takeEvery(HOLIDAYS_REMOVE, workerSagaLoadHolidays);
     yield takeEvery(HOLIDAYS_LOAD, workerSagaLoadHolidays);
+    yield takeEvery(HOLIDAYS_LOAD_FUTURE, workerSagaLoadHolidays);
 }
 
 function* workerSagaLogin(action) {
@@ -71,7 +77,7 @@ function* workerSagaCuti(action) {
             || CUTI_APPROVE_PEJABAT_SUBMIT === action.type
             || CUTI_APPROVE_ATASAN_SUBMIT === action.type
         ) {
-            console.log("api request", action.payload)
+            // console.log("api request", action.payload)
             const payload = yield call(postData, action.payload);
             yield put({type: CUTI_UPDATE_RESPONSE, payload});
         }
@@ -91,11 +97,11 @@ function* workerSagaLoadHolidays(action) {
             const payload = yield call(postData, action.payload);
             yield put({type: HOLIDAYS_REMOVE_RESPONSE, payload});
         }
-        if (HOLIDAYS_LOAD === action.type) {
+        if (HOLIDAYS_LOAD === action.type || HOLIDAYS_LOAD_FUTURE === action.type) {
             const payload = yield call(getData, action.payload);
             yield put({type: HOLIDAYS_LOAD_RESPONSE, payload});
         }
-        console.log("load holiday from saga", action.type)
+        // console.log("load holiday from saga", action.type)
     } catch (e) {
         yield put({type: "API_ERRORED", payload: e});
     }
@@ -103,7 +109,7 @@ function* workerSagaLoadHolidays(action) {
 
 function* workerSaga(action) {
     try {
-        console.log("worker saga")
+        // console.log("worker saga")
         const payload = yield call(getData, action.payload.url);
         yield put({type: "DATA_LOADED", payload});
     } catch (e) {
@@ -118,13 +124,13 @@ function getData(payload) {
 }
 
 function postData(payload) {
-    console.log(payload.url)
+    // console.log(payload.url)
     const requestOptions = {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(payload.body)
     };
-    console.log(requestOptions)
+    // console.log(requestOptions)
     return fetch(payload.url, requestOptions).then(response =>
         response.json()
     );

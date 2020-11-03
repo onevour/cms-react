@@ -6,7 +6,7 @@ import swal from 'sweetalert';
 import "react-datetime/css/react-datetime.css";
 import moment from "moment-timezone";
 import {JENIS_CUTI} from "../../application/AppConstant";
-import {submitCuti, loadCutiUserLogin, calculateDays} from "../../redux/actions/index";
+import {submitCuti, loadCutiUserLogin, calculateDays, loadHolidaysFuture} from "../../redux/actions/index";
 import {connect} from "react-redux";
 import {clearInput, cutiLabel, disableBeforeDay, formatDate, formatStatusCuti} from "../../application/AppCommons";
 import {Redirect} from "react-router-dom";
@@ -15,7 +15,7 @@ class CutiForm extends Component {
 
     constructor(props) {
         super(props);
-        moment.tz.setDefault("Asia/Jakarta");
+        // moment.tz.setDefault("Asia/Jakarta");
         require("moment-business-days")
         this.state = {
             direct: false,
@@ -26,11 +26,12 @@ class CutiForm extends Component {
             startDateValue: null,
             finishDate: null,
             totalDays: 0,
-            jenisCuti: null,
+            jenisCuti: '',
             description: '',
             tlpAddress: '',
             cutiAddress: '',
             // valid
+            errorjenisCuti: '',
             errorStartDate: '',
             errorFinishDate: '',
             errorDescription: '',
@@ -71,19 +72,16 @@ class CutiForm extends Component {
         this.setState({startDate: e})
         const {finishDate} = this.state
         if (finishDate) {
-            const totalDays = (finishDate.businessDiff(e, 'days')) + 1
-            this.setState({totalDays: totalDays})
-            if (0 >= totalDays) {
-                this.setState({errorFinishDate: 'Finish date after start Date!'});
-            } else this.setState({errorFinishDate: null});
+            // const totalDays = (finishDate.businessDiff(e, 'days')) + 1
+            // this.setState({totalDays: totalDays})
+            // if (0 >= totalDays) {
+            //     this.setState({errorFinishDate: 'Finish date after start Date!'});
+            // } else this.setState({errorFinishDate: null});
             const request = {
                 start_date: e.format(),
                 finish_date: finishDate.format()
             }
-            console.log(request)
             this.props.calculateDays(request)
-        } else {
-            this.setState({totalDays: 0})
         }
     }
 
@@ -91,19 +89,11 @@ class CutiForm extends Component {
         this.setState({finishDate: e})
         const {startDate} = this.state
         if (startDate) {
-            // const totalDays = (e.businessDiff(startDate, 'days')) + 1
-            // this.setState({totalDays: totalDays})
-            // if (0 >= totalDays) {
-            //     this.setState({errorFinishDate: 'Finish date after start Date!'});
-            // } else this.setState({errorFinishDate: null});
             const request = {
                 start_date: startDate.format(),
                 finish_date: e.format()
             }
             this.props.calculateDays(request)
-            console.log(request)
-        } else {
-            this.setState({totalDays: 0})
         }
     }
 
@@ -147,16 +137,27 @@ class CutiForm extends Component {
         event.preventDefault()
         // error
         var hasError = false
-        if (null === this.state.startDate) {
-            this.setState({errorStartDate: 'Start date cannot be empty!'});
-            hasError = true
-        } else this.setState({errorStartDate: null})
+        if (this.state.startDate !== null && this.state.finishDate !== null) {
+            this.setState({errorStartDate: null, errorFinishDate: null})
+            if (this.state.finishDate.isBefore(this.state.startDate)) {
+                hasError = true
+                this.setState({errorFinishDate: 'Tanggal selesai sebelum tgl mulai!'});
+            }
+        } else {
+            if (null === this.state.startDate) {
+                this.setState({errorStartDate: 'Start date cannot be empty!'});
+                hasError = true
+            } else this.setState({errorStartDate: null})
 
-        if (null === this.state.finishDate) {
-            this.setState({errorFinishDate: 'Finish date cannot be empty!'});
+            if (null === this.state.finishDate) {
+                this.setState({errorFinishDate: 'Finish date cannot be empty!'});
+                hasError = true
+            } else this.setState({errorFinishDate: null})
+        }
+        if (null === this.state.jenisCuti || '' === String(this.state.jenisCuti).trim()) {
+            this.setState({errorjenisCuti: 'Please select jenis cuti!'});
             hasError = true
-        } else this.setState({errorFinishDate: null})
-
+        } else this.setState({errorjenisCuti: null})
         if (null === this.state.description || '' === this.state.description.trim()) {
             this.setState({errorDescription: 'Input keterangan cuti!'});
             hasError = true
@@ -174,8 +175,8 @@ class CutiForm extends Component {
 
         if (hasError) return false
         const request = {
-            start_date: this.state.startDate,
-            finish_date: this.state.finishDate,
+            start_date: this.state.startDate.format(),
+            finish_date: this.state.finishDate.format(),
             total_days: this.state.totalDays,
             jenis_cuti: this.state.jenisCuti,
             description: this.state.description,
@@ -215,10 +216,15 @@ class CutiForm extends Component {
                 this.setState({errorServer: this.props.cutiResponse.message})
             }
         }
+        // holiday
+        if (props.holidaysResponse !== this.props.holidaysResponse) {
+
+        }
     }
 
     componentDidMount() {
         this.props.loadCutiUserLogin();
+        this.props.loadHolidaysFuture();
         this.props.calculateDays({})
     }
 
@@ -235,7 +241,7 @@ class CutiForm extends Component {
     }
 
     render() {
-        const {cutiUserResponse, cutiDaysResponse} = this.props
+        const {cutiUserResponse, cutiDaysResponse, holidaysResponse} = this.props
         const {startDate, startDateValue, jenisCuti, description, totalDays, tlpAddress, cutiAddress} = this.state
         return (
             <Fragment>
@@ -259,21 +265,43 @@ class CutiForm extends Component {
                                                 })}
                                                 label="Single select"
                                         />
+                                        <span className="text-danger">{this.state.errorjenisCuti}</span>
                                     </div>
                                     <div className="form-group">
                                         <label>Tgl. Mulai</label>
                                         <Datetime dateFormat="DD-MM-YYYY" timeFormat={false} closeOnSelect={true}
-                                                  isValidDate={disableBeforeDay}
+                                                  isValidDate={(current) => {
+                                                      const isWeekend = disableBeforeDay(current);
+                                                      if (isWeekend) {
+                                                          for (let i = 0; i < holidaysResponse.result.length; i++) {
+                                                              const o = holidaysResponse.result[i]
+                                                              const holiday = moment(o.date)
+                                                              if (holiday.isSame(current, 'day')) return false
+                                                          }
+                                                          return true
+                                                      } else return false
+                                                  }}
                                                   value={startDate}
                                                   ref={this.startDateRef}
                                                   onChange={this.handleSelectStartDate}/>
+
                                         <span className="text-danger">{this.state.errorStartDate}</span>
 
                                     </div>
                                     <div className="form-group">
                                         <label>Tgl. Selesai</label>
                                         <Datetime dateFormat="DD-MM-YYYY" timeFormat={false} closeOnSelect={true}
-                                                  isValidDate={disableBeforeDay}
+                                                  isValidDate={(current) => {
+                                                      const isWeekend = disableBeforeDay(current);
+                                                      if (isWeekend) {
+                                                          for (let i = 0; i < holidaysResponse.result.length; i++) {
+                                                              const o = holidaysResponse.result[i]
+                                                              const holiday = moment(o.date)
+                                                              if (holiday.isSame(current, 'day')) return false
+                                                          }
+                                                          return true
+                                                      } else return false
+                                                  }}
                                                   ref={this.finishDateRef}
                                                   onChange={this.handleSelectFinishDate}/>
                                         <span className="text-danger">{this.state.errorFinishDate}</span>
@@ -305,7 +333,7 @@ class CutiForm extends Component {
                                         <span className="text-danger">{this.state.errorServer}</span>
                                     </div>
                                     <button type="submit" className="btn btn-success mr-2">Submit</button>
-                                    <button className="btn btn-light">Cancel</button>
+
                                 </form>
                             </div>
                         </div>
@@ -392,7 +420,8 @@ function mapStateToProps(state) {
         cutiResponse: state.cutiResponse,
         cutiDaysResponse: state.cutiDaysResponse,
         cutiUserResponse: state.cutiUserResponse,
+        holidaysResponse: state.holidaysResponse,
     }
 }
 
-export default connect(mapStateToProps, {submitCuti, loadCutiUserLogin, calculateDays})(CutiForm);
+export default connect(mapStateToProps, {submitCuti, loadCutiUserLogin, calculateDays, loadHolidaysFuture})(CutiForm);
