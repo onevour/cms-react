@@ -16,6 +16,11 @@ export function formatDate(value) {
     return moment(value).format('DD MMM YYYY') //dd mmm yyyy
 }
 
+export function formatDateTime(value) {
+    if (null === value || undefined === value) return '-'
+    return moment(value).format('DD MMM YYYY hh:mm') //dd mmm yyyy
+}
+
 export function formatStatusCuti(value) {
     if (undefined === value) return <label className="badge badge-info">Unknown</label>
     if (value === 1) {
@@ -84,4 +89,12 @@ export function disableBeforeDay(current) {
 export function disableBeforeDayAndHoliday(current) {
     const today = moment();
     return current.isAfter(today) && current.day() !== 0 && current.day() !== 6;
+}
+
+// cuti template
+export function selectedTabClass(o) {
+    if (o) {
+        return o.selected ? "nav-link active" : "nav-link";
+    }
+
 }

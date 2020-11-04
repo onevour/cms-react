@@ -1,5 +1,5 @@
-export const BASE_URL = "http://5.181.217.229:8081";
-// export const BASE_URL = "http://localhost:8081";
+// export const BASE_URL = "http://5.181.217.229:8081";
+export const BASE_URL = "http://localhost:8081";
 
 export const ADD_ARTICLE = "ADD_ARTICLE";
 export const LOGIN = "LOGIN";

@@ -2,7 +2,7 @@ import React, {Component, Fragment} from "react";
 import swal from 'sweetalert';
 import {approveAtasanCuti, loadCutiUserLogin} from "../../redux/actions/index";
 import {connect} from "react-redux";
-import {cutiLabel, formatDate, formatStatusCuti} from "../../application/AppCommons";
+import {cutiLabel, formatDate, formatDateTime, formatStatusCuti} from "../../application/AppCommons";
 import {Redirect} from "react-router-dom";
 
 class CutiDetailAtasan extends Component {
@@ -104,6 +104,47 @@ class CutiDetailAtasan extends Component {
         }
     }
 
+    renderApprovalAtasan() {
+        const {cuti} = this.state
+        if (cuti) {
+            const {atasan} = cuti
+            if (atasan) {
+                return (
+                    <Fragment>
+                        <address className="norm">
+                            <h5>{atasan.name}</h5>
+                            <p> {atasan.nip} <br/>
+                                {formatDateTime(cuti.approve_atasan_date)} <br/><br/>
+                                {cuti.description_atasan}
+                            </p>
+                        </address>
+                        <hr/>
+                    </Fragment>
+                )
+            }
+        }
+    }
+
+    renderApprovalPejabat() {
+        const {cuti} = this.state
+        if (cuti) {
+            const {pejabat} = cuti
+            if (pejabat) {
+                return (
+                    <Fragment>
+                        <address className="norm">
+                            <h5>{pejabat.name}</h5>
+                            <p> {pejabat.nip} <br/>
+                                {formatDateTime(cuti.approve_pejabat_date)} <br/><br/>
+                                {cuti.description_pejabat}</p>
+                        </address>
+                        <hr/>
+                    </Fragment>
+                )
+            }
+        }
+    }
+
     renderForm() {
         const {description} = this.state
         if (this.state.cuti.cuti_status === 3) {
@@ -140,10 +181,9 @@ class CutiDetailAtasan extends Component {
                                 <hr/>
                                 <article>
                                     <address className="norm">
-                                        <h4>{cuti.user.name}</h4>
+                                        <h5>{cuti.user.name}</h5>
                                         <p> {cuti.user.nip} <br/>
-                                            {cuti.cuti_address} <br/>
-                                            {cuti.tlp_address}</p>
+                                            {formatDateTime(cuti.created_date)}</p>
                                     </address>
                                     <table className="table table-borderless table-sm">
                                         <tbody>
@@ -181,6 +221,8 @@ class CutiDetailAtasan extends Component {
                                     </table>
                                 </article>
                                 <hr/>
+                                {this.renderApprovalAtasan()}
+                                {this.renderApprovalPejabat()}
                                 <p className="card-description">
 
                                 </p>
