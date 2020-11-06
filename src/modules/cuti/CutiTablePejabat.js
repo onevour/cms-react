@@ -241,7 +241,7 @@ class CutiTablePejabat extends Component {
                                                 <tr className="clickable" key={i} onClick={() => this.handleModalShowHide(o)}>
                                                     <td>{cutiLabel(o.jenis_cuti)}</td>
                                                     <td>{formatDate(o.start_date)}</td>
-                                                    <td>{formatDate(o.start_date)}</td>
+                                                    <td>{formatDate(o.finish_date)}</td>
                                                     <td>{o.total_days}</td>
                                                     <td>{formatStatusCuti(o.cuti_status)}</td>
                                                     <td>{formatDate(o.approve_atasan_date)}</td>
