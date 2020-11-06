@@ -1,5 +1,7 @@
 import React, {Component, Fragment} from "react";
 import {selectedTabClass} from "../../application/AppCommons";
+import EmployeeMutasi from "./EmployeeMutasi";
+import EmployeePangkat from "./EmployeePangkat";
 
 class EmployeeDataRiwayat extends Component {
 
@@ -9,11 +11,18 @@ class EmployeeDataRiwayat extends Component {
             tabs: [
                 {
                     selected: true,
-                    label: "Mutasi"
+                    label: "Mutasi",
+                    content: <EmployeeMutasi/>,
                 },
                 {
                     selected: false,
-                    label: "Jabatan"
+                    label: "Jabatan",
+                    content: '',
+                },
+                {
+                    selected: false,
+                    label: "Pangkat",
+                    content: <EmployeePangkat/>,
                 },
                 {
                     selected: false,
@@ -31,21 +40,26 @@ class EmployeeDataRiwayat extends Component {
                     selected: false,
                     label: "Hukuman Disiplin"
                 }
-            ]
+            ],
+            content: <EmployeeMutasi/>,
+            user: JSON.parse(localStorage.getItem('user'))
         }
     }
 
     selectedTab(index) {
-        this.setState({
-            tabs: this.state.tabs.map((val, i) => {
-                val.selected = index === i
-                return val
-            })
+        var content = null
+        const tabs = this.state.tabs.map((val, i) => {
+            val.selected = index === i
+            if (val.selected) {
+                content = val.content;
+            }
+            return val
         })
+        this.setState({tabs: tabs, content: content})
     }
 
     render() {
-        const {tabs} = this.state
+        const {tabs, content} = this.state
         return (
             <div className="card-body">
                 <h4 className="card-title">Data Riwayat</h4>
@@ -60,6 +74,7 @@ class EmployeeDataRiwayat extends Component {
                         </li>
                     )}
                 </ul>
+                {content}
             </div>
         )
     }

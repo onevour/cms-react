@@ -27,9 +27,9 @@ class Employee extends Component {
                         <div className="card">
                             <div className="card-body text-center" style={{padding: 20}}>
                                 <img className="img-fluid"
-                                     src={user.picture}
+                                     src={user.photo}
                                      alt=""/>
-                                <p style={{marginTop: 30, fontSize: 12}}>{user.name}</p>
+                                <p style={{marginTop: 30, fontSize: 12}}>{user.nama}</p>
                                 <p style={{fontSize: 12}}>{user.nip}</p>
                             </div>
                         </div>
@@ -45,13 +45,8 @@ class Employee extends Component {
                         </div>
 
                         <div className="card mb-3">
-                            <EmployeeDataKeluarga/>
-                        </div>
-
-                        <div className="card mb-3">
                             <EmployeeDataRiwayat/>
                         </div>
-
                     </div>
 
                 </div>

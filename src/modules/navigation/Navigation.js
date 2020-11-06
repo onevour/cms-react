@@ -24,7 +24,7 @@ class Navigation extends Component {
                                      alt=""/>
                             </div>
                             <div className="text-wrapper">
-                                <p className="profile-name">{usernameTrim(user.name)}</p>
+                                <p className="profile-name">{usernameTrim(user.nama)}</p>
                                 <div>
                                     <small className="designation text-muted">{jabatanTrim(user.jabatan)}</small>
                                     <span className="status-indicator online"/>

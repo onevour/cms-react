@@ -1,6 +1,8 @@
 import React, {Component, Fragment} from "react";
 import {formatDate, selectedTabClass} from "../../application/AppCommons";
 import EmployeePendidikan from "./EmployeePendidikan";
+import EmployeeDataKeluarga from "./EmployeeDataKeluarga";
+import EmployeeDataKeluargaV2 from "./EmployeeDataKeluargaV2";
 
 class EmployeeDataPribadi extends Component {
 
@@ -11,7 +13,11 @@ class EmployeeDataPribadi extends Component {
                 {
                     selected: true,
                     label: "Pendidikan",
-                    component: <EmployeePendidikan/>
+                    content: <EmployeePendidikan/>
+                }, {
+                    selected: false,
+                    label: "Keluarga",
+                    content: <EmployeeDataKeluargaV2/>
                 }
             ],
             content: <EmployeePendidikan/>,
@@ -25,11 +31,12 @@ class EmployeeDataPribadi extends Component {
             val.selected = index === i
             if (val.selected) {
                 content = val.content
+                this.setState({content: val.content})
             }
             return val
 
         })
-        this.setState({tabs: newTabs, content: content})
+        this.setState({tabs: newTabs})
     }
 
     render() {
@@ -55,19 +62,19 @@ class EmployeeDataPribadi extends Component {
                             <tbody>
                             <tr>
                                 <td>Nama</td>
-                                <td>{user.name}</td>
+                                <td>{user.nama}</td>
                                 <td/>
                                 <td/>
                             </tr>
                             <tr>
                                 <td>Tempat, Tgl Lahir</td>
-                                <td>{user.pob + ", "} {formatDate(user.dob)}</td>
+                                <td>{user.tempat_lahir + ", "} {formatDate(user.tanggal_lahir)}</td>
                                 <td/>
                                 <td/>
                             </tr>
                             <tr>
                                 <td>Status Perkawinan</td>
-                                <td>{user.marital_status}</td>
+                                <td>{user.status_diri}</td>
                                 <td>Tgl. Pernikahan</td>
                                 <td>{formatDate(user.marital_date)}</td>
                             </tr>
@@ -93,7 +100,9 @@ class EmployeeDataPribadi extends Component {
                             </tr>
                             <tr>
                                 <td>Alamat</td>
-                                <td colSpan="3">{user.address}</td>
+                                <td>{user.alamat}, {user.kode_pos} </td>
+                                <td>RT/RW</td>
+                                <td>{user.rt_rw}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -101,17 +110,19 @@ class EmployeeDataPribadi extends Component {
                 </div>
 
                 <div className="row" style={{marginTop: 20}}>
-                    <ul className="nav nav-tabs">
-                        {tabs.map((o, i) =>
-                            <li className="nav-item">
-                                <a className={selectedTabClass(o)}
-                                   onClick={(e) => {
-                                       e.preventDefault();
-                                       this.selectedTab(i)
-                                   }} href="#">{o.label}</a>
-                            </li>
-                        )}
-                    </ul>
+                    <div className="col-md-12">
+                        <ul className="nav nav-tabs">
+                            {tabs.map((o, i) =>
+                                <li className="nav-item">
+                                    <a className={selectedTabClass(o)}
+                                       onClick={(e) => {
+                                           e.preventDefault();
+                                           this.selectedTab(i)
+                                       }} href="#">{o.label}</a>
+                                </li>
+                            )}
+                        </ul>
+                    </div>
                     {content}
                 </div>
             </div>

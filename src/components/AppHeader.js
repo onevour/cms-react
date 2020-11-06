@@ -111,7 +111,7 @@ class AppHeader extends Component {
                                    data-toggle="dropdown"
                                    aria-expanded="false"
                                    onClick={this.showMenuUser}>
-                                    <span className="profile-text">{user.username}</span>
+                                    <span className="profile-text">{user.nip}</span>
                                 </a>
                                 <div className={menuUserDropdownClass}
                                      aria-labelledby="UserDropdown">
