@@ -26,7 +26,7 @@ class EmployeePangkat extends Component {
                     </thead>
                     <tbody>
                     {pangkats.map((o, i) =>
-                        <tr>
+                        <tr key={i}>
                             <td>{i + 1}</td>
                             <td>{formatDate(o.tmt)}</td>
                             <td>{o.gol}</td>

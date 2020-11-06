@@ -26,7 +26,7 @@ class EmployeeMutasi extends Component {
                     </thead>
                     <tbody>
                     {mutasis.map((o, i) =>
-                        <tr>
+                        <tr key={i}>
                             <td>{i + 1}</td>
                             <td>{o.tahun}</td>
                             <td>{formatDate(o.tmt)}</td>

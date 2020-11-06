@@ -66,7 +66,7 @@ class EmployeeDataKeluargaV2 extends Component {
                 <div className="row">
                     <ul className="nav nav-tabs">
                         {tabs.map((o, i) =>
-                            <li className="nav-item">
+                            <li className="nav-item" key={i}>
                                 <a className={selectedTabClass(o)}
                                    onClick={(e) => {
                                        e.preventDefault();
@@ -90,7 +90,7 @@ class EmployeeDataKeluargaV2 extends Component {
                         </thead>
                         <tbody>
                         {families.map((o, i) =>
-                            <tr>
+                            <tr key={i}>
                                 <td>{i + 1}</td>
                                 <td>{o.family_status}</td>
                                 <td>{o.name}</td>

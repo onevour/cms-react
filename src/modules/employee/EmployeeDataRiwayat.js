@@ -16,11 +16,6 @@ class EmployeeDataRiwayat extends Component {
                 },
                 {
                     selected: false,
-                    label: "Jabatan",
-                    content: '',
-                },
-                {
-                    selected: false,
                     label: "Pangkat",
                     content: <EmployeePangkat/>,
                 },
@@ -65,7 +60,7 @@ class EmployeeDataRiwayat extends Component {
                 <h4 className="card-title">Data Riwayat</h4>
                 <ul className="nav nav-tabs">
                     {tabs.map((o, i) =>
-                        <li className="nav-item">
+                        <li className="nav-item" key={i}>
                             <a className={selectedTabClass(o)}
                                onClick={(e) => {
                                    e.preventDefault();
