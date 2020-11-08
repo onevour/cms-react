@@ -1,8 +1,9 @@
 import React, {Component, Fragment} from "react";
-import {formatDate, selectedTabClass} from "../../application/AppCommons";
+import {formatDate, selectedTabClass} from "../../../application/AppCommons";
 import EmployeePendidikan from "./EmployeePendidikan";
 import EmployeeDataKeluarga from "./EmployeeDataKeluarga";
 import EmployeeDataKeluargaV2 from "./EmployeeDataKeluargaV2";
+import {BASE_URL} from "../../../redux/constants/action-types";
 
 class EmployeeDataPribadi extends Component {
 
@@ -23,6 +24,7 @@ class EmployeeDataPribadi extends Component {
             content: <EmployeePendidikan/>,
             user: JSON.parse(localStorage.getItem('user'))
         }
+        this.downloadEmployeeData = this.downloadEmployeeData.bind(this)
     }
 
     selectedTab(index) {
@@ -39,6 +41,22 @@ class EmployeeDataPribadi extends Component {
         this.setState({tabs: newTabs})
     }
 
+    downloadEmployeeData() {
+        const {user} = this.state
+        fetch(BASE_URL + '/api/v1/view/cv/' + user.nip)
+            .then(response => {
+                response.blob().then(blob => {
+                    let url = window.URL.createObjectURL(blob);
+                    let a = document.createElement('a');
+                    a.href = url;
+                    a.download = user.nip + '-' + user.nama + '.pdf';
+                    a.click();
+                });
+            });
+        // open new tab
+        // window.open(BASE_URL + '/api/v1/view/cv/' + user.nip, "_blank")
+    }
+
     render() {
         const {user, tabs, content} = this.state
         if (user === null) {
@@ -52,6 +70,7 @@ class EmployeeDataPribadi extends Component {
                     </div>
                     <div className="col">
                         <button type="submit" style={{marginTop: -10}}
+                                onClick={this.downloadEmployeeData}
                                 className="btn btn-success btn-sm mr-2 float-right">Cetak CV
                         </button>
                     </div>

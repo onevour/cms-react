@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from "react";
-import {formatDate} from "../../application/AppCommons";
+import {formatDate} from "../../../application/AppCommons";
 
 class EmployeeMutasi extends Component {
 

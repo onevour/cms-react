@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from "react";
-import {formatDate, selectedTabClass} from "../../application/AppCommons";
+import {formatDate, selectedTabClass} from "../../../application/AppCommons";
 
 class EmployeeDataKeluarga extends Component {
 

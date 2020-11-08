@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from "react";
-import {selectedTabClass} from "../../application/AppCommons";
+import {selectedTabClass} from "../../../application/AppCommons";
 import EmployeeMutasi from "./EmployeeMutasi";
 import EmployeePangkat from "./EmployeePangkat";
 

@@ -1,10 +1,10 @@
 import React, {Component, Fragment} from "react";
 import Pagination from "../../plugins/Pagination";
 import moment from 'moment';
-import EmployeeDataPribadi from "./EmployeeDataPribadi";
-import EmployeeDataKepegawaian from "./EmployeeDataKepegawaian";
-import EmployeeDataKeluarga from "./EmployeeDataKeluarga";
-import EmployeeDataRiwayat from "./EmployeeDataRiwayat";
+import EmployeeDataPribadi from "./datapribadi/EmployeeDataPribadi";
+import EmployeeDataKepegawaian from "./kepegawaian/EmployeeDataKepegawaian";
+import EmployeeDataKeluarga from "./datapribadi/EmployeeDataKeluarga";
+import EmployeeDataRiwayat from "./riwayat/EmployeeDataRiwayat";
 
 class Employee extends Component {
 

@@ -14,7 +14,7 @@ class Navigation extends Component {
     render() {
         const {user} = this.state
         return (
-            <ul className="nav">
+            <ul className="nav" style={{position: 'fixed'}}>
                 <li className="nav-item nav-profile">
                     <div className="nav-link">
                         <div className="user-wrapper">

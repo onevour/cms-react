@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {formatDate} from "../../application/AppCommons";
+import {formatDate} from "../../../application/AppCommons";
 
 class EmployeePangkat extends Component {
 
