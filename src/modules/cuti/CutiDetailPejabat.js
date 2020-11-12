@@ -4,6 +4,7 @@ import {approvePejabatCuti, loadCutiUserLogin} from "../../redux/actions/reduxAc
 import {connect} from "react-redux";
 import {cutiLabel, formatDate, formatDateTime, formatStatusCuti} from "../../application/AppCommons";
 import {Redirect} from "react-router-dom";
+import {BASE_URL} from "../../redux/constants/action-types";
 
 class CutiDetailPejabat extends Component {
 
@@ -20,6 +21,7 @@ class CutiDetailPejabat extends Component {
         this.rejectCuti = this.rejectCuti.bind(this)
         this.cancelPage = this.cancelPage.bind(this)
         this.cancelExistCuti = this.cancelExistCuti.bind(this)
+        this.downloadCuti = this.downloadCuti.bind(this)
     }
 
     cancelPage(e) {
@@ -104,6 +106,21 @@ class CutiDetailPejabat extends Component {
         }
     }
 
+    downloadCuti() {
+        const {user, cuti} = this.state
+        console.log(cuti)
+        fetch(BASE_URL + '/api/v1/download/cuti/' + cuti.user.nip + '/' + cuti.id)
+            .then(response => {
+                response.blob().then(blob => {
+                    let url = window.URL.createObjectURL(blob);
+                    let a = document.createElement('a');
+                    a.href = url;
+                    a.download = cuti.user.nip + '-cuti-' + formatDate(cuti.start_date) + cuti.user.nama + '.pdf';
+                    a.click();
+                });
+            });
+    }
+
     renderApprovalAtasan() {
         const {cuti} = this.state
         if (cuti) {
@@ -176,6 +193,12 @@ class CutiDetailPejabat extends Component {
                         <div className="card">
                             <div className="card-body">
                                 <h4 className="card-title">Pengajuan Cuti</h4>
+                                <div className="col">
+                                    <button type="submit" style={{marginTop: -30}}
+                                            onClick={this.downloadCuti}
+                                            className="btn btn-success btn-sm mr-2 float-right">Cetak
+                                    </button>
+                                </div>
                                 <p className="card-description">
                                 </p>
                                 <hr/>

@@ -78,15 +78,16 @@ class CutiDetail extends Component {
         }
     }
 
-    downloadCuti(){
-        const {user} = this.state
-        fetch(BASE_URL + '/api/v1/download/cuti/' + user.nip)
+    downloadCuti() {
+        const {user, cuti} = this.state
+        console.log(cuti)
+        fetch(BASE_URL + '/api/v1/download/cuti/' + cuti.user.nip + '/' + cuti.id)
             .then(response => {
                 response.blob().then(blob => {
                     let url = window.URL.createObjectURL(blob);
                     let a = document.createElement('a');
                     a.href = url;
-                    a.download = user.nip + '-cuti-' + user.nama + '.pdf';
+                    a.download = cuti.user.nip + '-cuti-' + formatDate(cuti.start_date) + cuti.user.nama + '.pdf';
                     a.click();
                 });
             });
