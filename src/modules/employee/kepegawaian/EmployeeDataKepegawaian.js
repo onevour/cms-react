@@ -145,12 +145,6 @@ class EmployeeDataKepegawaian extends Component {
                                 <td/>
                             </tr>
                             <tr>
-                                <td>Gol. Awal</td>
-                                <td>{eselon_detail.gol_awal}</td>
-                                <td>Gol. Akhir</td>
-                                <td>{eselon_detail.gol_akhir}</td>
-                            </tr>
-                            <tr>
                                 <th colSpan={4}>Pangkat & Golongan</th>
                             </tr>
                             <tr>
