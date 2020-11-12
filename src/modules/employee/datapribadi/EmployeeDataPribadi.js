@@ -1,9 +1,10 @@
 import React, {Component, Fragment} from "react";
 import {formatDate, selectedTabClass} from "../../../application/AppCommons";
 import EmployeePendidikan from "./EmployeePendidikan";
-import EmployeeDataKeluarga from "./EmployeeDataKeluarga";
 import EmployeeDataKeluargaV2 from "./EmployeeDataKeluargaV2";
 import {BASE_URL} from "../../../redux/constants/action-types";
+import EmployeeDataDigital from "./EmployeeDataDigital";
+import {Redirect} from "react-router-dom";
 
 class EmployeeDataPribadi extends Component {
 
@@ -19,6 +20,11 @@ class EmployeeDataPribadi extends Component {
                     selected: false,
                     label: "Keluarga",
                     content: <EmployeeDataKeluargaV2/>
+                }
+                , {
+                    selected: false,
+                    label: "Data Digital",
+                    content: <EmployeeDataDigital/>
                 }
             ],
             content: <EmployeePendidikan/>,
@@ -53,8 +59,6 @@ class EmployeeDataPribadi extends Component {
                     a.click();
                 });
             });
-        // open new tab
-        // window.open(BASE_URL + '/api/v1/view/cv/' + user.nip, "_blank")
     }
 
     render() {

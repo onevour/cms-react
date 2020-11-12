@@ -6,7 +6,7 @@ import swal from 'sweetalert';
 import "react-datetime/css/react-datetime.css";
 import moment from "moment-timezone";
 import {JENIS_CUTI} from "../../application/AppConstant";
-import {submitCuti, loadCutiUserLogin, calculateDays, loadHolidaysFuture} from "../../redux/actions/index";
+import {submitCuti, loadCutiUserLogin, calculateDays, loadHolidaysFuture} from "../../redux/actions/reduxAction";
 import {connect} from "react-redux";
 import {clearInput, cutiLabel, disableBeforeDay, formatDate, formatStatusCuti} from "../../application/AppCommons";
 import {Redirect} from "react-router-dom";

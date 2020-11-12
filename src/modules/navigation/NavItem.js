@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Link, Router} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { AccessAlarm, ThreeDRotation } from '@material-ui/icons';
+import {AccessAlarm, ThreeDRotation} from '@material-ui/icons';
 
 class NavItem extends Component {
 
@@ -9,25 +9,31 @@ class NavItem extends Component {
         super();
         this.state = {
             navigation: [
-                {name: "Profile", path: "/employee"},
-                {name: "Cuti", path: "/cuti"},
-                {name: "Cuti Approval Atasan", path: "/cuti_approval_atasan"},
-                {name: "Cuti Approval Pejabat", path: "/cuti_approval_pejabat"},
-                {name: "Kenaikan Pangkat", path: "/kenaikan_pangkat"},
-                {name: "Pensiun", path: "/pensiun"},
-//                 {name: "Proyeksi Gaji", path: "/proyeksi_gaji"},
-                {name: "Calendar", path: "/calendar"},
+                {name: "Profile", icon: "menu-icon mdi mdi-account-card-details", path: "/employee"},
+                {name: "Cuti", icon: "menu-icon mdi mdi-file-image", path: "/cuti"},
+                {
+                    name: "Cuti Approval Atasan",
+                    icon: "menu-icon mdi mdi-account-check",
+                    path: "/cuti_approval_atasan"
+                },
+                {
+                    name: "Cuti Approval Pejabat",
+                    icon: "menu-icon mdi mdi-account-check",
+                    path: "/cuti_approval_pejabat"
+                },
+                {name: "Kenaikan Pangkat", icon: "menu-icon mdi mdi-folder-upload", path: "/kenaikan_pangkat"},
+                {name: "Pensiun", icon: "menu-icon mdi mdi-account-switch", path: "/pensiun"},
+                {name: "Calendar", icon: "menu-icon mdi mdi-calendar", path: "/calendar"},
             ]
         }
     }
 
     menuTemplate(item, index) {
-        // var isActive = this.props.location.pathname === this.props.to
-        // var className = isActive ? 'active' : ''
         return (
             <li className="nav-item" key={index}>
                 <Link className="nav-link" to={item.path}>
-                    <i className="menu-icon mdi mdi-television"/> <span className="menu-title menu-title-nav">{item.name}</span>
+                    <i className={item.icon}/> <span
+                    className="menu-title menu-title-nav">{item.name}</span>
                 </Link>
             </li>
         );

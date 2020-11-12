@@ -10,18 +10,7 @@ import {
     CUTI_CANCEL_SUBMIT, CUTI_APPROVE_PEJABAT_SUBMIT, CUTI_APPROVE_ATASAN_SUBMIT, CUTI_DAYS_RESPONSE
 } from "../constants/action-types";
 
-const initialState = {
-    loginResponse: {code: 0},
-    cutiResponse: {code: 0},
-    cutiDaysResponse: {code: 0, result: 0},
-    cutiUserResponse: {code: 0, result: []},
-    cutiUpdateResponse: {code: 0},
-    holidaySubmitResponse: {code: 0},
-    holidayRemoveResponse: {code: 0},
-    holidaysResponse: {code: 0, result: []}
-};
-
-function rootReducer(state = initialState, action) {
+function loginCutiReducer(state, action) {
     // start from here
     if (LOGIN_RESPONSE === action.type) {
         return Object.assign({}, state, {
@@ -73,4 +62,4 @@ function rootReducer(state = initialState, action) {
     return state;
 }
 
-export default rootReducer;
+export default loginCutiReducer;

@@ -16752,3 +16752,7 @@ span.text-danger {
 tr.clickable {
   cursor: pointer;
 }
+
+.btn i.mdi {
+  margin-right: 0rem;
+}

@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from "react";
 import swal from 'sweetalert';
-import {approveAtasanCuti, loadCutiUserLogin} from "../../redux/actions/index";
+import {approveAtasanCuti, loadCutiUserLogin} from "../../redux/actions/reduxAction";
 import {connect} from "react-redux";
 import {cutiLabel, formatDate, formatDateTime, formatStatusCuti} from "../../application/AppCommons";
 import {Redirect} from "react-router-dom";

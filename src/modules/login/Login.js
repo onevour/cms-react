@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Redirect} from 'react-router-dom';
 import {connect} from "react-redux";
-import {getData, login} from "../../redux/actions/index";
+import {getData, login} from "../../redux/actions/reduxAction";
 
 class Login extends Component {
 

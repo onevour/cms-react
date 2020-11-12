@@ -53,7 +53,6 @@ class EmployeeDataKepegawaian extends Component {
         if (user === null) {
             return (<></>)
         }
-        console.log(user)
         const {jabatan_detail, eselon_detail, pangkat_detail, units} = user
         return (
             <div className="card-body">

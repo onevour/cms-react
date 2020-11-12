@@ -17,6 +17,7 @@ import CutiTableAtasan from "../modules/cuti/CutiTableAtasan";
 import CutiTablePejabat from "../modules/cuti/CutiTablePejabat";
 import CutiDetailAtasan from "../modules/cuti/CutiDetailAtasan";
 import CutiDetailPejabat from "../modules/cuti/CutiDetailPejabat";
+import EmployeeDataDigitalForm from "../modules/employee/EmployeeDataDigitalForm";
 
 class AppHome extends Component {
 
@@ -31,6 +32,7 @@ class AppHome extends Component {
                     <div className="main-panel">
                         <div className="content-wrapper">
                             <Route path="/employee" component={Employee} exact/>
+                            <Route path="/employee/digital" render={(props) => <EmployeeDataDigitalForm {...props}/>} exact/>
                             <Route path="/sample_table" component={SampleTable} exact/>
                             <Route path="/cuti" component={CutiForm} exact/>
                             <Route path="/cuti_approval_atasan" component={CutiTableAtasan} exact/>

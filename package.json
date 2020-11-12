@@ -23,6 +23,7 @@
     "react-bootstrap-pagination": "^1.0.7",
     "react-datetime": "^3.0.4",
     "react-dom": "^16.14.0",
+    "react-file-base64": "^1.0.3",
     "react-form-with-constraints": "^0.16.0",
     "react-form-with-constraints-bootstrap4": "^0.16.0",
     "react-js-pagination": "^3.0.3",

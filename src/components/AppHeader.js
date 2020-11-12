@@ -5,7 +5,7 @@ import {Redirect, useHistory} from "react-router-dom";
 
 import {withRouter} from 'react-router-dom'
 import {connect} from "react-redux";
-import {login, logout} from "../redux/actions";
+import {login, logout} from "../redux/actions/reduxAction";
 
 class AppHeader extends Component {
 

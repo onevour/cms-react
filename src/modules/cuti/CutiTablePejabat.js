@@ -5,7 +5,7 @@ import Select from "react-select";
 import swal from 'sweetalert';
 import "react-datetime/css/react-datetime.css";
 import {JENIS_CUTI} from "../../application/AppConstant";
-import {submitCuti, loadCutiUserLogin} from "../../redux/actions/index";
+import {submitCuti, loadCutiUserLogin} from "../../redux/actions/reduxAction";
 import {connect} from "react-redux";
 import {clearInput, cutiLabel, disableBeforeDay, formatDate, formatStatusCuti} from "../../application/AppCommons";
 import {Redirect} from "react-router-dom";

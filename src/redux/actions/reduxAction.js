@@ -9,7 +9,9 @@ import {
     HOLIDAYS_SUBMIT,
     HOLIDAYS_REMOVE,
     HOLIDAYS_LOAD_FUTURE,
-    HOLIDAYS_LOAD, CUTI_CANCEL_SUBMIT, CUTI_APPROVE_ATASAN_SUBMIT, CUTI_APPROVE_PEJABAT_SUBMIT
+    HOLIDAYS_LOAD, CUTI_CANCEL_SUBMIT,
+    CUTI_APPROVE_ATASAN_SUBMIT,
+    CUTI_APPROVE_PEJABAT_SUBMIT
 } from "../constants/action-types";
 
 export function addArticle(payload) {
@@ -17,9 +19,9 @@ export function addArticle(payload) {
 }
 
 // with saga
-export function getData(url) {
-    return {type: "DATA_REQUESTED", payload: {url}};
-}
+// export function getData(url) {
+//     return {type: "DATA_REQUESTED", payload: {url}};
+// }
 
 export function login(param) {
     const payload = {

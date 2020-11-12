@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import './index.css';
 import './assets/css/md/materialdesignicons.min.css';
 import App from './App';
-import store from "./redux/store";
+import store from "./redux/store/reduxStore";
 
 ReactDOM.render(
     <Provider store={store}>

@@ -1,9 +1,10 @@
 import React, {Component, Fragment} from "react";
 import swal from 'sweetalert';
-import {cancelCuti, loadCutiUserLogin} from "../../redux/actions/index";
+import {cancelCuti, loadCutiUserLogin} from "../../redux/actions/reduxAction";
 import {connect} from "react-redux";
 import {cutiLabel, formatDate, formatDateTime, formatStatusCuti} from "../../application/AppCommons";
 import {Redirect} from "react-router-dom";
+import {BASE_URL} from "../../redux/constants/action-types";
 
 class CutiDetail extends Component {
 
@@ -12,12 +13,14 @@ class CutiDetail extends Component {
         this.state = {
             backAction: false,
             description: '',
-            cuti: JSON.parse(this.props.location.state.body)
+            cuti: JSON.parse(this.props.location.state.body),
+            user: JSON.parse(localStorage.getItem('user'))
         }
         this.formRef = null;
         this.handleChangeDescription = this.handleChangeDescription.bind(this)
         this.cancelPage = this.cancelPage.bind(this)
         this.cancelExistCuti = this.cancelExistCuti.bind(this)
+        this.downloadCuti = this.downloadCuti.bind(this)
     }
 
     cancelPage(e) {
@@ -73,6 +76,20 @@ class CutiDetail extends Component {
                 )
             }
         }
+    }
+
+    downloadCuti(){
+        const {user} = this.state
+        fetch(BASE_URL + '/api/v1/download/cuti/' + user.nip)
+            .then(response => {
+                response.blob().then(blob => {
+                    let url = window.URL.createObjectURL(blob);
+                    let a = document.createElement('a');
+                    a.href = url;
+                    a.download = user.nip + '-cuti-' + user.nama + '.pdf';
+                    a.click();
+                });
+            });
     }
 
     renderForm() {
@@ -145,6 +162,12 @@ class CutiDetail extends Component {
                         <div className="card">
                             <div className="card-body">
                                 <h4 className="card-title">Pengajuan Cuti</h4>
+                                <div className="col">
+                                    <button type="submit" style={{marginTop: -30}}
+                                            onClick={this.downloadCuti}
+                                            className="btn btn-success btn-sm mr-2 float-right">Cetak
+                                    </button>
+                                </div>
                                 <p className="card-description">
 
                                 </p>

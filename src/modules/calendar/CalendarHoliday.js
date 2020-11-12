@@ -6,7 +6,7 @@ import Select from "react-select";
 import swal from 'sweetalert';
 import "react-datetime/css/react-datetime.css";
 import {JENIS_CUTI} from "../../application/AppConstant";
-import {submitDateHoliday, removeDateHoliday, loadHolidays} from "../../redux/actions/index";
+import {submitDateHoliday, removeDateHoliday, loadHolidays} from "../../redux/actions/reduxAction";
 import {connect} from "react-redux";
 import {clearInput, cutiLabel, disableBeforeDay, formatDate, formatStatusCuti} from "../../application/AppCommons";
 import AddIcon from "@material-ui/icons/Add";
@@ -174,7 +174,7 @@ class CalendarHoliday extends Component {
                                                         <button type="button"
                                                                 className="btn btn-danger btn-sm btn-option"
                                                                 onClick={() => this.handleModalShowHide(o.id)}>
-                                                            <AddIcon style={{fontSize: 15}}/>
+                                                            <i className="mdi mdi-24px mdi-delete-circle"/>
                                                         </button>
                                                     </td>
                                                     <td>{formatDate(o.date)}</td>

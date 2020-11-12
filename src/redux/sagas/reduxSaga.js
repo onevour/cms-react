@@ -20,9 +20,9 @@ import {
     CUTI_APPROVE_ATASAN_SUBMIT,
     CUTI_DAYS,
     CUTI_DAYS_RESPONSE,
-    HOLIDAYS_LOAD_FUTURE
+    HOLIDAYS_LOAD_FUTURE, MASTER_DOCUMENT, UPLOAD_DOCUMENT_RESPONSE, UPLOAD_DOCUMENT, USER_DOCUMENT, REMOVE_DOCUMENT
 } from "../constants/action-types";
-
+import {masterDocument, removeUserDocument, uploadUserDocument, userDocument} from "./reduxSagaDataDigital";
 export default function* watcherSaga() {
     console.log("watcher saga")
     yield takeEvery("DATA_REQUESTED", workerSaga);
@@ -38,6 +38,11 @@ export default function* watcherSaga() {
     yield takeEvery(HOLIDAYS_REMOVE, workerSagaLoadHolidays);
     yield takeEvery(HOLIDAYS_LOAD, workerSagaLoadHolidays);
     yield takeEvery(HOLIDAYS_LOAD_FUTURE, workerSagaLoadHolidays);
+    // pisah file
+    yield takeEvery(MASTER_DOCUMENT, masterDocument);
+    yield takeEvery(UPLOAD_DOCUMENT, uploadUserDocument);
+    yield takeEvery(USER_DOCUMENT, userDocument);
+    yield takeEvery(REMOVE_DOCUMENT, removeUserDocument);
 }
 
 function* workerSagaLogin(action) {
@@ -86,7 +91,6 @@ function* workerSagaCuti(action) {
     }
 }
 
-
 function* workerSagaLoadHolidays(action) {
     try {
         if (HOLIDAYS_SUBMIT === action.type) {
@@ -117,13 +121,13 @@ function* workerSaga(action) {
     }
 }
 
-function getData(payload) {
+export function getData(payload) {
     return fetch(payload.url).then(response =>
         response.json()
     );
 }
 
-function postData(payload) {
+export function postData(payload) {
     // console.log(payload.url)
     const requestOptions = {
         method: 'POST',
