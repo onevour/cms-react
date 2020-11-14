@@ -1,5 +1,4 @@
-import React, {Component, Fragment} from "react";
-import {formatDate, selectedTabClass} from "../../../application/AppCommons";
+import React, {Component} from "react";
 import {Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 import {
@@ -8,7 +7,7 @@ import {
     removeUserDocument,
     userUploadDocument
 } from "../../../redux/actions/reduxActionDataDigital";
-import {BASE_URL} from "../../../redux/constants/action-types";
+import {BASE_URL} from "../../../redux/constants/reducActionTypes";
 
 class EmployeeDataDigital extends Component {
 

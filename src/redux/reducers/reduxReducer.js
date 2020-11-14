@@ -1,16 +1,6 @@
-import {
-    ADD_ARTICLE,
-    LOGIN_RESPONSE,
-    LOGOUT_RESPONSE,
-    CUTI_SUBMIT_RESPONSE,
-    CUTI_LOAD_USER_RESPONSE,
-    HOLIDAYS_LOAD_RESPONSE,
-    HOLIDAYS_SUBMIT_RESPONSE,
-    HOLIDAYS_REMOVE_RESPONSE,
-    CUTI_CANCEL_SUBMIT, CUTI_APPROVE_PEJABAT_SUBMIT, CUTI_APPROVE_ATASAN_SUBMIT, CUTI_DAYS_RESPONSE
-} from "../constants/action-types";
-import loginCutiReducer from "./reduxLoginCuti";
+import loginCutiReducer from "./reduxReducerCuti";
 import dataDigitalReducer from "./reduxReducerDataDigital";
+import {documentTypeReducer} from "./reduxReducerDocumentType";
 
 const initialState = {
     loginResponse: {code: 0},
@@ -29,6 +19,7 @@ const initialState = {
 function rootReducer(state = initialState, action) {
     state = loginCutiReducer(state, action)
     state = dataDigitalReducer(state, action)
+    state = documentTypeReducer(state, action)
     return state;
 }
 

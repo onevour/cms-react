@@ -25,3 +25,25 @@ export const JENIS_CUTI = [
         label: "LUAR TANGGUNGAN NEGARA"
     }
 ]
+
+export const emptyContent = {
+    code: 0, result: {
+        values: [], element_total: 0,
+        page: 0,
+        page_total: 1,
+        empty: false,
+        first: true,
+        last: true
+    }
+}
+
+export const emptyCrud = {
+    code: 0, result: {
+        values: [], element_total: 0,
+        page: 0,
+        page_total: 1,
+        empty: false,
+        first: true,
+        last: true
+    }
+}

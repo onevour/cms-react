@@ -1,10 +1,10 @@
 import React, {Component, Fragment} from "react";
 import swal from 'sweetalert';
-import {cancelCuti, loadCutiUserLogin} from "../../redux/actions/reduxAction";
+import {cancelCuti} from "../../redux/actions/reduxActionCuti";
 import {connect} from "react-redux";
 import {cutiLabel, formatDate, formatDateTime, formatStatusCuti} from "../../application/AppCommons";
 import {Redirect} from "react-router-dom";
-import {BASE_URL} from "../../redux/constants/action-types";
+import {BASE_URL} from "../../redux/constants/reducActionTypes";
 
 class CutiDetail extends Component {
 

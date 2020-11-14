@@ -1,14 +1,11 @@
 import React, {Component, Fragment} from "react";
 import {Button, Modal} from 'react-bootstrap';
-import Datetime from 'react-datetime';
-import Select from "react-select";
 import swal from 'sweetalert';
 import "react-datetime/css/react-datetime.css";
-import {JENIS_CUTI} from "../../application/AppConstant";
-import {submitCuti, loadCutiUserLogin} from "../../redux/actions/reduxAction";
 import {connect} from "react-redux";
 import {clearInput, cutiLabel, disableBeforeDay, formatDate, formatStatusCuti} from "../../application/AppCommons";
 import {Redirect} from "react-router-dom";
+import {loadCutiUserLogin, requestCuti} from "../../redux/actions/reduxActionCuti";
 
 class CutiTablePejabat extends Component {
 
@@ -72,11 +69,11 @@ class CutiTablePejabat extends Component {
     }
 
     handleModalShowHide(body) {
-        this.setState({direct: true, directBody:body})
+        this.setState({direct: true, directBody: body})
         this.renderRedirect()
     }
 
-    renderRedirect(){
+    renderRedirect() {
         if (this.state.direct) {
             return <Redirect to={{
                 pathname: '/cuti_approval_pejabat_detail',
@@ -178,7 +175,7 @@ class CutiTablePejabat extends Component {
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.props.loadCutiUserLogin();
     }
 
@@ -238,7 +235,8 @@ class CutiTablePejabat extends Component {
                                         <tbody>
                                         {
                                             cutiUserResponse.result.map((o, i) =>
-                                                <tr className="clickable" key={i} onClick={() => this.handleModalShowHide(o)}>
+                                                <tr className="clickable" key={i}
+                                                    onClick={() => this.handleModalShowHide(o)}>
                                                     <td>{cutiLabel(o.jenis_cuti)}</td>
                                                     <td>{formatDate(o.start_date)}</td>
                                                     <td>{formatDate(o.finish_date)}</td>
@@ -284,4 +282,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, {submitCuti, loadCutiUserLogin})(CutiTablePejabat);
+export default connect(mapStateToProps, {submitCuti: requestCuti, loadCutiUserLogin})(CutiTablePejabat);

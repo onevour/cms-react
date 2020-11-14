@@ -2,8 +2,8 @@ import {call, put} from "redux-saga/effects";
 import {
     MASTER_DOCUMENT_RESPONSE,
     USER_DOCUMENT_RESPONSE
-} from "../constants/action-types";
-import {getData, postData} from "./reduxSaga";
+} from "../constants/reducActionTypes";
+import {getData, postData} from "../../application/ApiRequest";
 
 export function* masterDocument(action) {
     try {

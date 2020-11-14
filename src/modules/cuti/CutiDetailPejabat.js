@@ -1,10 +1,10 @@
 import React, {Component, Fragment} from "react";
 import swal from 'sweetalert';
-import {approvePejabatCuti, loadCutiUserLogin} from "../../redux/actions/reduxAction";
 import {connect} from "react-redux";
 import {cutiLabel, formatDate, formatDateTime, formatStatusCuti} from "../../application/AppCommons";
 import {Redirect} from "react-router-dom";
-import {BASE_URL} from "../../redux/constants/action-types";
+import {BASE_URL} from "../../redux/constants/reducActionTypes";
+import {approvePejabatCuti} from "../../redux/actions/reduxActionCuti";
 
 class CutiDetailPejabat extends Component {
 
@@ -107,7 +107,7 @@ class CutiDetailPejabat extends Component {
     }
 
     downloadCuti() {
-        const {user, cuti} = this.state
+        const {cuti} = this.state
         console.log(cuti)
         fetch(BASE_URL + '/api/v1/download/cuti/' + cuti.user.nip + '/' + cuti.id)
             .then(response => {
@@ -185,7 +185,7 @@ class CutiDetailPejabat extends Component {
 
 
     render() {
-        const {cuti, description} = this.state
+        const {cuti} = this.state
         return (
             <Fragment>
                 <div className="row d-flex justify-content-center">
@@ -267,4 +267,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {approvePejabatCuti})(CutiDetailPejabat);
-// export default CutiDetail;

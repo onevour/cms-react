@@ -1,6 +1,6 @@
 import {
     MASTER_DOCUMENT_RESPONSE, REMOVE_DOCUMENT_RESPONSE, UPLOAD_DOCUMENT_RESPONSE, USER_DOCUMENT_RESPONSE
-} from "../constants/action-types";
+} from "../constants/reducActionTypes";
 
 
 function dataDigitalReducer(state, action) {

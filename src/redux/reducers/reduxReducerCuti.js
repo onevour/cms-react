@@ -8,7 +8,7 @@ import {
     HOLIDAYS_SUBMIT_RESPONSE,
     HOLIDAYS_REMOVE_RESPONSE,
     CUTI_CANCEL_SUBMIT, CUTI_APPROVE_PEJABAT_SUBMIT, CUTI_APPROVE_ATASAN_SUBMIT, CUTI_DAYS_RESPONSE
-} from "../constants/action-types";
+} from "../constants/reducActionTypes";
 
 function loginCutiReducer(state, action) {
     // start from here

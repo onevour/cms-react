@@ -6,7 +6,7 @@ import swal from 'sweetalert';
 import "react-datetime/css/react-datetime.css";
 import moment from "moment-timezone";
 import {JENIS_CUTI} from "../../application/AppConstant";
-import {submitCuti, loadCutiUserLogin, calculateDays, loadHolidaysFuture} from "../../redux/actions/reduxAction";
+import {requestCuti, loadCutiUserLogin, calculateDays, loadHolidaysFuture} from "../../redux/actions/reduxActionCuti";
 import {connect} from "react-redux";
 import {clearInput, cutiLabel, disableBeforeDay, formatDate, formatStatusCuti} from "../../application/AppCommons";
 import {Redirect} from "react-router-dom";
@@ -15,7 +15,6 @@ class CutiForm extends Component {
 
     constructor(props) {
         super(props);
-        // moment.tz.setDefault("Asia/Jakarta");
         require("moment-business-days")
         this.state = {
             direct: false,
@@ -59,7 +58,6 @@ class CutiForm extends Component {
     }
 
     handleChangeCuti(event) {
-        console.log(event)
         this.setState({jenisCuti: event.value})
     }
 
@@ -183,12 +181,11 @@ class CutiForm extends Component {
             tlp_address: this.state.tlpAddress,
             cuti_address: this.state.cutiAddress,
         }
-        this.props.submitCuti(request);
+        this.props.requestCuti(request);
 
     }
 
     componentDidUpdate(props) {
-        // if(prevProps.value !== this.props.value){ alert(prevProps.value) }
         if (props.cutiResponse !== this.props.cutiResponse) {
             if (this.props.cutiResponse.code === 200) {
                 swal("Cuti", "Pengajuan cuti berhasil!", "success");
@@ -212,7 +209,6 @@ class CutiForm extends Component {
                 this.props.loadCutiUserLogin()
                 this.props.calculateDays({})
             } else {
-                console.log("update redux trigger error message", this.props.cutiResponse)
                 this.setState({errorServer: this.props.cutiResponse.message})
             }
         }
@@ -228,21 +224,9 @@ class CutiForm extends Component {
         this.props.calculateDays({})
     }
 
-    renderInput(props, openCalendar, closeCalendar) {
-        function clear() {
-            props.onChange({target: {value: ''}});
-        }
-
-        return (
-            <div>
-                <input {...props} />
-            </div>
-        );
-    }
-
     render() {
         const {cutiUserResponse, cutiDaysResponse, holidaysResponse} = this.props
-        const {startDate, startDateValue, jenisCuti, description, totalDays, tlpAddress, cutiAddress} = this.state
+        const {startDate, jenisCuti, description, tlpAddress, cutiAddress} = this.state
         return (
             <Fragment>
                 <div className="row">
@@ -424,4 +408,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, {submitCuti, loadCutiUserLogin, calculateDays, loadHolidaysFuture})(CutiForm);
+export default connect(mapStateToProps, {requestCuti, loadCutiUserLogin, calculateDays, loadHolidaysFuture})(CutiForm);

@@ -1,5 +1,5 @@
-import React, {Component, Fragment} from "react";
-import {formatDate, selectedTabClass} from "../../../application/AppCommons";
+import React, {Component} from "react";
+import {formatDate} from "../../../application/AppCommons";
 import EmployeePendidikan from "../datapribadi/EmployeePendidikan";
 import EmployeePNS from "./EmployeePNS";
 

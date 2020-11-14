@@ -1,10 +1,10 @@
-import React, {Component, Fragment} from "react";
+import React, {Component} from "react";
 import {formatDate, selectedTabClass} from "../../../application/AppCommons";
 import EmployeePendidikan from "./EmployeePendidikan";
 import EmployeeDataKeluargaV2 from "./EmployeeDataKeluargaV2";
-import {BASE_URL} from "../../../redux/constants/action-types";
+import {BASE_URL} from "../../../redux/constants/reducActionTypes";
 import EmployeeDataDigital from "./EmployeeDataDigital";
-import {Redirect} from "react-router-dom";
+// import {Redirect} from "react-router-dom";
 
 class EmployeeDataPribadi extends Component {
 
@@ -105,19 +105,19 @@ class EmployeeDataPribadi extends Component {
                                 <td>Telepon</td>
                                 <td>
                                     {user.contacts.map((o, i) =>
-                                        <>
+                                        <span key={i}>
                                             {o.type === 1 ? o.value : ""}
                                             {o.type === 1 && <br/>}
-                                        </>
+                                        </span>
                                     )}
                                 </td>
                                 <td>Email</td>
                                 <td>
                                     {user.contacts.map((o, i) =>
-                                        <>
+                                        <span key={i}>
                                             {o.type === 2 ? o.value : ""}
                                             {o.type === 2 && <br/>}
-                                        </>
+                                        </span>
                                     )}
                                 </td>
                             </tr>
@@ -136,7 +136,7 @@ class EmployeeDataPribadi extends Component {
                     <div className="col-md-12">
                         <ul className="nav nav-tabs">
                             {tabs.map((o, i) =>
-                                <li className="nav-item">
+                                <li key={i} className="nav-item">
                                     <a className={selectedTabClass(o)}
                                        onClick={(e) => {
                                            e.preventDefault();

@@ -12,7 +12,7 @@ class Purchase extends Component {
                    className="btn ml-auto download-button">Download Free Version</a>
                 <a href="https://www.bootstrapdash.com/product/star-admin-pro/" target="_blank"
                    className="btn purchase-button">Upgrade To Pro</a>
-                <i className="mdi mdi-close popup-dismiss"></i>
+                <i className="mdi mdi-close popup-dismiss"/>
               </span>
                 </div>
             </div>

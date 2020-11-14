@@ -1,9 +1,6 @@
 import React, {Component, Fragment} from "react";
-import Pagination from "../../plugins/Pagination";
-import moment from 'moment';
 import EmployeeDataPribadi from "./datapribadi/EmployeeDataPribadi";
 import EmployeeDataKepegawaian from "./kepegawaian/EmployeeDataKepegawaian";
-import EmployeeDataKeluarga from "./datapribadi/EmployeeDataKeluarga";
 import EmployeeDataRiwayat from "./riwayat/EmployeeDataRiwayat";
 
 class Employee extends Component {
@@ -16,7 +13,7 @@ class Employee extends Component {
     }
 
     render() {
-        const {user, familyTab, familyVal} = this.state
+        const {user} = this.state
         if (user === null) {
             return (<></>)
         }

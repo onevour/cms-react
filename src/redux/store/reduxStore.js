@@ -1,4 +1,4 @@
-import {applyMiddleware, createStore, compose, combineReducers} from "redux";
+import {applyMiddleware, createStore, compose} from "redux";
 import createSagaMiddleware from "redux-saga";
 import {forbiddenWordsMiddleware} from "../middleware/reduxMidleware";
 import apiSaga from "../sagas/reduxSaga";

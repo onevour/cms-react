@@ -20,11 +20,14 @@ import {
     CUTI_APPROVE_ATASAN_SUBMIT,
     CUTI_DAYS,
     CUTI_DAYS_RESPONSE,
-    HOLIDAYS_LOAD_FUTURE, MASTER_DOCUMENT, UPLOAD_DOCUMENT_RESPONSE, UPLOAD_DOCUMENT, USER_DOCUMENT, REMOVE_DOCUMENT
-} from "../constants/action-types";
+    HOLIDAYS_LOAD_FUTURE, MASTER_DOCUMENT, UPLOAD_DOCUMENT, USER_DOCUMENT, REMOVE_DOCUMENT, DOCUMENT_PAGE, DOCUMENT_CRUD
+} from "../constants/reducActionTypes";
+
 import {masterDocument, removeUserDocument, uploadUserDocument, userDocument} from "./reduxSagaDataDigital";
+import {getData, postData} from "../../application/ApiRequest";
+import {masterDocumentType} from "./reduxSagaDocumentType";
+
 export default function* watcherSaga() {
-    console.log("watcher saga")
     yield takeEvery("DATA_REQUESTED", workerSaga);
     yield takeEvery(LOGIN, workerSagaLogin);
     yield takeEvery(LOGOUT, workerSagaLogout);
@@ -43,6 +46,10 @@ export default function* watcherSaga() {
     yield takeEvery(UPLOAD_DOCUMENT, uploadUserDocument);
     yield takeEvery(USER_DOCUMENT, userDocument);
     yield takeEvery(REMOVE_DOCUMENT, removeUserDocument);
+
+    // document
+    yield takeEvery(DOCUMENT_PAGE, masterDocumentType);
+    yield takeEvery(DOCUMENT_CRUD, masterDocumentType);
 }
 
 function* workerSagaLogin(action) {
@@ -119,23 +126,4 @@ function* workerSaga(action) {
     } catch (e) {
         yield put({type: "API_ERRORED", payload: e});
     }
-}
-
-export function getData(payload) {
-    return fetch(payload.url).then(response =>
-        response.json()
-    );
-}
-
-export function postData(payload) {
-    // console.log(payload.url)
-    const requestOptions = {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(payload.body)
-    };
-    // console.log(requestOptions)
-    return fetch(payload.url, requestOptions).then(response =>
-        response.json()
-    );
 }

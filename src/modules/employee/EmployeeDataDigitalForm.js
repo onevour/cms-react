@@ -7,14 +7,10 @@ import {
     loadUserDocument,
     removeUserDocument
 } from "../../redux/actions/reduxActionDataDigital";
-import AddIcon from "@material-ui/icons/Add";
 import swal from "sweetalert";
-import {BASE_URL} from "../../redux/constants/action-types";
+import {BASE_URL} from "../../redux/constants/reducActionTypes";
 import {Button} from "react-bootstrap";
 import {Redirect} from "react-router-dom";
-import RemoveIcon from "mdi-react/RemoveIcon";
-import {Delete} from "@material-ui/icons";
-import DeleteIcon from "mdi-react/DeleteIcon";
 
 class EmployeeDataDigitalForm extends Component {
 
@@ -107,7 +103,6 @@ class EmployeeDataDigitalForm extends Component {
         }
         this.props.userUploadDocument(param)
     }
-
 
     documentExist(o) {
         if (null === o.path) {

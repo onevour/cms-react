@@ -1,10 +1,4 @@
-import React, {Component, Fragment} from "react";
-import Pagination from "../../../plugins/Pagination";
-import moment from 'moment';
-import EmployeeDataPribadi from "./EmployeeDataPribadi";
-import EmployeeDataKepegawaian from "../kepegawaian/EmployeeDataKepegawaian";
-import EmployeeDataKeluarga from "./EmployeeDataKeluarga";
-import EmployeeDataRiwayat from "../riwayat/EmployeeDataRiwayat";
+import React, {Component} from "react";
 
 class EmployeePendidikan extends Component {
 
@@ -33,7 +27,7 @@ class EmployeePendidikan extends Component {
                     </thead>
                     <tbody>
                     {user.educations.map((o, i) =>
-                        <tr>
+                        <tr key={i}>
                             <td>{i + 1}</td>
                             <td>{o.type}</td>
                             <td>{o.value}</td>

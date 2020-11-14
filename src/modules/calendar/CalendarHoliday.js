@@ -1,15 +1,11 @@
 import React, {Component, Fragment} from "react";
 import {Button, Modal} from 'react-bootstrap';
-import ReactDOM from 'react-dom';
 import Datetime from 'react-datetime';
-import Select from "react-select";
 import swal from 'sweetalert';
 import "react-datetime/css/react-datetime.css";
-import {JENIS_CUTI} from "../../application/AppConstant";
-import {submitDateHoliday, removeDateHoliday, loadHolidays} from "../../redux/actions/reduxAction";
 import {connect} from "react-redux";
 import {clearInput, cutiLabel, disableBeforeDay, formatDate, formatStatusCuti} from "../../application/AppCommons";
-import AddIcon from "@material-ui/icons/Add";
+import {loadHolidays, removeDateHoliday, submitDateHoliday} from "../../redux/actions/reduxActionCuti";
 
 class CalendarHoliday extends Component {
 

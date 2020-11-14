@@ -1,5 +1,4 @@
-import React, {Component, Fragment} from "react";
-import Pagination from "../../plugins/Pagination";
+import React, {Component} from "react";
 import AddIcon from '@material-ui/icons/Add';
 
 class SampleTable extends Component {
@@ -21,6 +20,7 @@ class SampleTable extends Component {
 
     render() {
         const {currentPage} = this.state;
+
         return (
             <div className="row">
                 <div className="col-lg-12 grid-margin stretch-card">
@@ -190,7 +190,7 @@ class SampleTable extends Component {
                                     </tbody>
                                 </table>
                             </div>
-                            <Pagination/>
+
                         </div>
                     </div>
                 </div>

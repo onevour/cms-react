@@ -1,11 +1,10 @@
-import React, {Component, useState} from 'react';
+import React, {Component} from 'react';
 import ReactDOM from 'react-dom'
-import {AccessAlarm, Menu} from '@material-ui/icons';
-import {Redirect, useHistory} from "react-router-dom";
+import {Menu} from '@material-ui/icons';
+import {Redirect} from "react-router-dom";
 
-import {withRouter} from 'react-router-dom'
 import {connect} from "react-redux";
-import {login, logout} from "../redux/actions/reduxAction";
+import {logout} from "../redux/actions/reduxAction";
 
 class AppHeader extends Component {
 
@@ -80,7 +79,6 @@ class AppHeader extends Component {
     render() {
         const {loginResponse} = this.props
         const {isLogin, user, menuUserClass, menuUserDropdownClass} = this.state
-        console.log("login redux : ", loginResponse)
         if (loginResponse && loginResponse.code && loginResponse.code === 401) {
             return (
                 <Redirect to='/'/>

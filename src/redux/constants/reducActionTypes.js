@@ -1,5 +1,8 @@
-export const BASE_URL = "http://5.181.217.229:8081";
-// export const BASE_URL = "http://localhost:8081";
+// export const BASE_URL = "http://5.181.217.229:8081";
+export const BASE_URL = "http://localhost:8081/api/v1";
+
+export const POST = 'POST'
+export const GET = 'GET'
 
 // request
 export const ADD_ARTICLE = "ADD_ARTICLE";
@@ -32,8 +35,17 @@ export const MASTER_DOCUMENT = "MASTER_DOCUMENT";
 export const UPLOAD_DOCUMENT = "UPLOAD_DOCUMENT";
 export const USER_DOCUMENT = "USER_DOCUMENT";
 export const REMOVE_DOCUMENT = "REMOVE_DOCUMENT";
+
 // response master doc
 export const MASTER_DOCUMENT_RESPONSE = "MASTER_DOCUMENT_RESPONSE";
 export const UPLOAD_DOCUMENT_RESPONSE = "UPLOAD_DOCUMENT_RESPONSE";
 export const USER_DOCUMENT_RESPONSE = "USER_DOCUMENT_RESPONSE";
 export const REMOVE_DOCUMENT_RESPONSE = "REMOVE_DOCUMENT_RESPONSE";
+
+// master doc
+// request master doc
+export const DOCUMENT_PAGE = "DOCUMENT_PAGE";
+export const DOCUMENT_CRUD = "DOCUMENT_CRUD";
+
+export const DOCUMENT_PAGE_RESPONSE = "DOCUMENT_PAGE_RESPONSE";
+export const DOCUMENT_CRUD_RESPONSE = "DOCUMENT_CRUD_RESPONSE";
