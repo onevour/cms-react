@@ -1,12 +1,15 @@
 import React, {Component, Fragment} from "react";
 import {Button, Modal} from 'react-bootstrap'
 import "react-datetime/css/react-datetime.css";
+import {Redirect} from "react-router-dom";
 
-class PromosiDokumenForm extends Component {
+class KenaikanPangkatDokumenForm extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            back: false,
+            pangkat: JSON.parse(this.props.location.state.body),
             showHide: false,
             startDate: new Date().toISOString(),
             documents: [
@@ -17,6 +20,7 @@ class PromosiDokumenForm extends Component {
                 {id: 5, name: "Sertitikat III", path: "download"}
             ]
         }
+        this.cancel = this.cancel.bind(this)
         this.handleChange = this.handleChange.bind(this)
         this.componentDidUpdate = this.componentDidUpdate.bind(this)
         this.handleModalShowHide = this.handleModalShowHide.bind(this)
@@ -26,8 +30,8 @@ class PromosiDokumenForm extends Component {
         if (this.props.location.state === undefined) {
             return true
         }
-        const param = JSON.parse(this.props.location.state.body)
-        console.log("body", param.username);
+        // const param = JSON.parse(this.props.location.state.body)
+        // console.log("body", param);
     }
 
     handleModalShowHide() {
@@ -45,21 +49,35 @@ class PromosiDokumenForm extends Component {
 
     }
 
+    cancel() {
+        this.setState({back: true})
+    }
+
+    renderRedirect() {
+        if (this.state.back) {
+            return <Redirect to={{
+                pathname: '/kenaikan_pangkat'
+            }}/>
+        }
+    }
+
     renderTableData() {
-        return this.state.documents.map((document, index) => {
-            const {id, name, path} = document //destructuring
+        return this.state.pangkat.pangkat_golongan.document_pangkat.map((o, i) => {
+
             return (
-                <tr key={id}>
-                    <td>{id}</td>
-                    <td>{name}</td>
+                <tr key={i}>
+                    <td>{i + 1}</td>
+                    <td>{o.label}</td>
                     <td><input type="file"/></td>
-                    <td><label className="badge badge-success">Completed</label></td>
+                    <td><a className="mr-3" href="#">Download</a><a href="#">Preview</a></td>
                 </tr>
             )
         })
     }
 
     render() {
+        const {pangkat} = this.state
+        console.log(pangkat)
         return (
             <Fragment>
                 <div className="row">
@@ -93,24 +111,12 @@ class PromosiDokumenForm extends Component {
                                         </tbody>
                                     </table>
                                 </div>
+                                <button className="btn mt-3" onClick={this.cancel}>Tutup</button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <Modal show={this.state.showHide}>
-                    <Modal.Header closeButton onClick={() => this.handleModalShowHide()}>
-                        <Modal.Title>Modal heading</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={() => this.handleModalShowHide()}>
-                            Close
-                        </Button>
-                        <Button variant="primary" onClick={() => this.handleModalShowHide()}>
-                            Save Changes
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
+                {this.renderRedirect()}
             </Fragment>
         );
     }
@@ -130,4 +136,4 @@ class PromosiDokumenForm extends Component {
 //         </Button>
 //     </Modal.Footer>
 // </Modal>
-export default PromosiDokumenForm;
+export default KenaikanPangkatDokumenForm;

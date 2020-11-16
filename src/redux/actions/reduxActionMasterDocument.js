@@ -1,10 +1,23 @@
 import {
-    DOCUMENT_CRUD, DOCUMENT_CRUD_RESPONSE,
+    DOCUMENT_CRUD, DOCUMENT_CRUD_RESPONSE, DOCUMENT_LIST, DOCUMENT_LIST_RESPONSE,
     DOCUMENT_PAGE,
-    DOCUMENT_PAGE_RESPONSE,
+    DOCUMENT_PAGE_RESPONSE, GET,
     MASTER_DOCUMENT,
     POST
 } from "../constants/reducActionTypes";
+
+export function listDocument() {
+    const payload = {
+        url: "/document/type/all"
+    }
+    return {
+        type: DOCUMENT_LIST,
+        payload: payload,
+        method: GET,
+        response: DOCUMENT_LIST_RESPONSE,
+        responseBody: {code: 0, result: []}
+    }
+}
 
 export function pageDocument(param) {
     const payload = {

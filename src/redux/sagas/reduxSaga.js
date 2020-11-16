@@ -20,7 +20,14 @@ import {
     CUTI_APPROVE_ATASAN_SUBMIT,
     CUTI_DAYS,
     CUTI_DAYS_RESPONSE,
-    HOLIDAYS_LOAD_FUTURE, MASTER_DOCUMENT, UPLOAD_DOCUMENT, USER_DOCUMENT, REMOVE_DOCUMENT, DOCUMENT_PAGE, DOCUMENT_CRUD
+    HOLIDAYS_LOAD_FUTURE,
+    MASTER_DOCUMENT,
+    UPLOAD_DOCUMENT,
+    USER_DOCUMENT,
+    REMOVE_DOCUMENT,
+    DOCUMENT_PAGE,
+    DOCUMENT_CRUD,
+    PANGKAT_PAGE, DOCUMENT_LIST, PANGKAT_DOCUMENT_CRUD, USER_PAGE, USER_LIST, USER_HISTORY_PANGKAT_LIST
 } from "../constants/reducActionTypes";
 
 import {masterDocument, removeUserDocument, uploadUserDocument, userDocument} from "./reduxSagaDataDigital";
@@ -48,8 +55,16 @@ export default function* watcherSaga() {
     yield takeEvery(REMOVE_DOCUMENT, removeUserDocument);
 
     // document
+    yield takeEvery(DOCUMENT_LIST, masterDocumentType);
     yield takeEvery(DOCUMENT_PAGE, masterDocumentType);
     yield takeEvery(DOCUMENT_CRUD, masterDocumentType);
+
+    // pangkat
+    yield takeEvery(PANGKAT_PAGE, masterDocumentType);
+    yield takeEvery(PANGKAT_DOCUMENT_CRUD, masterDocumentType);
+    yield takeEvery(USER_PAGE, masterDocumentType);
+    yield takeEvery(USER_LIST, masterDocumentType);
+    yield takeEvery(USER_HISTORY_PANGKAT_LIST, masterDocumentType);
 }
 
 function* workerSagaLogin(action) {

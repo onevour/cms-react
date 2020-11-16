@@ -52,9 +52,7 @@ class CutiForm extends Component {
         this.handleChangeDescription = this.handleChangeDescription.bind(this)
         this.handleChangeTelepon = this.handleChangeTelepon.bind(this)
         this.handleChangeAddress = this.handleChangeAddress.bind(this)
-        this.renderInput = this.renderInput.bind(this)
         this.submitFormCuti = this.submitFormCuti.bind(this)
-        // load cuti
     }
 
     handleChangeCuti(event) {

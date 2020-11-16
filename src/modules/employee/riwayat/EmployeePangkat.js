@@ -29,8 +29,8 @@ class EmployeePangkat extends Component {
                         <tr key={i}>
                             <td>{i + 1}</td>
                             <td>{formatDate(o.tmt)}</td>
-                            <td>{o.gol}</td>
-                            <td>{o.pangkat}</td>
+                            <td>{o.pangkat_golongan.golongan}</td>
+                            <td>{o.pangkat_golongan.nama}</td>
                         </tr>
                     )}
                     </tbody>

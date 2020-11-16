@@ -27,9 +27,9 @@ class NavItem extends Component {
                             id: 3,
                             root_id: 1,
                             type: 3,
-                            name: "Profile",
+                            name: "Pangkat",
                             icon: "menu-icon mdi mdi-account-card-details",
-                            path: "/employee"
+                            path: "/pangkat"
                         },
                         {id: 300, root_id: 1, type: 3, name: "Cuti", icon: "menu-icon mdi mdi-file-image", path: "/cuti"}
                     ]
@@ -37,7 +37,7 @@ class NavItem extends Component {
                 {
                     id: 12,
                     type: 2,
-                    name: "Master",
+                    name: "Menu Admin",
                     expand: false,
                     selected: false,
                     items: [
@@ -45,9 +45,9 @@ class NavItem extends Component {
                             id: 13,
                             root_id: 12,
                             type: 3,
-                            name: "Document",
+                            name: "Kenaikan Pegawai",
                             icon: "menu-icon mdi mdi-account-card-details",
-                            path: "/document"
+                            path: "/pangkat/kenaikan/pegawai"
                         },
                         {
                             id: 14,

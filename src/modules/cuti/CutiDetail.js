@@ -238,4 +238,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {cancelCuti})(CutiDetail);
-// export default CutiDetail;
