@@ -21,7 +21,7 @@ class EmployeeMutasi extends Component {
                         <th>No.</th>
                         <th>Tahun</th>
                         <th>TMT</th>
-                        <th>Pangkat</th>
+                        <th>Instansi</th>
                     </tr>
                     </thead>
                     <tbody>

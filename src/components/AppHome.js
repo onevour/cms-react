@@ -24,6 +24,8 @@ import PangkatDokumenForm from "../modules/pangkat/PangkatDokumen";
 import PangkatDokumen from "../modules/pangkat/PangkatDokumen";
 import PangkatKenaikanPegawai from "../modules/pangkat/PangkatKenaikanPegawai";
 import PangkatKenaikanPegawaiForm from "../modules/pangkat/PangkatKenaikanPegawaiForm";
+import MasterJabatan from "../modules/jabatan/MasterJabatan";
+import MasterJabatanMap from "../modules/jabatan/MasterJabatanMap";
 
 class AppHome extends Component {
 
@@ -61,6 +63,8 @@ class AppHome extends Component {
                                    render={(props) => <PangkatKenaikanPegawaiForm {...props}/>} exact/>
                             <Route path="/proyeksi_gaji" component={ProyeksiGaji} exact/>
                             <Route path="/calendar" component={CalendarHoliday} exact/>
+                            <Route path="/jabatan" component={MasterJabatan} exact/>
+                            <Route path="/jabatan/map" component={MasterJabatanMap} exact/>
                         </div>
                         <AppFooter/>
                     </div>

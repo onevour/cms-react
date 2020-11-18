@@ -11,6 +11,7 @@ import {connect} from "react-redux";
 import {listDocument} from "../../redux/actions/reduxActionMasterDocument";
 import {mergePangkatDocument} from "../../redux/actions/reduxActionMasterPangkat";
 import {listUserHistoryPangkat} from "../../redux/actions/reduxActionUser";
+import {formatDate} from "../../application/AppCommons";
 
 class KenaikanPangkatForm extends Component {
 
@@ -64,7 +65,67 @@ class KenaikanPangkatForm extends Component {
     }
 
     componentDidUpdate() {
+
     }
+
+    renderTableKenaikanPangkat(pangkats) {
+        // get onlu tmt null
+        console.log(pangkats)
+        let pangkatNullTmt = []
+        for (let i = 0; i < pangkats.result.length; i++) {
+            let tmt = pangkats.result[i]
+            console.log(tmt)
+            if (!(tmt.tmt)) {
+                pangkatNullTmt.push(tmt);
+                break
+            }
+        }
+        return (
+            <>
+                {
+                    pangkatNullTmt.map((o, i) =>
+                        <tr className="clickable" key={i} onClick={() => {
+                            this.showDocument(o)
+                        }}>
+                            <td>{i + 1}</td>
+                            <td>{o.pangkat_golongan.nama}</td>
+                            <td>{o.pangkat_golongan.golongan}</td>
+                        </tr>
+                    )
+                }
+            </>
+        )
+    }
+
+    renderTableKenaikanPangkatHis(pangkats) {
+        // get onlu tmt null
+        console.log(pangkats)
+        let pangkatNullTmt = []
+        for (let i = 0; i < pangkats.result.length; i++) {
+            let tmt = pangkats.result[i]
+            console.log(tmt)
+            if (tmt.tmt) {
+                pangkatNullTmt.push(tmt);
+            }
+        }
+        return (
+            <>
+                {
+                    pangkatNullTmt.map((o, i) =>
+                        <tr className="clickable" key={i} onClick={() => {
+                            this.showDocument(o)
+                        }}>
+                            <td>{i + 1}</td>
+                            <td>{formatDate(o.tmt)}</td>
+                            <td>{o.pangkat_golongan.nama}</td>
+                            <td>{o.pangkat_golongan.golongan}</td>
+                        </tr>
+                    )
+                }
+            </>
+        )
+    }
+
 
     render() {
         const {pangkats} = this.props
@@ -76,7 +137,7 @@ class KenaikanPangkatForm extends Component {
                             <div className="card-body">
                                 <h4 className="card-title">Kenaikan Pangkat</h4>
                                 <p className="card-description">
-                                    History Kenaikan Pangkat
+                                    Kenaikan Pangkat Anda
                                 </p>
                                 <div className="table-responsive">
                                     <table className="table table-hover">
@@ -94,17 +155,42 @@ class KenaikanPangkatForm extends Component {
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {
-                                            pangkats.result.map((o, i) =>
-                                                <tr className="clickable" key={i} onClick={() => {
-                                                    this.showDocument(o)
-                                                }}>
-                                                    <td>{i + 1}</td>
-                                                    <td>{o.pangkat_golongan.nama}</td>
-                                                    <td>{o.pangkat_golongan.golongan}</td>
-                                                </tr>
-                                            )
-                                        }
+                                        {this.renderTableKenaikanPangkat(pangkats)}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-12 grid-margin">
+                        <div className="card mb-3">
+                            <div className="card-body">
+                                <h4 className="card-title">Kenaikan Pangkat</h4>
+                                <p className="card-description">
+                                    History Kenaikan Pangkat
+                                </p>
+                                <div className="table-responsive">
+                                    <table className="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>
+                                                No.
+                                            </th>
+                                            <th>
+                                                TMT
+                                            </th>
+                                            <th>
+                                                Pangkat
+                                            </th>
+                                            <th>
+                                                Golongan
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {this.renderTableKenaikanPangkatHis(pangkats)}
                                         </tbody>
                                     </table>
                                 </div>
@@ -118,15 +204,6 @@ class KenaikanPangkatForm extends Component {
         );
     }
 }
-
-// <tr onClick={this.handleModalShowHide}>
-//     <td>2020</td>
-//     <td>Kenaikan Jabatan</td>
-//     <td>10 Dokumen</td>
-//     <td>
-//         <label className="badge badge-danger">Pending</label>
-//     </td>
-// </tr>
 
 function mapStateToProps(state) {
     return {

@@ -1,76 +1,165 @@
 import React, {Component, Fragment} from "react";
 import {Button, Modal} from 'react-bootstrap'
 import "react-datetime/css/react-datetime.css";
+import {connect} from "react-redux";
+import {loadUserDocument, userUploadDocument} from "../../redux/actions/reduxActionDataDigital";
+import {BASE_URL, USER_HISTORY_PANGKAT_LIST_RESPONSE} from "../../redux/constants/reducActionTypes";
+import {emptyContentList} from "../../application/AppConstant";
+import {listUserHistoryPangkat} from "../../redux/actions/reduxActionUser";
+import {getFileExtension} from "../../application/AppCommons";
 
 class Pensiun extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            showHide: false,
-            startDate: new Date().toISOString()
+            user: JSON.parse(localStorage.getItem('user'))
         }
-        this.handleChange = this.handleChange.bind(this)
-        this.componentDidUpdate = this.componentDidUpdate.bind(this)
-        this.handleModalShowHide = this.handleModalShowHide.bind(this)
     }
 
-    handleModalShowHide() {
-        this.setState({showHide: !this.state.showHide})
+    componentDidMount(props) {
+        this.props.loadUserDocument()
+        this.props.listUserHistoryPangkat()
     }
 
-    handleChange(value, formattedValue) {
-        this.setState({
-            value: value, // ISO String, ex: "2016-11-19T12:00:00.000Z"
-            formattedValue: formattedValue // Formatted String, ex: "11/19/2016"
-        });
+    componentDidUpdate(props) {
+        if (props.uploadDocument !== this.props.uploadDocument) {
+            this.props.loadUserDocument()
+            this.props.listUserHistoryPangkat()
+        }
     }
 
-    componentDidUpdate() {
-        // Access ISO String and formatted values from the DOM.
-        // var hiddenInputElement = document.getElementById("example-datepicker");
-        // console.log(hiddenInputElement.value); // ISO String, ex: "2016-11-19T12:00:00.000Z"
-        // console.log(hiddenInputElement.getAttribute('data-formattedvalue')) // Formatted String, ex: "11/19/2016"
+    pensiunDocument() {
+        const {pangkats} = this.props
+        for (let i = 0; i < pangkats.result.length; i++) {
+            const o = pangkats.result[i]
+            // hardcode id
+
+            if ((o.pangkat_golongan) && 18 === o.pangkat_golongan.id) {
+                // console.log(o)
+                if (o.pangkat_golongan) {
+                    console.log(o.pangkat_golongan)
+                    return o.pangkat_golongan.document_pangkat
+                } else return []
+            }
+        }
+        return []
+    }
+
+    handleChangeFile(file, o) {
+        new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file)
+            fileReader.onload = () => {
+                const param = {
+                    type: o.value,
+                    ext: getFileExtension(file.name),
+                    file: fileReader.result
+                }
+                if ('' === param.ext) {
+                    return true
+                }
+                this.props.userUploadDocument(param)
+            }
+            fileReader.onerror = (error) => {
+                this.setState({ext: '', file: ''})
+                // reject(error);
+            }
+        })
+    }
+
+    renderDownloadView(o, userDocument) {
+        if (userDocument) {
+            // console.log(o)
+            let value = null
+            for (let i = 0; i < userDocument.length; i++) {
+                let tmp = userDocument[i]
+                // console.log(tmp)
+                if (tmp.document.value === o.value) {
+                    value = tmp
+                    break
+                }
+            }
+            if (value && value.path) {
+                return (
+                    <a href="#" style={{marginTop: -10}}
+                       onClick={() => {
+                           const {user} = this.state
+                           fetch(BASE_URL + '/user/download/digital/' + user.nip + '/' + value.id)
+                               .then(response => {
+                                   if (response.ok) {
+                                       response.blob().then(blob => {
+                                           let url = window.URL.createObjectURL(blob);
+                                           let a = document.createElement('a');
+                                           a.href = url;
+                                           a.download = user.nip + '-' + value.document.label + '.' + getFileExtension(value.path);
+                                           a.click();
+                                       });
+                                   }
+                               }).catch(function (err) {
+                           });
+                       }}>download</a>
+                )
+            }
+        }
+
+    }
+
+    renderTableData(documents, userDocument) {
+        return documents.map((o, i) => {
+
+            return (
+                <tr key={i}>
+                    <td>{i + 1}</td>
+                    <td>{o.label}</td>
+                    <td><input type="file" onChange={(e) => {
+                        const file = e.target.files[0]
+                        if (file) {
+                            this.handleChangeFile(file, o)
+                        }
+                    }}/></td>
+                    <td>{this.renderDownloadView(o, userDocument)}</td>
+                </tr>
+            )
+        })
+
     }
 
     render() {
+        const documents = this.pensiunDocument()
+        const {userDocument} = this.props
         return (
             <Fragment>
                 <div className="row">
                     <div className="col-md-12 grid-margin">
                         <div className="card mb-3">
                             <div className="card-body">
-                                <h4 className="card-title">Pensiun</h4>
+                                <h4 className="card-title">Dokumen Pensiun</h4>
                                 <p className="card-description">
-                                    Pensiun pegawai
+                                    Dokumen pensiun pegawai
                                 </p>
                                 <div className="table-responsive">
                                     <table className="table table-hover">
                                         <thead>
                                         <tr>
                                             <th>
-                                                Tahun
+                                                No
                                             </th>
                                             <th>
-                                                Nama
+                                                Dokumen
                                             </th>
                                             <th>
-                                                NIP
+                                                File
                                             </th>
                                             <th>
-                                                Status
+                                                Opsi
                                             </th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr onClick={() => this.handleModalShowHide()}>
-                                            <td>Nama</td>
-                                            <td>john doe</td>
-                                            <td>11111111</td>
-                                            <td>
-                                                <label className="badge badge-success">Completed</label>
-                                            </td>
-                                        </tr>
+                                        {
+                                            this.renderTableData(documents, userDocument.result)
+                                        }
                                         </tbody>
                                     </table>
                                 </div>
@@ -78,37 +167,19 @@ class Pensiun extends Component {
                         </div>
                     </div>
                 </div>
-                <Modal show={this.state.showHide}>
-                    <Modal.Header closeButton onClick={() => this.handleModalShowHide()}>
-                        <Modal.Title>Modal heading</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={() => this.handleModalShowHide()}>
-                            Close
-                        </Button>
-                        <Button variant="primary" onClick={() => this.handleModalShowHide()}>
-                            Save Changes
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
             </Fragment>
-        );
+        )
     }
 }
 
-// <Modal show={this.state.show} onHide={handleClose}>
-//     <Modal.Header closeButton>
-//         <Modal.Title>Modal heading</Modal.Title>
-//     </Modal.Header>
-//     <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-//     <Modal.Footer>
-//         <Button variant="secondary" onClick={handleClose}>
-//             Close
-//         </Button>
-//         <Button variant="primary" onClick={handleClose}>
-//             Save Changes
-//         </Button>
-//     </Modal.Footer>
-// </Modal>
-export default Pensiun;
+function mapStateToProps(state) {
+    return {
+        pangkats: (state[USER_HISTORY_PANGKAT_LIST_RESPONSE] ? state[USER_HISTORY_PANGKAT_LIST_RESPONSE] : emptyContentList),
+        uploads: state.uploadDocument,
+        userDocument: state.userDocument
+    }
+}
+
+export default connect(
+    mapStateToProps, {userUploadDocument, listUserHistoryPangkat, loadUserDocument}
+)(Pensiun)

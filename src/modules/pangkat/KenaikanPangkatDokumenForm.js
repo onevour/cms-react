@@ -19,7 +19,7 @@ class KenaikanPangkatDokumenForm extends Component {
         super(props);
         this.state = {
             back: false,
-            user : JSON.parse(localStorage.getItem('user')),
+            user: JSON.parse(localStorage.getItem('user')),
             pangkat: JSON.parse(this.props.location.state.body)
         }
         this.cancel = this.cancel.bind(this)
@@ -149,9 +149,9 @@ class KenaikanPangkatDokumenForm extends Component {
         })
     }
 
+
     render() {
         const {userDocument} = this.props
-        const {pangkat} = this.state
         console.log(userDocument)
         return (
             <Fragment>

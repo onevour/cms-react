@@ -31,7 +31,14 @@ class NavItem extends Component {
                             icon: "menu-icon mdi mdi-account-card-details",
                             path: "/pangkat"
                         },
-                        {id: 300, root_id: 1, type: 3, name: "Cuti", icon: "menu-icon mdi mdi-file-image", path: "/cuti"}
+                        {
+                            id: 113,
+                            root_id: 1,
+                            type: 3,
+                            name: "Jabatan",
+                            icon: "menu-icon mdi mdi-account-card-details",
+                            path: "/jabatan"
+                        }
                     ]
                 },
                 {
@@ -85,6 +92,7 @@ class NavItem extends Component {
                 },
                 {id: 10, type: 1, name: "Pensiun", icon: "menu-icon mdi mdi-account-switch", path: "/pensiun"},
                 {id: 11, type: 1, name: "Calendar", icon: "menu-icon mdi mdi-calendar", path: "/calendar"},
+                {id: 13, type: 1, name: "Calendar", icon: "menu-icon mdi mdi-calendar", path: "/jabatan/map"},
 
             ]
         }

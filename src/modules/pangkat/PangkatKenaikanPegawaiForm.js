@@ -166,6 +166,17 @@ class PangkatKenaikanPegawaiForm extends Component {
                 modalUserSelected: [],
             })
         }
+
+        let pangkat = this.state.pangkat
+        // pangkat.tmt = this.state.tmtDate.format()
+        pangkat.sumber_data = 'TEMAN_DAWAI'
+        const param = {
+            pangkat: pangkat,
+            users: newUsers
+        }
+        this.props.addPangkat(param)
+        console.log(param)
+        /*
         if (this.state.tmtDate) {
             let pangkat = this.state.pangkat
             pangkat.tmt = this.state.tmtDate.format()
@@ -179,6 +190,7 @@ class PangkatKenaikanPegawaiForm extends Component {
         } else {
             this.setState({errorTMT: 'pilih tanggal tmt'})
         }
+         */
 
         // push to server, reset default
 

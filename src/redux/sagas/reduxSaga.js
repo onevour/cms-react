@@ -33,7 +33,7 @@ import {
     USER_PAGE,
     USER_LIST,
     USER_HISTORY_PANGKAT_LIST,
-    USER_HISTORY_PANGKAT_CRUD
+    USER_HISTORY_PANGKAT_CRUD, JABATAN_LIST, JABATAN_PAGE, JABATAN_CRUD
 } from "../constants/reducActionTypes";
 
 import {masterDocument, removeUserDocument, uploadUserDocument, userDocument} from "./reduxSagaDataDigital";
@@ -64,6 +64,11 @@ export default function* watcherSaga() {
     yield takeEvery(DOCUMENT_LIST, masterDocumentType);
     yield takeEvery(DOCUMENT_PAGE, masterDocumentType);
     yield takeEvery(DOCUMENT_CRUD, masterDocumentType);
+
+    // jabatan
+    yield takeEvery(JABATAN_LIST, masterDocumentType);
+    yield takeEvery(JABATAN_PAGE, masterDocumentType);
+    yield takeEvery(JABATAN_CRUD, masterDocumentType);
 
     // pangkat
     yield takeEvery(PANGKAT_PAGE, masterDocumentType);

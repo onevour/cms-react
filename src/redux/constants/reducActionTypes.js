@@ -1,5 +1,5 @@
-export const BASE_URL = "http://5.181.217.229:8081/api/v1";
-// export const BASE_URL = "http://localhost:8081/api/v1";
+// export const BASE_URL = "http://5.181.217.229:8081/api/v1";
+export const BASE_URL = "http://localhost:8081/api/v1";
 
 export const POST = 'POST'
 export const GET = 'GET'
@@ -43,6 +43,7 @@ export const USER_DOCUMENT_RESPONSE = "USER_DOCUMENT_RESPONSE";
 export const REMOVE_DOCUMENT_RESPONSE = "REMOVE_DOCUMENT_RESPONSE";
 
 // master doc
+
 // request master doc
 export const DOCUMENT_LIST = "DOCUMENT_LIST";
 export const DOCUMENT_PAGE = "DOCUMENT_PAGE";
@@ -51,6 +52,15 @@ export const DOCUMENT_CRUD = "DOCUMENT_CRUD";
 export const DOCUMENT_LIST_RESPONSE = "DOCUMENT_LIST_RESPONSE";
 export const DOCUMENT_PAGE_RESPONSE = "DOCUMENT_PAGE_RESPONSE";
 export const DOCUMENT_CRUD_RESPONSE = "DOCUMENT_CRUD_RESPONSE";
+
+// request master doc
+export const JABATAN_LIST = "JABATAN_LIST";
+export const JABATAN_PAGE = "JABATAN_PAGE";
+export const JABATAN_CRUD = "JABATAN_CRUD";
+
+export const JABATAN_LIST_RESPONSE = "JABATAN_LIST_RESPONSE";
+export const JABATAN_PAGE_RESPONSE = "JABATAN_PAGE_RESPONSE";
+export const JABATAN_CRUD_RESPONSE = "JABATAN_CRUD_RESPONSE";
 
 // request master doc
 export const PANGKAT_PAGE = "PANGKAT_PAGE";

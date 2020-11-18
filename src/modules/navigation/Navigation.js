@@ -10,11 +10,11 @@ class Navigation extends Component {
             user: JSON.parse(localStorage.getItem('user'))
         }
     }
-
+    //style={{position: 'fixed'}}
     render() {
         const {user} = this.state
         return (
-            <ul className="nav" style={{position: 'fixed'}}>
+            <ul className="nav">
                 <li className="nav-item nav-profile">
                     <div className="nav-link">
                         <div className="user-wrapper">
