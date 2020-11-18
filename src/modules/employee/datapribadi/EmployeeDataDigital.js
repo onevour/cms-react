@@ -32,7 +32,7 @@ class EmployeeDataDigital extends Component {
             <a href="#" style={{marginTop: -10}}
                onClick={() => {
                    const {user} = this.state
-                   fetch(BASE_URL + '/api/v1/user/download/digital/' + user.nip + '/' + o.id)
+                   fetch(BASE_URL + '/user/download/digital/' + user.nip + '/' + o.id)
                        .then(response => {
                            if (response.ok) {
                                response.blob().then(blob => {
