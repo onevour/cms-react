@@ -4,6 +4,7 @@ import "react-datetime/css/react-datetime.css";
 import {Redirect} from "react-router-dom";
 import swal from "sweetalert";
 import {
+    USER_HISTORY_PANGKAT_CRUD_RESPONSE,
     USER_LIST_RESPONSE,
     USER_PAGE_RESPONSE
 } from "../../redux/constants/reducActionTypes";
@@ -11,8 +12,11 @@ import {emptyContentList, emptyContentPage, emptyCrud} from "../../application/A
 import {connect} from "react-redux";
 import {listDocument} from "../../redux/actions/reduxActionMasterDocument";
 import {mergePangkatDocument} from "../../redux/actions/reduxActionMasterPangkat";
-import {listUserGolongan, pageUser} from "../../redux/actions/reduxActionUser";
-import {formatDate} from "../../application/AppCommons";
+import {addPangkat, listUserGolongan, pageUser, removePangkat} from "../../redux/actions/reduxActionUser";
+import {disableBeforeDay, formatDate} from "../../application/AppCommons";
+import Button from "react-bootstrap/Button";
+import moment from "moment-timezone";
+import Datetime from "react-datetime";
 
 class PangkatKenaikanPegawaiForm extends Component {
 
@@ -22,8 +26,13 @@ class PangkatKenaikanPegawaiForm extends Component {
             back: false,
             modalShow: false,
             pangkat: JSON.parse(this.props.location.state.body),
+            errorTMT: '',
             documents: [],
-            users: []
+            users: [],
+            // modal state
+            modalState: 0,
+            tmtDate: null,
+            modalUserSelected: [],
         }
         this.showListPegawai = this.showListPegawai.bind(this)
         this.cancel = this.cancel.bind(this)
@@ -31,6 +40,9 @@ class PangkatKenaikanPegawaiForm extends Component {
         this.modalClose = this.modalClose.bind(this)
         this.filterUser = this.filterUser.bind(this)
         this.submitForm = this.submitForm.bind(this)
+        // modal
+        this.modalNext = this.modalNext.bind(this)
+        this.selectTMT = this.selectTMT.bind(this)
     }
 
     componentDidMount(props) {
@@ -58,6 +70,20 @@ class PangkatKenaikanPegawaiForm extends Component {
                 this.setState({back: true})
             });
         }
+        if (props.usersCrud !== this.props.usersCrud) {
+            this.setState({
+                back: false,
+                modalShow: false,
+                users: [],
+                // modal state
+                modalState: 0,
+                tmt: null,
+                errorTMT: '',
+                modalUserSelected: []
+            })
+            this.props.listUserGolongan({filter: this.state.pangkat.golongan})
+        }
+
     }
 
     onCheckDocument(checked, v) {
@@ -79,7 +105,7 @@ class PangkatKenaikanPegawaiForm extends Component {
     }
 
     modalClose() {
-        this.setState({modalShow: false})
+        this.setState({modalShow: false, modalState: 0})
     }
 
     filterUser(event) {
@@ -108,22 +134,54 @@ class PangkatKenaikanPegawaiForm extends Component {
         this.setState({back: true})
     }
 
-    addUser(o) {
+    // ini jadi array
+    addUser(newUsers) {
         // .push(o);
         let found = false
+        let removeIndex = []
         for (let i = 0; i < this.state.users.length; i++) {
             let tmp = this.state.users[i];
-            if (tmp.nip === o.nip) {
-                found = true
-                break
+            for (let x = 0; x < newUsers.length; x++) {
+                let tmpNew = newUsers[x];
+                if (tmpNew.nip === tmp.nip) {
+                    removeIndex.push(removeIndex)
+                    break
+                }
             }
         }
-        if (!found) {
-            this.state.users.push(o)
-            this.setState({users: this.state.users, modalShow: false})
-        } else {
-            this.setState({modalShow: false})
+        // clear user already exist
+        for (let x = 0; x < removeIndex.length; x++) {
+            newUsers.splice(x, 1)
         }
+        if (newUsers.length === 0) {
+            // reset and return false
+            this.setState({
+                back: false,
+                modalShow: false,
+                users: [],
+                // modal state
+                modalState: 0,
+                errorTMT: '',
+                tmt: null,
+                modalUserSelected: [],
+            })
+        }
+        if (this.state.tmtDate) {
+            let pangkat = this.state.pangkat
+            pangkat.tmt = this.state.tmtDate.format()
+            pangkat.sumber_data = 'TEMAN_DAWAI'
+            const param = {
+                pangkat: pangkat,
+                users: newUsers
+            }
+            this.props.addPangkat(param)
+            console.log(param)
+        } else {
+            this.setState({errorTMT: 'pilih tanggal tmt'})
+        }
+
+        // push to server, reset default
+
     }
 
     hapusCandidate(o) {
@@ -135,6 +193,7 @@ class PangkatKenaikanPegawaiForm extends Component {
             dangerMode: true,
         }).then((willDelete) => {
             if (willDelete) {
+                /*
                 let index = -1
                 let found = false
                 for (let i = 0; i < this.state.users.length; i++) {
@@ -147,6 +206,12 @@ class PangkatKenaikanPegawaiForm extends Component {
                 }
                 this.state.users.splice(index, 1)
                 this.setState({users: this.state.users})
+                 */
+                const param = {
+                    pangkat: this.state.pangkat,
+                    nip: o.nip,
+                }
+                this.props.removePangkat(param)
             }
         });
     }
@@ -159,16 +224,51 @@ class PangkatKenaikanPegawaiForm extends Component {
         }
     }
 
+    findSumberData(o) {
+        const {pangkat} = this.state
+        let sumberData = '-';
+        for (let i = 0; i < o.pangkats.length; i++) {
+            let tmp = o.pangkats[i];
+            if (tmp.pangkat_golongan && tmp.pangkat_golongan.id === pangkat.id) {
+                sumberData = tmp.sumber_data
+                break
+            }
+        }
+        return sumberData;
+    }
+
+    renderOption(o) {
+        if ('SIMPEG' === this.findSumberData(o)) {
+            return (<></>)
+        }
+        return (
+            <button type="button"
+                    className="btn btn-danger btn-sm btn-option"
+                    onClick={() => this.hapusCandidate(o)}>
+                <i className="mdi mdi-24px mdi-delete-circle"/>
+            </button>
+        )
+    }
+
+    renderSumberData(o) {
+        if (!(o.pangkats)) {
+            return (<>-</>)
+        }
+        let sumberData = this.findSumberData(o);
+        return (<>{sumberData.replace(/_/g, ' ')}</>)
+
+    }
+
     renderDocument(o, index, col) {
-        const {documents} = this.props
-        const sisa = documents.result.length % 4
+        const {pangkat} = this.state
+        const sisa = pangkat.document_pangkat.length % 4
         var perPage = 0;
         var min = 0;
         var max = 0;
         if (sisa === 0) {
-            perPage = documents.result.length / 4;
+            perPage = pangkat.document_pangkat.length / 4;
         } else {
-            perPage = (documents.result.length + (4 - sisa)) / 4;
+            perPage = (pangkat.document_pangkat.length + (4 - sisa)) / 4;
         }
         min = perPage * col;
         max = (perPage * col + perPage) - 1;
@@ -177,11 +277,7 @@ class PangkatKenaikanPegawaiForm extends Component {
                 <div className="form-group" key={index}>
                     <div className="form-check form-check-flat">
                         <label className="form-check-label">
-                            <input type="checkbox" className="form-check-input"
-                                   onChange={(event) => {
-                                       this.onCheckDocument(event.target.checked, o)
-                                   }}
-                                   checked={o.check}/>
+                            <input type="checkbox" className="form-check-input" checked={true}/>
                             {o.label}
                             <i className="input-helper"/>
                         </label>
@@ -191,10 +287,185 @@ class PangkatKenaikanPegawaiForm extends Component {
         }
     }
 
+
+    // modal action
+
+    modalNext() {
+        if (this.state.modalState === 0) {
+            this.setState({modalState: 1})
+            return true
+        }
+        this.addUser(this.state.modalUserSelected)
+    }
+
+    addUserSelected(o) {
+        if (this.userIsSelected(o)) {
+            let users = this.state.modalUserSelected
+            let index = -1;
+            for (var i = 0; i < users.length; i++) {
+                let tmp = users[i];
+                if (tmp.nip === o.nip) {
+                    index = i
+                    break
+                }
+            }
+            if (index >= 0) {
+                users.splice(index, 1)
+                this.setState({modalUserSelected: users})
+                return true
+            }
+        }
+        this.state.modalUserSelected.push(o)
+        this.setState({modalUserSelected: this.state.modalUserSelected})
+    }
+
+    userIsSelected(o) {
+        const users = this.state.modalUserSelected
+        for (var i = 0; i < users.length; i++) {
+            let tmp = users[i];
+            if (tmp.nip === o.nip) {
+                return true
+            }
+        }
+        return false
+    }
+
+    selectTMT(e) {
+        this.setState({tmtDate: e})
+    }
+
+    // modal rendered
+
+    renderModalContent(usersPage) {
+        const {modalState, modalUserSelected} = this.state
+        if (modalState > 0) {
+            return (
+                <>
+                    <div className="form-group row">
+                        <div className="col-md-4">
+                            <div className="form-group row">
+                                <label className="col-sm-12 col-form-label">Jumlah pegawai kenaikan pangkat</label>
+                            </div>
+                        </div>
+                        <div className="col-md-4">
+                        </div>
+                        <div className="col-md-4">
+                            <div className="form-group row">
+                                <label className="col-sm-3 col-form-label">TMT</label>
+                                <div className="col-sm-9">
+                                    <Datetime dateFormat="DD-MM-YYYY" timeFormat={false} closeOnSelect={true}
+                                              ref={this.finishDateRef}
+                                              onChange={this.selectTMT}/>
+
+                                </div>
+                                <span className="text-danger">{this.state.errorTMT}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="table-responsive">
+                        <table className="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>
+                                    NIP
+                                </th>
+                                <th>
+                                    Nama
+                                </th>
+                                <th>
+                                    Tempat, Tgl Lahir
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {
+                                modalUserSelected.map((o, i) =>
+                                    <tr className="clickable" key={i} onClick={() => {
+                                        //this.addUser(o)
+                                    }}>
+                                        <td>{o.nip}</td>
+                                        <td>{o.nama}</td>
+                                        <td>{o.tempat_lahir}, {formatDate(o.tanggal_lahir)}</td>
+                                    </tr>
+                                )
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </>
+            )
+
+
+            //
+        }
+
+        return (
+            <>
+                <div className="form-group row">
+                    <div className="col-md-4">
+                        <div className="form-group row">
+                            <label className="col-sm-12 col-form-label">Pilih pegawai kenaikan pangkat
+                                ({modalUserSelected.length})</label>
+                        </div>
+                    </div>
+                    <div className="col-md-4">
+                    </div>
+                    <div className="col-md-4">
+                        <div className="form-group row">
+                            <label className="col-sm-3 col-form-label"/>
+                            <div className="col-sm-9">
+                                <input type="text" className="form-control" placeholder="Search"
+                                       onChange={this.filterUser}/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="table-responsive">
+                    <table className="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>
+                                Pilih
+                            </th>
+                            <th>
+                                NIP
+                            </th>
+                            <th>
+                                Nama
+                            </th>
+                            <th>
+                                Tempat, Tgl Lahir
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {
+                            usersPage.result.values.map((o, i) =>
+                                <tr className="clickable" key={i} onClick={() => {
+                                    this.addUserSelected(o)
+                                }}>
+                                    <td>
+                                        <input style={{height: 22, width: 22, marginTop: -10, marginLeft: 10}}
+                                               type="radio" className="form-check-input"
+                                               checked={this.userIsSelected(o)}/>
+                                    </td>
+                                    <td>{o.nip}</td>
+                                    <td>{o.nama}</td>
+                                    <td>{o.tempat_lahir}, {formatDate(o.tanggal_lahir)}</td>
+                                </tr>
+                            )
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </>
+        )
+    }
+
     render() {
-        const {pangkat, documents, users} = this.state
+        const {pangkat} = this.state
         const {usersPage, usersList} = this.props
-        console.log(usersList)
+        console.log(pangkat)
         return (
             <Fragment>
                 <div className="row">
@@ -203,21 +474,22 @@ class PangkatKenaikanPegawaiForm extends Component {
                             <div className="card-body">
                                 <h4 className="card-title">{pangkat.nama} ({pangkat.golongan})</h4>
                                 <p className="card-description">
-                                    Pegawai ({pangkat.golongan})
+                                    Pegawai ({pangkat.golongan}), Jumlah dokument yang dibutuhkan
+                                    ({pangkat.document_pangkat.length})
                                 </p>
                                 <form className="forms-sample">
                                     <div className="row">
                                         <div className="col-md-3">
-                                            {documents.map((o, i) => this.renderDocument(o, i, 0))}
+                                            {pangkat.document_pangkat.map((o, i) => this.renderDocument(o, i, 0))}
                                         </div>
                                         <div className="col-md-3">
-                                            {documents.map((o, i) => this.renderDocument(o, i, 1))}
+                                            {pangkat.document_pangkat.map((o, i) => this.renderDocument(o, i, 1))}
                                         </div>
                                         <div className="col-md-3">
-                                            {documents.map((o, i) => this.renderDocument(o, i, 2))}
+                                            {pangkat.document_pangkat.map((o, i) => this.renderDocument(o, i, 2))}
                                         </div>
                                         <div className="col-md-3">
-                                            {documents.map((o, i) => this.renderDocument(o, i, 3))}
+                                            {pangkat.document_pangkat.map((o, i) => this.renderDocument(o, i, 3))}
                                         </div>
                                     </div>
                                 </form>
@@ -245,6 +517,9 @@ class PangkatKenaikanPegawaiForm extends Component {
                                         <thead>
                                         <tr>
                                             <th>
+                                                Opsi
+                                            </th>
+                                            <th>
                                                 NIP
                                             </th>
                                             <th>
@@ -253,6 +528,9 @@ class PangkatKenaikanPegawaiForm extends Component {
                                             <th>
                                                 Tempat, Tgl Lahir
                                             </th>
+                                            <th>
+                                                Sumber
+                                            </th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -260,15 +538,12 @@ class PangkatKenaikanPegawaiForm extends Component {
                                             usersList.result.map((o, i) =>
                                                 <tr className="clickable" key={i}>
                                                     <td className="py-1">
-                                                        <button type="button"
-                                                                className="btn btn-danger btn-sm btn-option"
-                                                                onClick={() => this.hapusCandidate(o)}>
-                                                            <i className="mdi mdi-24px mdi-delete-circle"/>
-                                                        </button>
+                                                        {this.renderOption(o)}
                                                     </td>
                                                     <td>{o.nip}</td>
                                                     <td>{o.nama}</td>
                                                     <td>{o.tempat_lahir}, {formatDate(o.tanggal_lahir)}</td>
+                                                    <td>{this.renderSumberData(o)}</td>
                                                 </tr>
                                             )
                                         }
@@ -282,57 +557,25 @@ class PangkatKenaikanPegawaiForm extends Component {
                 {this.renderRedirect()}
 
                 <Modal size="lg" show={this.state.modalShow} onHide={this.modalClose} onShow={this.modalOnShow}
-                       animation={false} centered>
+                       animation={false} backdrop="static">
                     <Modal.Header closeButton style={{backgroundColor: "white"}}>
                         <Modal.Title>List Pegawai</Modal.Title>
                     </Modal.Header>
                     <Modal.Body style={{backgroundColor: "white"}}>
-                        <div className="form-group row">
-                            <div className="col-md-3">
-                                <p className="card-description">
-                                    Pangkat golongan
-                                </p>
-                            </div>
-                            <div className="col-md-6"/>
-                            <div className="col-md-3">
-                                <input type="text" className="form-control" placeholder="Search"
-                                       onChange={this.filterUser}
-                                />
-                            </div>
-                        </div>
-                        <div className="table-responsive">
-                            <table className="table table-hover">
-                                <thead>
-                                <tr>
-                                    <th>
-                                        NIP
-                                    </th>
-                                    <th>
-                                        Nama
-                                    </th>
-                                    <th>
-                                        Tempat, Tgl Lahir
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {
-                                    usersPage.result.values.map((o, i) =>
-                                        <tr className="clickable" key={i} onClick={() => {
-                                            this.addUser(o)
-                                        }}>
-                                            <td>{o.nip}</td>
-                                            <td>{o.nama}</td>
-                                            <td>{o.tempat_lahir}, {formatDate(o.tanggal_lahir)}</td>
-                                        </tr>
-                                    )
-                                }
-                                </tbody>
-                            </table>
-                        </div>
+                        {this.renderModalContent(usersPage)}
                     </Modal.Body>
                     <Modal.Footer style={{backgroundColor: "white"}}>
+                        <Button variant="secondary" onClick={() => {
+                            const stateModal = this.state.modalState
+                            if (stateModal === 1) {
+                                this.setState({modalState: 0})
+                            } else {
+                                this.modalClose()
+                            }
 
+                        }}>{this.state.modalState === 0 ? 'CLOSE' : 'BACK'}</Button>
+                        <Button variant="primary"
+                                onClick={this.modalNext}>{this.state.modalState === 0 ? 'NEXT' : 'SAVE'}</Button>
                     </Modal.Footer>
                 </Modal>
 
@@ -346,8 +589,15 @@ class PangkatKenaikanPegawaiForm extends Component {
 function mapStateToProps(state) {
     return {
         usersPage: (state[USER_PAGE_RESPONSE] ? state[USER_PAGE_RESPONSE] : emptyContentPage),
-        usersList: (state[USER_LIST_RESPONSE] ? state[USER_LIST_RESPONSE] : emptyContentList)
+        usersList: (state[USER_LIST_RESPONSE] ? state[USER_LIST_RESPONSE] : emptyContentList),
+        usersCrud: (state[USER_HISTORY_PANGKAT_CRUD_RESPONSE] ? state[USER_HISTORY_PANGKAT_CRUD_RESPONSE] : emptyCrud)
     }
 }
 
-export default connect(mapStateToProps, {pageUser, listUserGolongan, listDocument})(PangkatKenaikanPegawaiForm);
+export default connect(mapStateToProps, {
+    pageUser,
+    listUserGolongan,
+    addPangkat,
+    removePangkat,
+    listDocument
+})(PangkatKenaikanPegawaiForm);

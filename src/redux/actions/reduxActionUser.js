@@ -9,7 +9,7 @@ import {
     PANGKAT_DOCUMENT_CRUD_RESPONSE,
     PANGKAT_PAGE,
     PANGKAT_PAGE_RESPONSE,
-    POST,
+    POST, USER_HISTORY_PANGKAT_CRUD, USER_HISTORY_PANGKAT_CRUD_RESPONSE,
     USER_HISTORY_PANGKAT_LIST,
     USER_HISTORY_PANGKAT_LIST_RESPONSE,
     USER_LIST,
@@ -58,5 +58,35 @@ export function listUserHistoryPangkat() {
         method: GET,
         response: USER_HISTORY_PANGKAT_LIST_RESPONSE,
         responseBody: {code: 0, result: {values: []}}
+    }
+}
+
+export function addPangkat(param) {
+    const user = JSON.parse(localStorage.getItem('user'))
+    const payload = {
+        url: "/user/pangkat/add",
+        body: param
+    }
+    return {
+        type: USER_HISTORY_PANGKAT_CRUD,
+        payload: payload,
+        method: POST,
+        response: USER_HISTORY_PANGKAT_CRUD_RESPONSE,
+        responseBody: {code: 0, result: null}
+    }
+}
+
+export function removePangkat(param) {
+    const user = JSON.parse(localStorage.getItem('user'))
+    const payload = {
+        url: "/user/pangkat/remove",
+        body: param
+    }
+    return {
+        type: USER_HISTORY_PANGKAT_CRUD,
+        payload: payload,
+        method: POST,
+        response: USER_HISTORY_PANGKAT_CRUD_RESPONSE,
+        responseBody: {code: 0, result: null}
     }
 }

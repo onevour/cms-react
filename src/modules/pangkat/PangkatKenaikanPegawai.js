@@ -34,6 +34,7 @@ class PangkatKenaikanPegawai extends Component {
     }
 
     showPangkat(o) {
+        console.log(o)
         this.setState({direct: true, pangkat: o})
         this.renderToDetailDocument()
     }

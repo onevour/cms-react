@@ -8,6 +8,7 @@ import {
     userUploadDocument
 } from "../../../redux/actions/reduxActionDataDigital";
 import {BASE_URL} from "../../../redux/constants/reducActionTypes";
+import {getFileExtension} from "../../../application/AppCommons";
 
 class EmployeeDataDigital extends Component {
 
@@ -31,14 +32,14 @@ class EmployeeDataDigital extends Component {
             <a href="#" style={{marginTop: -10}}
                onClick={() => {
                    const {user} = this.state
-                   fetch(BASE_URL + '/api/v1/download/user/' + user.nip + '/' + o.id)
+                   fetch(BASE_URL + '/api/v1/user/download/digital/' + user.nip + '/' + o.id)
                        .then(response => {
                            if (response.ok) {
                                response.blob().then(blob => {
                                    let url = window.URL.createObjectURL(blob);
                                    let a = document.createElement('a');
                                    a.href = url;
-                                   a.download = user.nip + '-' + o.document.label + '.'+ this.getFileExtension(o.path);
+                                   a.download = user.nip + '-' + o.document.label + '.'+ getFileExtension(o.path);
                                    a.click();
                                });
                            }
@@ -46,10 +47,6 @@ class EmployeeDataDigital extends Component {
                    });
                }}>download</a>
         )
-    }
-
-    getFileExtension(filename) {
-        return filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
     }
 
     openDataDigital() {

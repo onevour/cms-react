@@ -11,6 +11,7 @@ import swal from "sweetalert";
 import {BASE_URL} from "../../redux/constants/reducActionTypes";
 import {Button} from "react-bootstrap";
 import {Redirect} from "react-router-dom";
+import {getFileExtension} from "../../application/AppCommons";
 
 class EmployeeDataDigitalForm extends Component {
 
@@ -35,7 +36,7 @@ class EmployeeDataDigitalForm extends Component {
     }
 
     componentDidUpdate(props) {
-        console.log(this.props.uploadDocument)
+        // console.log(this.props.uploadDocument)
         if (props.uploadDocument !== this.props.uploadDocument) {
             swal("Cuti", "Pengajuan cuti berhasil!", "success");
             this.props.loadUserDocument()
@@ -65,10 +66,6 @@ class EmployeeDataDigitalForm extends Component {
 
     handleChangeSelect(e) {
         this.setState({type: e.value})
-    }
-
-    getFileExtension(filename) {
-        return filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
     }
 
     async handleChangeFile(e) {
@@ -122,7 +119,7 @@ class EmployeeDataDigitalForm extends Component {
                                    let url = window.URL.createObjectURL(blob);
                                    let a = document.createElement('a');
                                    a.href = url;
-                                   a.download = user.nip + '-' + o.document.label + '.' + this.getFileExtension(o.path);
+                                   a.download = user.nip + '-' + o.document.label + '.' + getFileExtension(o.path);
                                    a.click();
                                });
                            }

@@ -27,7 +27,13 @@ import {
     REMOVE_DOCUMENT,
     DOCUMENT_PAGE,
     DOCUMENT_CRUD,
-    PANGKAT_PAGE, DOCUMENT_LIST, PANGKAT_DOCUMENT_CRUD, USER_PAGE, USER_LIST, USER_HISTORY_PANGKAT_LIST
+    PANGKAT_PAGE,
+    DOCUMENT_LIST,
+    PANGKAT_DOCUMENT_CRUD,
+    USER_PAGE,
+    USER_LIST,
+    USER_HISTORY_PANGKAT_LIST,
+    USER_HISTORY_PANGKAT_CRUD
 } from "../constants/reducActionTypes";
 
 import {masterDocument, removeUserDocument, uploadUserDocument, userDocument} from "./reduxSagaDataDigital";
@@ -64,6 +70,7 @@ export default function* watcherSaga() {
     yield takeEvery(PANGKAT_DOCUMENT_CRUD, masterDocumentType);
     yield takeEvery(USER_PAGE, masterDocumentType);
     yield takeEvery(USER_LIST, masterDocumentType);
+    yield takeEvery(USER_HISTORY_PANGKAT_CRUD, masterDocumentType);
     yield takeEvery(USER_HISTORY_PANGKAT_LIST, masterDocumentType);
 }
 
