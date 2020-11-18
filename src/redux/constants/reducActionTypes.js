@@ -1,5 +1,5 @@
-// export const BASE_URL = "http://5.181.217.229:8081";
-export const BASE_URL = "http://localhost:8081/api/v1";
+export const BASE_URL = "http://5.181.217.229:8081/api/v1";
+// export const BASE_URL = "http://localhost:8081/api/v1";
 
 export const POST = 'POST'
 export const GET = 'GET'
