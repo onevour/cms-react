@@ -75,7 +75,7 @@ class EmployeeDataDigitalForm extends Component {
                 const fileReader = new FileReader();
                 fileReader.readAsDataURL(file)
                 fileReader.onload = () => {
-                    this.setState({ext: this.getFileExtension(file.name), file: fileReader.result})
+                    this.setState({ext: getFileExtension(file.name), file: fileReader.result})
                     // resolve(fileReader.result);
                 }
                 fileReader.onerror = (error) => {
@@ -112,7 +112,7 @@ class EmployeeDataDigitalForm extends Component {
             <a href="#" style={{marginTop: -10}}
                onClick={() => {
                    const {user} = this.state
-                   fetch(BASE_URL + '/api/v1/download/user/' + user.nip + '/' + o.id)
+                   fetch(BASE_URL + '/user/download/digital/' + user.nip + '/' + o.id)
                        .then(response => {
                            if (response.ok) {
                                response.blob().then(blob => {

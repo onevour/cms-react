@@ -49,7 +49,7 @@ class EmployeeDataPribadi extends Component {
 
     downloadEmployeeData() {
         const {user} = this.state
-        fetch(BASE_URL + '/api/v1/view/cv/' + user.nip)
+        fetch(BASE_URL + '/user/download/cv/' + user.nip)
             .then(response => {
                 response.blob().then(blob => {
                     let url = window.URL.createObjectURL(blob);
