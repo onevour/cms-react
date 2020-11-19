@@ -27,6 +27,7 @@ import PangkatKenaikanPegawaiForm from "../modules/pangkat/PangkatKenaikanPegawa
 import MasterJabatan from "../modules/jabatan/MasterJabatan";
 import MasterJabatanMap from "../modules/jabatan/MasterJabatanMap";
 import EmployeeDUK from "../modules/employee/EmployeeDUK";
+import CutiUser from "../modules/cuti/CutiUser";
 
 class AppHome extends Component {
 
@@ -46,6 +47,7 @@ class AppHome extends Component {
                                    exact/>
                             <Route path="/sample_table" component={SampleTable} exact/>
                             <Route path="/cuti" component={CutiForm} exact/>
+                            <Route path="/cuti/user" component={CutiUser} exact/>
                             <Route path="/cuti_approval_atasan" component={CutiTableAtasan} exact/>
                             <Route path="/cuti_approval_pejabat" component={CutiTablePejabat} exact/>
                             <Route path="/cuti_detail" render={(props) => <CutiDetail {...props}/>} exact/>

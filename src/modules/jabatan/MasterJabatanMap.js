@@ -62,11 +62,11 @@ class MasterJabatanMap extends Component {
                     <div className="col-md-12 grid-margin stretch-card">
                         <div className="card">
                             <div className="card-body">
-                                <h4 className="card-title">Direktur SMA</h4>
+                                <h4 className="card-title">Peta Jabatan Fungsional</h4>
                                 <div className="form-group row">
                                     <div className="col-md-3">
                                         <p className="card-description">
-                                            Peta Jabatan Pelaksana (kelas 15)
+                                            Direktur SMA (kelas 15)
                                         </p>
                                     </div>
                                     <div className="col-md-6"/>
@@ -114,11 +114,11 @@ class MasterJabatanMap extends Component {
                     <div className="col-md-12 grid-margin stretch-card">
                         <div className="card">
                             <div className="card-body">
-                                <h4 className="card-title">Tata Usaha</h4>
+                                <h4 className="card-title">Peta Jabatan Pelaksana</h4>
                                 <div className="form-group row">
                                     <div className="col-md-3">
                                         <p className="card-description">
-                                            Peta Jabatan Fungsional (kelas 15)
+                                            Kepala Tata Usaha (kelas 15)
                                         </p>
                                     </div>
                                     <div className="col-md-6"/>

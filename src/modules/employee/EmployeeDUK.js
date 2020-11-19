@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from "react";
 import Pagination from "react-bootstrap-4-pagination";
 import {
+    BASE_URL,
     DUK_PAGE_RESPONSE
 } from "../../redux/constants/reducActionTypes";
 import {emptyContentPage} from "../../application/AppConstant";
@@ -21,6 +22,7 @@ class EmployeeDUK extends Component {
         };
         this.changePage = this.changePage.bind(this)
         this.handleChangeName = this.handleChangeName.bind(this)
+        this.downloadDUK = this.downloadDUK.bind(this)
         this.submitForm = this.submitForm.bind(this)
     }
 
@@ -37,6 +39,20 @@ class EmployeeDUK extends Component {
 
 
         }
+    }
+
+    downloadDUK(){
+        const {user} = this.state
+        fetch(BASE_URL + '/duk/download/')
+            .then(response => {
+                response.blob().then(blob => {
+                    let url = window.URL.createObjectURL(blob);
+                    let a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'duk.pdf';
+                    a.click();
+                });
+            });
     }
 
     changePage(page) {
@@ -74,15 +90,15 @@ class EmployeeDUK extends Component {
     }
 
     pensiun(dob) {
-        let dodDate = moment(dob).add(55, 'y')
+        let dodDate = moment(dob).add(58, 'y')
         return dodDate.format('YYYY')
     }
 
     masaKerja(mulaiCPNS, dob) {
         let year = moment().diff(dob, 'years', false)
-        if (year > 55) {
+        if (year > 58) {
             // sudah pensiun
-            let dobDate = moment(dob).add(55, 'y')
+            let dobDate = moment(dob).add(58, 'y')
             let year = moment(dobDate).diff(mulaiCPNS, 'years', false)
             let month = moment(dobDate).diff(mulaiCPNS, 'months', false) - (year * 12)
             return year + ' Tahun ' + month + ' Bulan'
@@ -180,7 +196,13 @@ class EmployeeDUK extends Component {
                     <div className="col-md-12 grid-margin stretch-card">
                         <div className="card">
                             <div className="card-body">
-                                <h4 className="card-title">Document Type</h4>
+                                <h4 className="card-title">DUK</h4>
+                                <div className="col">
+                                    <button type="submit" style={{marginTop: -30}}
+                                            onClick={this.downloadDUK}
+                                            className="btn btn-success btn-sm mr-2 float-right">Download
+                                    </button>
+                                </div>
                                 <div className="table-responsive">
                                     <table className="table table-hover">
                                         {this.renderHeader()}

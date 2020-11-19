@@ -1,6 +1,17 @@
 import {
-    CUTI_APPROVE_ATASAN_SUBMIT, CUTI_APPROVE_PEJABAT_SUBMIT, CUTI_CANCEL_SUBMIT, CUTI_DAYS, CUTI_LOAD_USER,
-    CUTI_SUBMIT, HOLIDAYS_LOAD, HOLIDAYS_LOAD_FUTURE, HOLIDAYS_REMOVE, HOLIDAYS_SUBMIT,
+    CUTI_APPROVE_ATASAN_SUBMIT,
+    CUTI_APPROVE_PEJABAT_SUBMIT,
+    CUTI_CANCEL_SUBMIT,
+    CUTI_DAYS,
+    CUTI_LOAD_USER, CUTI_PAGE, CUTI_PAGE_RESPONSE,
+    CUTI_SUBMIT,
+    DOCUMENT_PAGE,
+    DOCUMENT_PAGE_RESPONSE,
+    HOLIDAYS_LOAD,
+    HOLIDAYS_LOAD_FUTURE,
+    HOLIDAYS_REMOVE,
+    HOLIDAYS_SUBMIT,
+    POST,
 } from "../constants/reducActionTypes";
 
 export function requestCuti(param) {
@@ -98,4 +109,18 @@ export function loadHolidaysFuture() {
         url:  "/cuti/holiday/future"
     }
     return {type: HOLIDAYS_LOAD_FUTURE, payload: payload};
+}
+
+export function pageUserCuti(param) {
+    const payload = {
+        url: "/cuti/page",
+        body: param
+    }
+    return {
+        type: CUTI_PAGE,
+        payload: payload,
+        method: POST,
+        response: CUTI_PAGE_RESPONSE,
+        responseBody: {code: 0, result: {values: []}}
+    }
 }

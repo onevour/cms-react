@@ -94,6 +94,7 @@ class NavItem extends Component {
                 {id: 11, type: 1, name: "Calendar", icon: "menu-icon mdi mdi-calendar", path: "/calendar"},
                 {id: 13, type: 1, name: "Peta Jabatan", icon: "menu-icon mdi mdi-file-tree", path: "/jabatan/map"},
                 {id: 14, type: 1, name: "DUK", icon: "menu-icon mdi mdi-file-tree", path: "/duk"},
+                {id: 15, type: 1, name: "CUTI", icon: "menu-icon mdi mdi-file-tree", path: "/cuti/user"},
 
             ]
         }
