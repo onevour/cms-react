@@ -38,6 +38,22 @@ class MasterJabatanMap extends Component {
         this.props.pageJabatan({filter: event.target.value, page: 0})
     }
 
+    renderTable(jabatans, key) {
+        let newArray = jabatans.result.filter(item => item.jenis_jabatan === key);
+        return (
+            newArray.map((o, i) =>
+                <tr className="clickable" key={i}>
+                    <td>{i + 1}</td>
+                    <td>{o.name}</td>
+                    <td>{o.kelas_jabatan}</td>
+                    <td>{o.ketersediaan}</td>
+                    <td>{o.kebutuhan}</td>
+                    <td>{o.total}</td>
+                </tr>
+            )
+        )
+    }
+
     render() {
         const {jabatans} = this.props
         return (
@@ -46,11 +62,11 @@ class MasterJabatanMap extends Component {
                     <div className="col-md-12 grid-margin stretch-card">
                         <div className="card">
                             <div className="card-body">
-                                <h4 className="card-title">Jabatan</h4>
+                                <h4 className="card-title">Direktur SMA</h4>
                                 <div className="form-group row">
                                     <div className="col-md-3">
                                         <p className="card-description">
-                                            Peta Jabatan pegawai
+                                            Peta Jabatan Pelaksana (kelas 15)
                                         </p>
                                     </div>
                                     <div className="col-md-6"/>
@@ -82,18 +98,59 @@ class MasterJabatanMap extends Component {
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {
-                                            jabatans.result.map((o, i) =>
-                                                <tr className="clickable" key={i}>
-                                                    <td>{i + 1}</td>
-                                                    <td>{o.name}</td>
-                                                    <td>{o.kelas_jabatan}</td>
-                                                    <td>{o.ketersediaan}</td>
-                                                    <td>{o.kebutuhan}</td>
-                                                    <td>{o.total}</td>
-                                                </tr>
-                                            )
-                                        }
+                                        {this.renderTable(jabatans, 'JF')}
+                                        </tbody>
+
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div className="row">
+                    <div className="col-md-12 grid-margin stretch-card">
+                        <div className="card">
+                            <div className="card-body">
+                                <h4 className="card-title">Tata Usaha</h4>
+                                <div className="form-group row">
+                                    <div className="col-md-3">
+                                        <p className="card-description">
+                                            Peta Jabatan Fungsional (kelas 15)
+                                        </p>
+                                    </div>
+                                    <div className="col-md-6"/>
+                                    <div className="col-md-3">
+                                    </div>
+                                </div>
+                                <div className="table-responsive">
+                                    <table className="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>
+                                                No.
+                                            </th>
+                                            <th>
+                                                Jabatan
+                                            </th>
+                                            <th>
+                                                KLS
+                                            </th>
+                                            <th>
+                                                B
+                                            </th>
+                                            <th>
+                                                K
+                                            </th>
+                                            <th>
+                                                +/-
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {this.renderTable(jabatans, 'P')}
                                         </tbody>
 
                                     </table>

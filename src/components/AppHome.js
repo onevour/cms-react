@@ -26,6 +26,7 @@ import PangkatKenaikanPegawai from "../modules/pangkat/PangkatKenaikanPegawai";
 import PangkatKenaikanPegawaiForm from "../modules/pangkat/PangkatKenaikanPegawaiForm";
 import MasterJabatan from "../modules/jabatan/MasterJabatan";
 import MasterJabatanMap from "../modules/jabatan/MasterJabatanMap";
+import EmployeeDUK from "../modules/employee/EmployeeDUK";
 
 class AppHome extends Component {
 
@@ -65,6 +66,7 @@ class AppHome extends Component {
                             <Route path="/calendar" component={CalendarHoliday} exact/>
                             <Route path="/jabatan" component={MasterJabatan} exact/>
                             <Route path="/jabatan/map" component={MasterJabatanMap} exact/>
+                            <Route path="/duk" component={EmployeeDUK} exact/>
                         </div>
                         <AppFooter/>
                     </div>

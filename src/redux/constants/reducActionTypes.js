@@ -62,6 +62,13 @@ export const JABATAN_LIST_RESPONSE = "JABATAN_LIST_RESPONSE";
 export const JABATAN_PAGE_RESPONSE = "JABATAN_PAGE_RESPONSE";
 export const JABATAN_CRUD_RESPONSE = "JABATAN_CRUD_RESPONSE";
 
+// request master duk
+export const DUK_LIST = "DUK_LIST";
+export const DUK_PAGE = "DUK_PAGE";
+
+export const DUK_LIST_RESPONSE = "DUK_LIST_RESPONSE";
+export const DUK_PAGE_RESPONSE = "DUK_PAGE_RESPONSE";
+
 // request master doc
 export const PANGKAT_PAGE = "PANGKAT_PAGE";
 export const PANGKAT_DOCUMENT_CRUD = "PANGKAT_DOCUMENT_CRUD";
