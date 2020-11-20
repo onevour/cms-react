@@ -21,7 +21,7 @@ class EmployeeDataRiwayat extends Component {
                 },
                 {
                     selected: false,
-                    label: "DP3"
+                    label: "SKP"
                 },
                 {
                     selected: false,

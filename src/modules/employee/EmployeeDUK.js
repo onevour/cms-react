@@ -1,16 +1,15 @@
 import React, {Component, Fragment} from "react";
 import Pagination from "react-bootstrap-4-pagination";
 import {
-    BASE_URL,
+    BASE_URL, DUK_FILTER_PARAM, DUK_FILTER_PARAM_RESPONSE,
     DUK_PAGE_RESPONSE
 } from "../../redux/constants/reducActionTypes";
-import {emptyContentPage, JENIS_CUTI, MAX_PENSIUN, STATUS_PEGAWAI} from "../../application/AppConstant";
+import {emptyContentPage, emptyCrud, MAX_PENSIUN, STATUS_PEGAWAI} from "../../application/AppConstant";
 import {connect} from "react-redux";
-import {listDuk, pageDuk} from "../../redux/actions/reduxActionMasterDUK";
-import {disableBeforeDay, formatDate} from "../../application/AppCommons";
+import {listDuk, pageDuk, paramDuk} from "../../redux/actions/reduxActionMasterDUK";
+import {formatDate} from "../../application/AppCommons";
 import moment from "moment";
 import Select from "react-select";
-import Datetime from "react-datetime";
 
 
 class EmployeeDUK extends Component {
@@ -20,21 +19,67 @@ class EmployeeDUK extends Component {
         this.state = {
             page: 0,
             id: 0,
-            status:'',
+            status: {label: 'ALL', value: 0},
             name: '',
-            golongan: '',
-            pangkat: '',
-            pendidikan: '',
-            usia: ''
+            golongan: {label: 'ALL', value: 0},
+            masaKerja: {label: 'ALL', value: -1},
+            pangkat: {label: 'ALL', value: 0},
+            pendidikan: {label: 'ALL', value: 0},
+            jabatan: {label: 'ALL', value: 0},
+            usia: {label: 'ALL', value: 0}
         };
         this.changePage = this.changePage.bind(this)
         this.handleChangeName = this.handleChangeName.bind(this)
+        this.handleChangeStatus = this.handleChangeStatus.bind(this)
+        this.handleChangeMasakerja = this.handleChangeMasakerja.bind(this)
+        this.handleChangeGolongan = this.handleChangeGolongan.bind(this)
+        this.handleChangePangkat = this.handleChangePangkat.bind(this)
+        this.handleChangeJabatan = this.handleChangeJabatan.bind(this)
+        this.handleChangePendidikan = this.handleChangePendidikan.bind(this)
+        this.handleChangeUsia = this.handleChangeUsia.bind(this)
+        this.clearFilter = this.clearFilter.bind(this)
         this.downloadDUK = this.downloadDUK.bind(this)
         this.submitForm = this.submitForm.bind(this)
     }
 
     componentDidMount() {
-        this.props.pageDuk({filter: "", page: 0})
+        this.props.pageDuk({
+            name: '',
+            status: 0,
+            golongan: 0,
+            pangkat: 0,
+            pendidikan: 0,
+            jabatan: 0,
+            usia: 0,
+            masa_kerja: -1,
+            page: 0
+        })
+        this.props.paramDuk()
+    }
+
+    clearFilter() {
+        this.setState({
+            name: '',
+            status: {label: 'ALL', value: 0},
+            golongan: {label: 'ALL', value: 0},
+            pangkat: {label: 'ALL', value: 0},
+            pendidikan: {label: 'ALL', value: 0},
+            jabatan: {label: 'ALL', value: 0},
+            masaKerja: {label: 'ALL', value: -1},
+            usia: {label: 'ALL', value: 0},
+            page: 0
+        })
+        this.props.pageDuk({
+            name: '',
+            status: 0,
+            golongan: 0,
+            pangkat: 0,
+            pendidikan: 0,
+            jabatan: 0,
+            usia: 0,
+            masa_kerja: -1,
+            page: 0
+        })
     }
 
     componentDidUpdate(props) {
@@ -44,8 +89,78 @@ class EmployeeDUK extends Component {
         }
         if (props.documents !== this.props.documents) {
 
-
         }
+    }
+
+    pendidikanParam(params) {
+        let values = []
+        values.push({value: 0, label: "ALL"})
+        if (params.result && params.result.educations) {
+            params.result.educations.map((v) => {
+                values.push({value: v.id, label: v.type})
+            })
+        }
+
+        return values
+    }
+
+    jabatanParam(params) {
+        let values = []
+        values.push({value: 0, label: "ALL"})
+        if (params.result && params.result.jabatans) {
+            params.result.jabatans.map((v) => {
+                values.push({value: v.id, label: v.name})
+            })
+        }
+        return values
+    }
+
+    pangkatParam(params) {
+        let values = []
+        values.push({value: 0, label: "ALL"})
+        if (params.result && params.result.pangkats) {
+            params.result.pangkats.map((v) => {
+                values.push({value: v.id, label: v.nama + ' (' + v.golongan + ')'})
+            })
+        }
+        return values
+    }
+
+    usiaParam() {
+        let usia = []
+        usia.push({
+            value: 0,
+            label: "ALL"
+        })
+        for (let i = 17; i <= 60; i++) {
+            usia.push({
+                value: i,
+                label: i + " Tahun"
+            })
+        }
+        return usia
+    }
+
+    masaKerjaParam() {
+        let masaKerja = []
+        masaKerja.push({
+            value: -1,
+            label: "ALL"
+        })
+        for (let i = 0; i < 40; i++) {
+            if (i === 0) {
+                masaKerja.push({
+                    value: i,
+                    label: "< 1 Tahun"
+                })
+                continue
+            }
+            masaKerja.push({
+                value: i,
+                label: i + " Tahun"
+            })
+        }
+        return masaKerja
     }
 
     downloadDUK() {
@@ -68,43 +183,53 @@ class EmployeeDUK extends Component {
     }
 
     handleChangeStatus(event) {
-        console.log(event.target.value)
-        this.setState({status: event.value})
+        console.log(event.value)
+        this.setState({status: event})
     }
 
     handleChangeName(event) {
-        console.log(event.target.value)
         this.setState({name: event.target.value})
     }
 
     handleChangeGolongan(event) {
-        console.log(event.target.value)
-        this.setState({golongan: event.target.value})
+        this.setState({golongan: event})
     }
 
     handleChangePangkat(event) {
-        console.log(event.target.value)
-        this.setState({pangkat: event.target.value})
+        this.setState({pangkat: event})
+    }
+
+    handleChangeJabatan(event) {
+        this.setState({jabatan: event})
     }
 
     handleChangePendidikan(event) {
-        console.log(event.target.value)
-        this.setState({pendidikan: event.target.value})
+        this.setState({pendidikan: event})
     }
 
     handleChangeUsia(event) {
-        console.log(event.target.value)
-        this.setState({usia: event.target.value})
+        this.setState({usia: event})
+    }
+
+    handleChangeMasakerja(event) {
+        this.setState({masaKerja: event})
     }
 
     submitForm(event) {
         event.preventDefault()
         const request = {
-            id: this.state.id,
-            name: this.state.name
+            name: this.state.name,
+            status: this.state.status.value,
+            golongan: this.state.golongan.value,
+            pangkat: this.state.pangkat.value,
+            pendidikan: this.state.pendidikan.value,
+            jabatan: this.state.jabatan.value,
+            masa_kerja: this.state.masaKerja.value,
+            usia: this.state.usia.value,
+            page: this.state.page
         }
-        console.log("submit")
-        this.props.mergeDocument(request)
+        this.props.pageDuk(request)
+        console.log("submit", request)
     }
 
     latesPendidikan(educations, key) {
@@ -235,8 +360,8 @@ class EmployeeDUK extends Component {
 
     render() {
         const {page, name} = this.state
-        const {duks} = this.props
-        console.log(duks)
+        const {duks, filter} = this.props
+        console.log(filter)
         return (
             <Fragment>
                 <div className="row">
@@ -257,31 +382,38 @@ class EmployeeDUK extends Component {
                                                         <div className="col-sm-9">
                                                             <Select className="form-control select-tmd"
                                                                     options={STATUS_PEGAWAI}
-                                                                    onChange={this.handleChangeCuti}
+                                                                    value={this.state.status}
+                                                                    onChange={this.handleChangeStatus}
+                                                                    defaultValue={{label: 'ALL', value: 0}}
                                                                     label="Single select"/>
-                                                            <span
-                                                                className="text-danger">{this.state.errorjenisCuti}</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className="col-md-6">
                                                     <div className="form-group row">
-                                                        <label className="col-sm-3 col-form-label">Nama</label>
+                                                        <label className="col-sm-3 col-form-label">Usia</label>
                                                         <div className="col-sm-9">
-                                                            <input type="text" className="form-control"
-                                                                   placeholder="Nama pegawai"/>
+                                                            <Select className="form-control select-tmd"
+                                                                    options={this.usiaParam()}
+                                                                    value={this.state.usia}
+                                                                    onChange={this.handleChangeUsia}
+                                                                    defaultValue={{label: 'ALL', value: 0}}
+                                                                    label="Single select"/>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div className="row">
                                                 <div className="col-md-6">
                                                     <div className="form-group row">
                                                         <label className="col-sm-3 col-form-label">Pangkat</label>
                                                         <div className="col-sm-9">
-                                                            <input type="text" className="form-control"
-                                                                   placeholder="Pangkat pegawai"/>
+                                                            <Select className="form-control select-tmd"
+                                                                    options={this.pangkatParam(filter)}
+                                                                    value={this.state.pangkat}
+                                                                    onChange={this.handleChangePangkat}
+                                                                    defaultValue={{label: 'ALL', value: 0}}
+                                                                    label="Single select"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -289,8 +421,12 @@ class EmployeeDUK extends Component {
                                                     <div className="form-group row">
                                                         <label className="col-sm-3 col-form-label">Jabatan</label>
                                                         <div className="col-sm-9">
-                                                            <input type="text" className="form-control"
-                                                                   placeholder="Jabatan pegawai"/>
+                                                            <Select className="form-control select-tmd"
+                                                                    options={this.jabatanParam(filter)}
+                                                                    value={this.state.jabatan}
+                                                                    onChange={this.handleChangeJabatan}
+                                                                    defaultValue={{label: 'ALL', value: 0}}
+                                                                    label="Single select"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -301,8 +437,12 @@ class EmployeeDUK extends Component {
                                                     <div className="form-group row">
                                                         <label className="col-sm-3 col-form-label">Masa Kerja</label>
                                                         <div className="col-sm-9">
-                                                            <input type="text" className="form-control"
-                                                                   placeholder="Masa kerja"/>
+                                                            <Select className="form-control select-tmd"
+                                                                    options={this.masaKerjaParam()}
+                                                                    value={this.state.masaKerja}
+                                                                    onChange={this.handleChangeMasakerja}
+                                                                    defaultValue={{label: 'ALL', value: 0}}
+                                                                    label="Single select"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -310,8 +450,12 @@ class EmployeeDUK extends Component {
                                                     <div className="form-group row">
                                                         <label className="col-sm-3 col-form-label">Pendidikan</label>
                                                         <div className="col-sm-9">
-                                                            <input type="text" className="form-control"
-                                                                   placeholder="Pendidikan"/>
+                                                            <Select className="form-control select-tmd"
+                                                                    options={this.pendidikanParam(filter)}
+                                                                    value={this.state.pendidikan}
+                                                                    onChange={this.handleChangePendidikan}
+                                                                    defaultValue={{label: 'ALL', value: 0}}
+                                                                    label="Single select"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -319,10 +463,12 @@ class EmployeeDUK extends Component {
                                             <div className="row">
                                                 <div className="col-md-6">
                                                     <div className="form-group row">
-                                                        <label className="col-sm-3 col-form-label">Usia</label>
+                                                        <label className="col-sm-3 col-form-label">Nama</label>
                                                         <div className="col-sm-9">
                                                             <input type="text" className="form-control"
-                                                                   placeholder="Usia"/>
+                                                                   value={this.state.name}
+                                                                   onChange={this.handleChangeName}
+                                                                   placeholder="Nama pegawai"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -339,6 +485,7 @@ class EmployeeDUK extends Component {
                                                     className="btn btn-success mr-2">Cari Pegawai
                                             </button>
                                             <button type="cancel"
+                                                    onClick={this.clearFilter}
                                                     className="btn mr-2">Clear
                                             </button>
                                         </form>
@@ -380,8 +527,9 @@ class EmployeeDUK extends Component {
 
 function mapStateToProps(state) {
     return {
-        duks: (state[DUK_PAGE_RESPONSE] ? state[DUK_PAGE_RESPONSE] : emptyContentPage)
+        duks: (state[DUK_PAGE_RESPONSE] ? state[DUK_PAGE_RESPONSE] : emptyContentPage),
+        filter: (state[DUK_FILTER_PARAM_RESPONSE] ? state[DUK_FILTER_PARAM_RESPONSE] : emptyCrud)
     }
 }
 
-export default connect(mapStateToProps, {pageDuk, listDuk})(EmployeeDUK);
+export default connect(mapStateToProps, {pageDuk, listDuk, paramDuk})(EmployeeDUK);

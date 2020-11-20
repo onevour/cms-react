@@ -1,7 +1,17 @@
 import {
-    DOCUMENT_CRUD, DOCUMENT_CRUD_RESPONSE, DOCUMENT_LIST, DOCUMENT_LIST_RESPONSE,
+    DOCUMENT_CRUD,
+    DOCUMENT_CRUD_RESPONSE,
+    DOCUMENT_LIST,
+    DOCUMENT_LIST_RESPONSE,
     DOCUMENT_PAGE,
-    DOCUMENT_PAGE_RESPONSE, DUK_LIST, DUK_LIST_RESPONSE, DUK_PAGE, DUK_PAGE_RESPONSE, GET,
+    DOCUMENT_PAGE_RESPONSE,
+    DUK_FILTER_PARAM,
+    DUK_FILTER_PARAM_RESPONSE,
+    DUK_LIST,
+    DUK_LIST_RESPONSE,
+    DUK_PAGE,
+    DUK_PAGE_RESPONSE,
+    GET,
     MASTER_DOCUMENT,
     POST
 } from "../constants/reducActionTypes";
@@ -16,6 +26,19 @@ export function listDuk() {
         method: GET,
         response: DUK_LIST_RESPONSE,
         responseBody: {code: 0, result: []}
+    }
+}
+
+export function paramDuk() {
+    const payload = {
+        url: "/duk/filter/param"
+    }
+    return {
+        type: DUK_FILTER_PARAM,
+        payload: payload,
+        method: GET,
+        response: DUK_FILTER_PARAM_RESPONSE,
+        responseBody: {code: 0, result: null}
     }
 }
 
