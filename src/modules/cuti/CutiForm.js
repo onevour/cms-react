@@ -5,11 +5,18 @@ import Select from "react-select";
 import swal from 'sweetalert';
 import "react-datetime/css/react-datetime.css";
 import moment from "moment-timezone";
-import {JENIS_CUTI} from "../../application/AppConstant";
-import {requestCuti, loadCutiUserLogin, calculateDays, loadHolidaysFuture} from "../../redux/actions/reduxActionCuti";
+import {emptyCrud, JENIS_CUTI} from "../../application/AppConstant";
+import {
+    requestCuti,
+    loadCutiUserLogin,
+    calculateDays,
+    loadHolidaysFuture,
+    cutiQuota
+} from "../../redux/actions/reduxActionCuti";
 import {connect} from "react-redux";
 import {clearInput, cutiLabel, disableBeforeDay, formatDate, formatStatusCuti} from "../../application/AppCommons";
 import {Redirect} from "react-router-dom";
+import {CUTI_QUOTA_RESPONSE, DOCUMENT_CRUD_RESPONSE} from "../../redux/constants/reducActionTypes";
 
 class CutiForm extends Component {
 
@@ -217,13 +224,21 @@ class CutiForm extends Component {
     }
 
     componentDidMount() {
-        this.props.loadCutiUserLogin();
-        this.props.loadHolidaysFuture();
+        this.props.loadCutiUserLogin()
+        this.props.cutiQuota()
+        this.props.loadHolidaysFuture()
         this.props.calculateDays({})
     }
 
+    renderQuotaCuti(cutiQuotaResponse) {
+        if (cutiQuotaResponse.result) {
+            return (cutiQuotaResponse.result.kuota_cuti + cutiQuotaResponse.result.kuota_past_cuti)
+        }
+        return 0
+    }
+
     render() {
-        const {cutiUserResponse, cutiDaysResponse, holidaysResponse} = this.props
+        const {cutiUserResponse, cutiDaysResponse, holidaysResponse, cutiQuotaResponse} = this.props
         const {startDate, jenisCuti, description, tlpAddress, cutiAddress} = this.state
         return (
             <Fragment>
@@ -233,7 +248,8 @@ class CutiForm extends Component {
                             <div className="card-body">
                                 <h4 className="card-title">Pengajuan Cuti</h4>
                                 <p className="card-description">
-                                    Sisa cuti anda(0)
+                                    Sisa cuti
+                                    anda({this.renderQuotaCuti(cutiQuotaResponse)})
                                 </p>
                                 <form className="forms-sample" ref={(ref) => this.formRef = ref}
                                       onSubmit={this.submitFormCuti}
@@ -403,7 +419,14 @@ function mapStateToProps(state) {
         cutiDaysResponse: state.cutiDaysResponse,
         cutiUserResponse: state.cutiUserResponse,
         holidaysResponse: state.holidaysResponse,
+        cutiQuotaResponse: (state[CUTI_QUOTA_RESPONSE] ? state[CUTI_QUOTA_RESPONSE] : emptyCrud)
     }
 }
 
-export default connect(mapStateToProps, {requestCuti, loadCutiUserLogin, calculateDays, loadHolidaysFuture})(CutiForm);
+export default connect(mapStateToProps, {
+    requestCuti,
+    cutiQuota,
+    loadCutiUserLogin,
+    calculateDays,
+    loadHolidaysFuture
+})(CutiForm);

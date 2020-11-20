@@ -68,6 +68,30 @@ class Pensiun extends Component {
         })
     }
 
+    renderStatus(o, userDocument) {
+        if (userDocument) {
+            // console.log(o)
+            let value = null
+            for (let i = 0; i < userDocument.length; i++) {
+                let tmp = userDocument[i]
+                // console.log(tmp)
+                if (tmp.document.value === o.value) {
+                    value = tmp
+                    break
+                }
+            }
+            if (value && value.path) {
+                return (
+                    <>Tersedia</>
+                )
+            }
+            return (
+                <>Tidak Tersedia</>
+            )
+        }
+
+    }
+
     renderDownloadView(o, userDocument) {
         if (userDocument) {
             // console.log(o)
@@ -118,6 +142,7 @@ class Pensiun extends Component {
                             this.handleChangeFile(file, o)
                         }
                     }}/></td>
+                    <td>{this.renderStatus(o, userDocument)}</td>
                     <td>{this.renderDownloadView(o, userDocument)}</td>
                 </tr>
             )
@@ -150,6 +175,9 @@ class Pensiun extends Component {
                                             </th>
                                             <th>
                                                 File
+                                            </th>
+                                            <th>
+                                                File Digital
                                             </th>
                                             <th>
                                                 Opsi
