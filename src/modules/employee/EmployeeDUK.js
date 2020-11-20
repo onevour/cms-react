@@ -67,9 +67,34 @@ class EmployeeDUK extends Component {
         this.props.pageDuk({filter: "", page: page - 1})
     }
 
+    handleChangeStatus(event) {
+        console.log(event.target.value)
+        this.setState({status: event.value})
+    }
+
     handleChangeName(event) {
         console.log(event.target.value)
         this.setState({name: event.target.value})
+    }
+
+    handleChangeGolongan(event) {
+        console.log(event.target.value)
+        this.setState({golongan: event.target.value})
+    }
+
+    handleChangePangkat(event) {
+        console.log(event.target.value)
+        this.setState({pangkat: event.target.value})
+    }
+
+    handleChangePendidikan(event) {
+        console.log(event.target.value)
+        this.setState({pendidikan: event.target.value})
+    }
+
+    handleChangeUsia(event) {
+        console.log(event.target.value)
+        this.setState({usia: event.target.value})
     }
 
     submitForm(event) {
@@ -222,7 +247,7 @@ class EmployeeDUK extends Component {
                                 <div className="row">
                                     <div className="col-md-9">
                                         <form className="forms-sample" ref={(ref) => this.formRef = ref}
-                                              onSubmit={this.submitFormCuti}
+                                              onSubmit={this.submitForm}
                                               noValidate>
                                             <div className="row">
                                                 <div className="col-md-6">
@@ -311,7 +336,7 @@ class EmployeeDUK extends Component {
                                                 </div>
                                             </div>
                                             <button type="submit"
-                                                    className="btn btn-success mr-2">Filter
+                                                    className="btn btn-success mr-2">Cari Pegawai
                                             </button>
                                             <button type="cancel"
                                                     className="btn mr-2">Clear

@@ -7,7 +7,7 @@ import {
     DOCUMENT_PAGE_RESPONSE, JABATAN_CRUD_RESPONSE, JABATAN_LIST, JABATAN_LIST_RESPONSE,
     JABATAN_PAGE_RESPONSE
 } from "../../redux/constants/reducActionTypes";
-import {emptyContentList, emptyContentPage, emptyCrud, JENIS_CUTI} from "../../application/AppConstant";
+import {emptyContentList, emptyContentPage, emptyCrud, JENIS_CUTI, STATUS_PEGAWAI} from "../../application/AppConstant";
 import {listJabatanMap, mergeJabatan, pageJabatan, removeJabatan} from "../../redux/actions/reduxActionMasterJabatan";
 import Select from "react-select";
 import moment from "moment";
@@ -138,17 +138,17 @@ class MasterJabatanMap extends Component {
                                 <div className="form-group row">
                                     <div className="col-md-3">
                                         <p className="card-description">
-                                            Direktur SMA (kelas 15)
                                         </p>
                                     </div>
                                     <div className="col-md-6"/>
                                     <div className="col-md-3">
-                                        <div className="form-group">
-                                            <label htmlFor="jenisCuti">Tahun</label>
-                                            <Select className="form-control select-tmd" options={this.selectValue()}
-                                                    onChange={this.handleChangeYear}
-                                                    label="Single select"
-                                            />
+                                        <div className="form-group row">
+                                            <label className="col-sm-3 col-form-label">Tahun</label>
+                                            <div className="col-sm-9">
+                                                <Select className="form-control select-tmd" options={this.selectValue()}
+                                                        onChange={this.handleChangeYear}
+                                                        label="Pilih Tahun"/>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
