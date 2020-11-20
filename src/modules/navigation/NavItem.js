@@ -38,8 +38,14 @@ class NavItem extends Component {
                             name: "Jabatan",
                             icon: "menu-icon mdi mdi-account-card-details",
                             path: "/jabatan"
-                        },                {id: 11, type: 1, name: "Calendar", icon: "menu-icon mdi mdi-calendar", path: "/calendar"},
-                        {id: 4, type: 1, name: "Document", icon: "menu-icon mdi mdi-account-card-details", path: "/document"},
+                        }, {
+                            id: 11,
+                            root_id: 1,
+                            type: 3,
+                            name: "Calendar",
+                            icon: "menu-icon mdi mdi-calendar",
+                            path: "/calendar"
+                        }
                     ]
                 },
                 {
@@ -90,9 +96,30 @@ class NavItem extends Component {
                     selected: false,
                     name: "Report",
                     items: [
-                        {id: 13, type: 1, name: "Peta Jabatan", icon: "menu-icon mdi mdi-file-tree", path: "/jabatan/map"},
-                        {id: 14, type: 1, name: "Data Pegawai", icon: "menu-icon mdi mdi-file-tree", path: "/duk"},
-                        {id: 15, type: 1, name: "Cuti Pegawai", icon: "menu-icon mdi mdi-file-tree", path: "/cuti/user"},
+                        {
+                            id: 13,
+                            type: 3,
+                            root_id: 100,
+                            name: "Peta Jabatan",
+                            icon: "menu-icon mdi mdi-file-tree",
+                            path: "/jabatan/map"
+                        },
+                        {
+                            id: 14,
+                            root_id: 100,
+                            type: 3,
+                            name: "Data Pegawai",
+                            icon: "menu-icon mdi mdi-file-tree",
+                            path: "/duk"
+                        },
+                        {
+                            id: 15,
+                            type: 3,
+                            root_id: 100,
+                            name: "Cuti Pegawai",
+                            icon: "menu-icon mdi mdi-file-tree",
+                            path: "/cuti/user"
+                        },
                     ]
                 }
 
