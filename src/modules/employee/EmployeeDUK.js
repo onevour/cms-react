@@ -4,11 +4,13 @@ import {
     BASE_URL,
     DUK_PAGE_RESPONSE
 } from "../../redux/constants/reducActionTypes";
-import {emptyContentPage} from "../../application/AppConstant";
+import {emptyContentPage, JENIS_CUTI, MAX_PENSIUN, STATUS_PEGAWAI} from "../../application/AppConstant";
 import {connect} from "react-redux";
 import {listDuk, pageDuk} from "../../redux/actions/reduxActionMasterDUK";
-import {formatDate} from "../../application/AppCommons";
+import {disableBeforeDay, formatDate} from "../../application/AppCommons";
 import moment from "moment";
+import Select from "react-select";
+import Datetime from "react-datetime";
 
 
 class EmployeeDUK extends Component {
@@ -18,7 +20,12 @@ class EmployeeDUK extends Component {
         this.state = {
             page: 0,
             id: 0,
-            name: ''
+            status:'',
+            name: '',
+            golongan: '',
+            pangkat: '',
+            pendidikan: '',
+            usia: ''
         };
         this.changePage = this.changePage.bind(this)
         this.handleChangeName = this.handleChangeName.bind(this)
@@ -41,7 +48,7 @@ class EmployeeDUK extends Component {
         }
     }
 
-    downloadDUK(){
+    downloadDUK() {
         const {user} = this.state
         fetch(BASE_URL + '/duk/download/')
             .then(response => {
@@ -90,15 +97,20 @@ class EmployeeDUK extends Component {
     }
 
     pensiun(dob) {
-        let dodDate = moment(dob).add(58, 'y')
+        let dodDate = moment(dob).add(MAX_PENSIUN, 'y')
         return dodDate.format('YYYY')
+    }
+
+    pensiunTMT(dob) {
+        let dodDate = moment(dob).add(MAX_PENSIUN, 'y')
+        return dodDate.format('DD MMM YYYY')
     }
 
     masaKerja(mulaiCPNS, dob) {
         let year = moment().diff(dob, 'years', false)
-        if (year > 58) {
+        if (year > MAX_PENSIUN) {
             // sudah pensiun
-            let dobDate = moment(dob).add(58, 'y')
+            let dobDate = moment(dob).add(MAX_PENSIUN, 'y')
             let year = moment(dobDate).diff(mulaiCPNS, 'years', false)
             let month = moment(dobDate).diff(mulaiCPNS, 'months', false) - (year * 12)
             return year + ' Tahun ' + month + ' Bulan'
@@ -106,8 +118,18 @@ class EmployeeDUK extends Component {
         let yearCPNS = moment().diff(mulaiCPNS, 'years', false)
         let monthCPNS = moment().diff(mulaiCPNS, 'months', false) - (yearCPNS * 12)
         return yearCPNS + ' Tahun ' + monthCPNS + ' Bulan'
+    }
 
+    masaKerjaJabatan(gol) {
+        let yearCPNS = moment().diff(gol, 'years', false)
+        let monthCPNS = moment().diff(gol, 'months', false) - (yearCPNS * 12)
+        return yearCPNS + ' Tahun ' + monthCPNS + ' Bulan'
+    }
 
+    masaKerjaGolongan(jabatan) {
+        let yearCPNS = moment().diff(jabatan, 'years', false)
+        let monthCPNS = moment().diff(jabatan, 'months', false) - (yearCPNS * 12)
+        return yearCPNS + ' Tahun ' + monthCPNS + ' Bulan'
     }
 
     renderHeader() {
@@ -161,10 +183,10 @@ class EmployeeDUK extends Component {
                     <td>{o.pangkat}</td>
                     <td>{o.pangkat_detail.gol}</td>
                     <td>{formatDate(o.tmt_gol)}</td>
-                    <td/>
+                    <td>{this.masaKerjaGolongan(o.tmt_gol)}</td>
                     <td>{o.jabatan}</td>
                     <td>{formatDate(o.tmt_jabatan)}</td>
-                    <td/>
+                    <td>{this.masaKerjaJabatan(o.tmt_jabatan)}</td>
                     <td>{formatDate(o.tgl_mulai_cpns)}</td>
                     <td>{this.masaKerja(o.tgl_mulai_cpns, o.tanggal_lahir)}</td>
                     <td/>
@@ -175,7 +197,7 @@ class EmployeeDUK extends Component {
                     <td>{o.tempat_lahir}</td>
                     <td>{formatDate(o.tanggal_lahir)}</td>
                     <td>{this.usia(o.tanggal_lahir)}</td>
-                    <td/>
+                    <td>{this.pensiunTMT(o.tanggal_lahir)}</td>
                     <td>{this.pensiun(o.tanggal_lahir)}</td>
                     <td/>
                     <td>{o.agama}</td>
@@ -196,13 +218,115 @@ class EmployeeDUK extends Component {
                     <div className="col-md-12 grid-margin stretch-card">
                         <div className="card">
                             <div className="card-body">
-                                <h4 className="card-title">DUK</h4>
-                                <div className="col">
-                                    <button type="submit" style={{marginTop: -30}}
-                                            onClick={this.downloadDUK}
-                                            className="btn btn-success btn-sm mr-2 float-right">Download
-                                    </button>
+                                <h4 className="card-title">Data Pegawai</h4>
+                                <div className="row">
+                                    <div className="col-md-9">
+                                        <form className="forms-sample" ref={(ref) => this.formRef = ref}
+                                              onSubmit={this.submitFormCuti}
+                                              noValidate>
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <div className="form-group row">
+                                                        <label className="col-sm-3 col-form-label">Status
+                                                            Pegawai</label>
+                                                        <div className="col-sm-9">
+                                                            <Select className="form-control select-tmd"
+                                                                    options={STATUS_PEGAWAI}
+                                                                    onChange={this.handleChangeCuti}
+                                                                    label="Single select"/>
+                                                            <span
+                                                                className="text-danger">{this.state.errorjenisCuti}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <div className="form-group row">
+                                                        <label className="col-sm-3 col-form-label">Nama</label>
+                                                        <div className="col-sm-9">
+                                                            <input type="text" className="form-control"
+                                                                   placeholder="Nama pegawai"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <div className="form-group row">
+                                                        <label className="col-sm-3 col-form-label">Pangkat</label>
+                                                        <div className="col-sm-9">
+                                                            <input type="text" className="form-control"
+                                                                   placeholder="Pangkat pegawai"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <div className="form-group row">
+                                                        <label className="col-sm-3 col-form-label">Jabatan</label>
+                                                        <div className="col-sm-9">
+                                                            <input type="text" className="form-control"
+                                                                   placeholder="Jabatan pegawai"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <div className="form-group row">
+                                                        <label className="col-sm-3 col-form-label">Masa Kerja</label>
+                                                        <div className="col-sm-9">
+                                                            <input type="text" className="form-control"
+                                                                   placeholder="Masa kerja"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <div className="form-group row">
+                                                        <label className="col-sm-3 col-form-label">Pendidikan</label>
+                                                        <div className="col-sm-9">
+                                                            <input type="text" className="form-control"
+                                                                   placeholder="Pendidikan"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <div className="form-group row">
+                                                        <label className="col-sm-3 col-form-label">Usia</label>
+                                                        <div className="col-sm-9">
+                                                            <input type="text" className="form-control"
+                                                                   placeholder="Usia"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <div className="form-group row">
+                                                        <label className="col-sm-3 col-form-label"/>
+                                                        <div className="col-sm-9">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="submit"
+                                                    className="btn btn-success mr-2">Filter
+                                            </button>
+                                            <button type="cancel"
+                                                    className="btn mr-2">Clear
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <div className="col-md-3">
+                                        <button type="submit" style={{marginTop: -30}}
+                                                onClick={this.downloadDUK}
+                                                className="btn btn-success btn-sm mr-2 float-right">Download DUK
+                                        </button>
+
+                                    </div>
                                 </div>
+
                                 <div className="table-responsive">
                                     <table className="table table-hover">
                                         {this.renderHeader()}

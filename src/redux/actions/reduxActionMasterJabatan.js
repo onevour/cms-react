@@ -19,14 +19,15 @@ export function listJabatan() {
     }
 }
 
-export function listJabatanMap() {
+export function listJabatanMap(param) {
     const payload = {
-        url: "/jabatan/all/map"
+        url: "/jabatan/all/map",
+        body: param
     }
     return {
         type: JABATAN_LIST,
         payload: payload,
-        method: GET,
+        method: POST,
         response: JABATAN_LIST_RESPONSE,
         responseBody: {code: 0, result: []}
     }

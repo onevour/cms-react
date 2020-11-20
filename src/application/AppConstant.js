@@ -1,3 +1,17 @@
+export const MAX_PENSIUN = 58
+
+
+export const STATUS_PEGAWAI = [
+    {
+        value: 1,
+        label: "AKTIF"
+    },
+    {
+        value: 2,
+        label: "NON AKTIF"
+    }
+    ]
+
 // CUTI
 export const JENIS_CUTI = [
     {

@@ -82,7 +82,6 @@ class CutiUser extends Component {
         )
     }
 
-
     render() {
         const {page, name} = this.state
         const {cuties} = this.props
@@ -101,7 +100,8 @@ class CutiUser extends Component {
                                             <th>NIP</th>
                                             <th>Jabatan</th>
                                             <th>Sisa Cuti Tahun Lalu</th>
-                                            <th>Kuota Cuti</th>
+                                            <th>Kuota Cuti Tahun Berjalan</th>
+                                            <th>Sisa Cuti Terakhir</th>
                                             <th>Jan</th>
                                             <th>Feb</th>
                                             <th>Mar</th>
@@ -125,6 +125,7 @@ class CutiUser extends Component {
                                                     <td>{o.user.employee.jabatan}</td>
                                                     <td>{o.cuti_summary.kuota_past_cuti}</td>
                                                     <td>{o.cuti_summary.kuota_cuti}</td>
+                                                    <td>{o.cuti_summary.kuota_past_cuti + o.cuti_summary.kuota_cuti}</td>
                                                     {this.renderMonth(o)}
                                                 </tr>
                                             )
