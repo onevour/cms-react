@@ -38,7 +38,8 @@ class NavItem extends Component {
                             name: "Jabatan",
                             icon: "menu-icon mdi mdi-account-card-details",
                             path: "/jabatan"
-                        }
+                        },                {id: 11, type: 1, name: "Calendar", icon: "menu-icon mdi mdi-calendar", path: "/calendar"},
+                        {id: 4, type: 1, name: "Document", icon: "menu-icon mdi mdi-account-card-details", path: "/document"},
                     ]
                 },
                 {
@@ -52,21 +53,12 @@ class NavItem extends Component {
                             id: 13,
                             root_id: 12,
                             type: 3,
-                            name: "Kenaikan Pegawai",
+                            name: "Kenaikan Pangkat",
                             icon: "menu-icon mdi mdi-account-card-details",
                             path: "/pangkat/kenaikan/pegawai"
-                        },
-                        {
-                            id: 14,
-                            root_id: 12,
-                            type: 3,
-                            name: "Profile",
-                            icon: "menu-icon mdi mdi-account-card-details",
-                            path: "/employee"
                         }
                     ]
                 },
-                {id: 4, type: 1, name: "Document", icon: "menu-icon mdi mdi-account-card-details", path: "/document"},
                 {id: 5, type: 1, name: "Profile", icon: "menu-icon mdi mdi-account-card-details", path: "/employee"},
                 {id: 6, type: 1, name: "Cuti", icon: "menu-icon mdi mdi-file-image", path: "/cuti"},
                 {
@@ -91,10 +83,19 @@ class NavItem extends Component {
                     path: "/kenaikan_pangkat"
                 },
                 {id: 10, type: 1, name: "Pensiun", icon: "menu-icon mdi mdi-account-switch", path: "/pensiun"},
-                {id: 11, type: 1, name: "Calendar", icon: "menu-icon mdi mdi-calendar", path: "/calendar"},
-                {id: 13, type: 1, name: "Peta Jabatan", icon: "menu-icon mdi mdi-file-tree", path: "/jabatan/map"},
-                {id: 14, type: 1, name: "Data Pegawai", icon: "menu-icon mdi mdi-file-tree", path: "/duk"},
-                {id: 15, type: 1, name: "Cuti Pegawai", icon: "menu-icon mdi mdi-file-tree", path: "/cuti/user"},
+                {
+                    id: 100,
+                    type: 2,
+                    expand: false,
+                    selected: false,
+                    name: "Report",
+                    items: [
+                        {id: 13, type: 1, name: "Peta Jabatan", icon: "menu-icon mdi mdi-file-tree", path: "/jabatan/map"},
+                        {id: 14, type: 1, name: "Data Pegawai", icon: "menu-icon mdi mdi-file-tree", path: "/duk"},
+                        {id: 15, type: 1, name: "Cuti Pegawai", icon: "menu-icon mdi mdi-file-tree", path: "/cuti/user"},
+                    ]
+                }
+
 
             ]
         }
