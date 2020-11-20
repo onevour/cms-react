@@ -230,9 +230,12 @@ class CutiForm extends Component {
         this.props.calculateDays({})
     }
 
-    renderQuotaCuti(cutiQuotaResponse) {
+    renderQuotaCuti(cutiQuotaResponse, flag) {
         if (cutiQuotaResponse.result) {
-            return (cutiQuotaResponse.result.kuota_cuti + cutiQuotaResponse.result.kuota_past_cuti)
+            if('A' === flag) {
+                return (cutiQuotaResponse.result.kuota_cuti)
+            }
+            return (cutiQuotaResponse.result.kuota_past_cuti)
         }
         return 0
     }
@@ -248,8 +251,8 @@ class CutiForm extends Component {
                             <div className="card-body">
                                 <h4 className="card-title">Pengajuan Cuti</h4>
                                 <p className="card-description">
-                                    Sisa cuti
-                                    anda({this.renderQuotaCuti(cutiQuotaResponse)})
+                                    Sisa cuti anda({this.renderQuotaCuti(cutiQuotaResponse, 'A')})
+                                    tahun lalu({this.renderQuotaCuti(cutiQuotaResponse, 'P')})
                                 </p>
                                 <form className="forms-sample" ref={(ref) => this.formRef = ref}
                                       onSubmit={this.submitFormCuti}
