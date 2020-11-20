@@ -137,11 +137,6 @@ class MasterJabatanMap extends Component {
                                 <h4 className="card-title">Summary</h4>
                                 <div className="form-group row">
                                     <div className="col-md-3">
-                                        <p className="card-description">
-                                        </p>
-                                    </div>
-                                    <div className="col-md-6"/>
-                                    <div className="col-md-3">
                                         <div className="form-group row">
                                             <label className="col-sm-3 col-form-label">Tahun</label>
                                             <div className="col-sm-9">
@@ -150,6 +145,10 @@ class MasterJabatanMap extends Component {
                                                         label="Pilih Tahun"/>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div className="col-md-6"/>
+                                    <div className="col-md-3">
+
                                     </div>
                                 </div>
                                 <div className="table-responsive">
