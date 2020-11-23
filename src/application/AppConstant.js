@@ -1,5 +1,37 @@
 export const MAX_PENSIUN = 58
 
+export const ROLES = [
+    {
+        "value": "STAFF ADMIN",
+        "label": "STAFF ADMIN",
+        "description": "Pegawai"
+    },
+    {
+        "value": "STAFF",
+        "label": "STAFF",
+        "description": "Super Admin"
+    },
+    {
+        "value": "KEPALA SUB UNIT",
+        "label": "KEPALA SUB UNIT",
+        "description": "Admin Satker Simpeg"
+    },
+    {
+        "value": "KEPALA UNIT",
+        "label": "KEPALA UNIT",
+        "description": "Admin Satker Presensi"
+    },
+    {
+        "value": "SEKRETARIS SUB UNIT",
+        "label": "SEKRETARIS SUB UNIT",
+        "description": "Pejabat Satker"
+    },
+    {
+        "value": "SEKRETARIS KEPALA UNIT",
+        "label": "SEKRETARIS KEPALA UNIT",
+        "description": "Admin Pusat Simpeg"
+    }
+]
 
 export const STATUS_PEGAWAI = [
     {
@@ -44,7 +76,7 @@ export const JENIS_CUTI = [
 
 export const emptyCrud = {
     code: 0,
-    result : null
+    result: null
 }
 
 export const emptyContentList = {

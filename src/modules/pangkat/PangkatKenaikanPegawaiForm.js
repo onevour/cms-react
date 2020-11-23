@@ -12,7 +12,13 @@ import {emptyContentList, emptyContentPage, emptyCrud} from "../../application/A
 import {connect} from "react-redux";
 import {listDocument} from "../../redux/actions/reduxActionMasterDocument";
 import {mergePangkatDocument} from "../../redux/actions/reduxActionMasterPangkat";
-import {addPangkat, listUserGolongan, pageUser, removePangkat} from "../../redux/actions/reduxActionUser";
+import {
+    addPangkat,
+    listUserGolongan,
+    pageUser,
+    pageUserJabatan,
+    removePangkat
+} from "../../redux/actions/reduxActionUser";
 import {disableBeforeDay, formatDate} from "../../application/AppCommons";
 import Button from "react-bootstrap/Button";
 import moment from "moment-timezone";
@@ -101,7 +107,7 @@ class PangkatKenaikanPegawaiForm extends Component {
     }
 
     modalOnShow() {
-        this.props.pageUser({filter: "", page: 0})
+        this.props.pageUserJabatan({filter: "", jenis_jabatan: "JF", id: (this.state.pangkat.id - 1), page: 0})
     }
 
     modalClose() {
@@ -109,7 +115,12 @@ class PangkatKenaikanPegawaiForm extends Component {
     }
 
     filterUser(event) {
-        this.props.pageUser({filter: event.target.value, page: 0})
+        this.props.pageUserJabatan({
+            filter: event.target.value,
+            jenis_jabatan: "JF",
+            id: (this.state.pangkat.id - 1),
+            page: 0
+        })
     }
 
     submitForm(event) {
@@ -199,7 +210,7 @@ class PangkatKenaikanPegawaiForm extends Component {
     hapusCandidate(o) {
         swal({
             title: "Hapus Pengawai",
-            text: "hapus pegawai dari kenaikan pangkat?",
+            text: "hapus user dari kenaikan pangkat?",
             icon: "warning",
             buttons: true,
             dangerMode: true,
@@ -231,7 +242,7 @@ class PangkatKenaikanPegawaiForm extends Component {
     renderRedirect() {
         if (this.state.back) {
             return <Redirect to={{
-                pathname: '/pangkat/kenaikan/pegawai'
+                pathname: '/pangkat/kenaikan/user'
             }}/>
         }
     }
@@ -474,6 +485,31 @@ class PangkatKenaikanPegawaiForm extends Component {
         )
     }
 
+    renderTable(usersList) {
+        if (usersList.result && (usersList.result)) {
+            let result = usersList.result.filter((item) => {
+                if (item.jabatan_detail && (item.jabatan_detail.jabatan) && (item.jabatan_detail.jabatan.jenis_jabatan)) {
+                    return 'JF' === item.jabatan_detail.jabatan.jenis_jabatan
+                }
+                return false
+            })
+            console.log(usersList.result)
+            return (
+                result.map((o, i) =>
+                    <tr className="clickable" key={i}>
+                        <td className="py-1">
+                            {this.renderOption(o)}
+                        </td>
+                        <td>{o.nip}</td>
+                        <td>{o.nama}</td>
+                        <td>{o.tempat_lahir}, {formatDate(o.tanggal_lahir)}</td>
+                        <td>{this.renderSumberData(o)}</td>
+                    </tr>
+                )
+            )
+        }
+    }
+
     render() {
         const {pangkat} = this.state
         const {usersPage, usersList} = this.props
@@ -546,19 +582,7 @@ class PangkatKenaikanPegawaiForm extends Component {
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {
-                                            usersList.result.map((o, i) =>
-                                                <tr className="clickable" key={i}>
-                                                    <td className="py-1">
-                                                        {this.renderOption(o)}
-                                                    </td>
-                                                    <td>{o.nip}</td>
-                                                    <td>{o.nama}</td>
-                                                    <td>{o.tempat_lahir}, {formatDate(o.tanggal_lahir)}</td>
-                                                    <td>{this.renderSumberData(o)}</td>
-                                                </tr>
-                                            )
-                                        }
+                                        {this.renderTable(usersList)}
                                         </tbody>
                                     </table>
                                 </div>
@@ -607,7 +631,7 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-    pageUser,
+    pageUserJabatan,
     listUserGolongan,
     addPangkat,
     removePangkat,

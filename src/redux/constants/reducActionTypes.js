@@ -1,5 +1,5 @@
-export const BASE_URL = "http://5.181.217.229:8081/api/v1";
-// export const BASE_URL = "http://localhost:8081/api/v1";
+// export const BASE_URL = "http://5.181.217.229:8081/api/v1";
+export const BASE_URL = "http://localhost:8081/api/v1";
 
 export const POST = 'POST'
 export const GET = 'GET'
@@ -84,6 +84,9 @@ export const PANGKAT_DOCUMENT_CRUD_RESPONSE = "PANGKAT_DOCUMENT_CRUD_RESPONSE";
 
 export const USER_PAGE = "USER_PAGE";
 export const USER_PAGE_RESPONSE = "USER_PAGE_RESPONSE";
+
+export const USER_CRUD = "USER_CRUD";
+export const USER_CRUD_RESPONSE = "USER_CRUD_RESPONSE";
 
 export const USER_LIST = "USER_LIST";
 export const USER_LIST_RESPONSE = "USER_LIST_RESPONSE";

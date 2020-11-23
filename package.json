@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
+    "@react-pdf/renderer": "^1.6.12",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
@@ -14,6 +15,7 @@
     "moment": "^2.29.1",
     "moment-business-days": "^1.2.0",
     "moment-timezone": "^0.5.31",
+    "pdf-viewer-reactjs": "^2.1.2",
     "react": "^16.14.0",
     "react-bootstrap": "^1.4.0",
     "react-bootstrap-4-pagination": "^1.0.3",
@@ -24,6 +26,7 @@
     "react-form-with-constraints": "^0.16.0",
     "react-form-with-constraints-bootstrap4": "^0.16.0",
     "react-moment": "^1.0.0",
+    "react-pdf": "^5.0.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.4",
     "react-select": "^3.1.0",

@@ -134,11 +134,23 @@ class EmployeeDataDigitalForm extends Component {
         this.renderRedirect()
     }
 
+    renderStatus(status) {
+        if (0 === status) {
+            return "PENDING"
+        }
+        if (1 === status) {
+            return "DITOLAK"
+        }
+        if (2 === status) {
+            return "BERHASIL"
+        }
+    }
+
     renderRedirect() {
         const body = {}
         if (this.state.direct) {
             return <Redirect to={{
-                pathname: '/employee',
+                pathname: '/profile',
                 state: {body: JSON.stringify(body)}
             }}/>
         }
@@ -200,6 +212,8 @@ class EmployeeDataDigitalForm extends Component {
                                             <th>Opsi</th>
                                             <th>Dokumen</th>
                                             <th>Download</th>
+                                            <th>Status</th>
+                                            <th>Keterangan</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -214,6 +228,8 @@ class EmployeeDataDigitalForm extends Component {
                                                 </td>
                                                 <td>{o.document.label}</td>
                                                 <td>{this.documentExist(o)}</td>
+                                                <td>{this.renderStatus(o.approval)}</td>
+                                                <td>{o.message}</td>
                                             </tr>
                                         )}
                                         </tbody>

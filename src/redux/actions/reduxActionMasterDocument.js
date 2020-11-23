@@ -33,6 +33,34 @@ export function pageDocument(param) {
     }
 }
 
+export function listDocumentPending() {
+    const payload = {
+        url: "/document/pending",
+        body: {}
+    }
+    return {
+        type: DOCUMENT_LIST,
+        payload: payload,
+        method: GET,
+        response: DOCUMENT_LIST_RESPONSE,
+        responseBody: {code: 0, result: {values: []}}
+    }
+}
+
+export function approveDocument(param) {
+    const payload = {
+        url: "/document/approval",
+        body: param
+    }
+    return {
+        type: DOCUMENT_CRUD,
+        payload: payload,
+        method: POST,
+        response: DOCUMENT_CRUD_RESPONSE,
+        responseBody: null
+    }
+}
+
 export function mergeDocument(param) {
     const payload = {
         url: "/document/type/merge",

@@ -42,9 +42,27 @@ class PangkatKenaikanPegawai extends Component {
     renderToDetailDocument() {
         if (this.state.direct) {
             return <Redirect to={{
-                pathname: '/pangkat/kenaikan/pegawai/candidate',
+                pathname: '/pangkat/kenaikan/user/candidate',
                 state: {body: JSON.stringify(this.state.pangkat)}
             }}/>
+        }
+    }
+
+    renderTable(pangkats) {
+        if (pangkats.result && (pangkats.result.values)) {
+            let result = pangkats.result.values.filter(item => item.id > 8)
+            return (
+                result.map((o, i) =>
+                    <tr className="clickable" key={i} onClick={() => {
+                        this.showPangkat(o)
+                    }}>
+                        <td>{i + 1}</td>
+                        <td>{o.nama}</td>
+                        <td>{o.golongan}</td>
+                        <td>{o.document_pangkat.length}</td>
+                    </tr>
+                )
+            )
         }
     }
 
@@ -90,18 +108,7 @@ class PangkatKenaikanPegawai extends Component {
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {
-                                            pangkats.result.values.map((o, i) =>
-                                                <tr className="clickable" key={i} onClick={() => {
-                                                    this.showPangkat(o)
-                                                }}>
-                                                    <td>{i + 1}</td>
-                                                    <td>{o.nama}</td>
-                                                    <td>{o.golongan}</td>
-                                                    <td>{o.document_pangkat.length}</td>
-                                                </tr>
-                                            )
-                                        }
+                                        {this.renderTable(pangkats)}
                                         </tbody>
                                     </table>
                                 </div>

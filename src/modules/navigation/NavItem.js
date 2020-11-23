@@ -56,16 +56,32 @@ class NavItem extends Component {
                     selected: false,
                     items: [
                         {
-                            id: 13,
+                            id: 120,
                             root_id: 12,
                             type: 3,
                             name: "Kenaikan Pangkat",
                             icon: "menu-icon mdi mdi-account-card-details",
-                            path: "/pangkat/kenaikan/pegawai"
+                            path: "/pangkat/kenaikan/user"
+                        },
+                        {
+                            id: 121,
+                            root_id: 12,
+                            type: 3,
+                            name: "Document Pending",
+                            icon: "menu-icon mdi mdi-account-card-details",
+                            path: "/document/pending"
+                        },
+                        {
+                            id: 123,
+                            root_id: 12,
+                            type: 3,
+                            name: "User",
+                            icon: "menu-icon mdi mdi-account-card-details",
+                            path: "/user"
                         }
                     ]
                 },
-                {id: 5, type: 1, name: "Profile", icon: "menu-icon mdi mdi-account-card-details", path: "/employee"},
+                {id: 5, type: 1, name: "Profile", icon: "menu-icon mdi mdi-account-card-details", path: "/profile"},
                 {id: 6, type: 1, name: "Cuti", icon: "menu-icon mdi mdi-file-image", path: "/cuti"},
                 {
                     id: 7,

@@ -39,6 +39,7 @@ class EmployeeDUK extends Component {
         this.handleChangeUsia = this.handleChangeUsia.bind(this)
         this.clearFilter = this.clearFilter.bind(this)
         this.downloadDUK = this.downloadDUK.bind(this)
+        this.downloadFilterDUK = this.downloadFilterDUK.bind(this)
         this.submitForm = this.submitForm.bind(this)
     }
 
@@ -165,21 +166,59 @@ class EmployeeDUK extends Component {
 
     downloadDUK() {
         const {user} = this.state
-        fetch(BASE_URL + '/duk/download/')
-            .then(response => {
-                response.blob().then(blob => {
-                    let url = window.URL.createObjectURL(blob);
-                    let a = document.createElement('a');
-                    a.href = url;
-                    a.download = 'duk.pdf';
-                    a.click();
-                });
-            });
+        fetch(BASE_URL + '/duk/download/').then(response => {
+            response.blob().then(blob => {
+                let url = window.URL.createObjectURL(blob);
+                let a = document.createElement('a');
+                a.href = url;
+                a.download = 'duk.pdf';
+                a.click();
+            })
+        })
+    }
+
+    downloadFilterDUK() {
+        const request = {
+            name: this.state.name,
+            status: this.state.status.value,
+            golongan: this.state.golongan.value,
+            pangkat: this.state.pangkat.value,
+            pendidikan: this.state.pendidikan.value,
+            jabatan: this.state.jabatan.value,
+            masa_kerja: this.state.masaKerja.value,
+            usia: this.state.usia.value
+        }
+        const requestOptions = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(request)
+        };
+        fetch(BASE_URL + '/duk/download/filter', requestOptions).then(response => {
+            response.blob().then(blob => {
+                let url = window.URL.createObjectURL(blob);
+                let a = document.createElement('a');
+                a.href = url;
+                a.download = 'duk-filter.pdf';
+                a.click();
+            })
+        })
+
     }
 
     changePage(page) {
-        this.setState({page: page - 1});
-        this.props.pageDuk({filter: "", page: page - 1})
+        this.setState({page: page - 1})
+        const request = {
+            name: this.state.name,
+            status: this.state.status.value,
+            golongan: this.state.golongan.value,
+            pangkat: this.state.pangkat.value,
+            pendidikan: this.state.pendidikan.value,
+            jabatan: this.state.jabatan.value,
+            masa_kerja: this.state.masaKerja.value,
+            usia: this.state.usia.value,
+            page: page - 1
+        }
+        this.props.pageDuk(request)
     }
 
     handleChangeStatus(event) {
@@ -361,7 +400,7 @@ class EmployeeDUK extends Component {
     render() {
         const {page, name} = this.state
         const {duks, filter} = this.props
-        console.log(filter)
+
         return (
             <Fragment>
                 <div className="row">
@@ -494,6 +533,10 @@ class EmployeeDUK extends Component {
                                         <button type="submit" style={{marginTop: -30}}
                                                 onClick={this.downloadDUK}
                                                 className="btn btn-success btn-sm mr-2 float-right">Download DUK
+                                        </button>
+                                        <button type="submit" style={{marginTop: -30}}
+                                                onClick={this.downloadFilterDUK}
+                                                className="btn btn-success btn-sm mr-2 float-right">Download Filter
                                         </button>
 
                                     </div>

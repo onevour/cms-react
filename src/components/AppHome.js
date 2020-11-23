@@ -4,7 +4,7 @@ import Navigation from "../modules/navigation/Navigation";
 import AppHeader from "./AppHeader";
 import AppFooter from "./AppFooter";
 import SampleTable from "../modules/dashboard/SampleTable";
-import Employee from "../modules/employee/Employee";
+import Employee from "../modules/profile/Employee";
 import CutiForm from "../modules/cuti/CutiForm";
 import KenaikanPangkatForm from "../modules/pangkat/KenaikanPangkatForm";
 import KenaikanPangkatDokumenForm from "../modules/pangkat/KenaikanPangkatDokumenForm";
@@ -17,7 +17,7 @@ import CutiTableAtasan from "../modules/cuti/CutiTableAtasan";
 import CutiTablePejabat from "../modules/cuti/CutiTablePejabat";
 import CutiDetailAtasan from "../modules/cuti/CutiDetailAtasan";
 import CutiDetailPejabat from "../modules/cuti/CutiDetailPejabat";
-import EmployeeDataDigitalForm from "../modules/employee/EmployeeDataDigitalForm";
+import EmployeeDataDigitalForm from "../modules/profile/EmployeeDataDigitalForm";
 import MasterDocument from "../modules/documents/MasterDocument";
 import Pangkat from "../modules/pangkat/Pangkat";
 import PangkatDokumenForm from "../modules/pangkat/PangkatDokumen";
@@ -26,8 +26,11 @@ import PangkatKenaikanPegawai from "../modules/pangkat/PangkatKenaikanPegawai";
 import PangkatKenaikanPegawaiForm from "../modules/pangkat/PangkatKenaikanPegawaiForm";
 import MasterJabatan from "../modules/jabatan/MasterJabatan";
 import MasterJabatanMap from "../modules/jabatan/MasterJabatanMap";
-import EmployeeDUK from "../modules/employee/EmployeeDUK";
+import EmployeeDUK from "../modules/profile/EmployeeDUK";
 import CutiUser from "../modules/cuti/CutiUser";
+import DocumentPending from "../modules/documents/DocumentPending";
+import User from "../modules/user/User";
+import UserRoleForm from "../modules/user/UserRoleForm";
 
 class AppHome extends Component {
 
@@ -41,9 +44,12 @@ class AppHome extends Component {
                     </nav>
                     <div className="main-panel">
                         <div className="content-wrapper">
+                            <Route path="/user" component={User} exact/>
+                            <Route path="/user/update" render={(props) => <UserRoleForm {...props}/>} exact/>
                             <Route path="/document" component={MasterDocument} exact/>
-                            <Route path="/employee" component={Employee} exact/>
-                            <Route path="/employee/digital" render={(props) => <EmployeeDataDigitalForm {...props}/>}
+                            <Route path="/document/pending" component={DocumentPending} exact/>
+                            <Route path="/profile" component={Employee} exact/>
+                            <Route path="/profile/digital" render={(props) => <EmployeeDataDigitalForm {...props}/>}
                                    exact/>
                             <Route path="/sample_table" component={SampleTable} exact/>
                             <Route path="/cuti" component={CutiForm} exact/>

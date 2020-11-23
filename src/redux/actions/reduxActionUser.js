@@ -9,7 +9,7 @@ import {
     PANGKAT_DOCUMENT_CRUD_RESPONSE,
     PANGKAT_PAGE,
     PANGKAT_PAGE_RESPONSE,
-    POST, USER_HISTORY_PANGKAT_CRUD, USER_HISTORY_PANGKAT_CRUD_RESPONSE,
+    POST, USER_CRUD, USER_CRUD_RESPONSE, USER_HISTORY_PANGKAT_CRUD, USER_HISTORY_PANGKAT_CRUD_RESPONSE,
     USER_HISTORY_PANGKAT_LIST,
     USER_HISTORY_PANGKAT_LIST_RESPONSE,
     USER_LIST,
@@ -21,6 +21,34 @@ import {
 export function pageUser(param) {
     const payload = {
         url: "/user/page",
+        body: param
+    }
+    return {
+        type: USER_PAGE,
+        payload: payload,
+        method: POST,
+        response: USER_PAGE_RESPONSE,
+        responseBody: {code: 0, result: {values: []}}
+    }
+}
+
+export function userUpdateRole(param) {
+    const payload = {
+        url: "/user/update/role",
+        body: param
+    }
+    return {
+        type: USER_CRUD,
+        payload: payload,
+        method: POST,
+        response: USER_CRUD_RESPONSE,
+        responseBody: {code: 0, result: null}
+    }
+}
+
+export function pageUserJabatan(param) {
+    const payload = {
+        url: "/user/page/jabatan",
         body: param
     }
     return {
