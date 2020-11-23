@@ -530,14 +530,17 @@ class EmployeeDUK extends Component {
                                         </form>
                                     </div>
                                     <div className="col-md-3">
-                                        <button type="submit" style={{marginTop: -30}}
-                                                onClick={this.downloadDUK}
-                                                className="btn btn-success btn-sm mr-2 float-right">Download DUK
-                                        </button>
-                                        <button type="submit" style={{marginTop: -30}}
-                                                onClick={this.downloadFilterDUK}
-                                                className="btn btn-success btn-sm mr-2 float-right">Download Filter
-                                        </button>
+                                        <div className="row float-right">
+                                            <button type="submit" style={{marginTop: -30}}
+                                                    onClick={this.downloadDUK}
+                                                    className="btn btn-success btn-sm mr-2">Download DUK
+                                            </button>
+                                            <button type="submit" style={{marginTop: -30}}
+                                                    onClick={this.downloadFilterDUK}
+                                                    className="btn btn-success btn-sm mr-2">Download Filter
+                                            </button>
+                                        </div>
+
 
                                     </div>
                                 </div>

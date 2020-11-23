@@ -55,7 +55,7 @@ class Login extends Component {
         const {loginResponse} = this.props
         if (loginResponse.code === 200) {
             return (
-                <Redirect to='/employee'/>
+                <Redirect to='/profile'/>
             )
         }
         return (
@@ -99,7 +99,7 @@ class Login extends Component {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="form-group" style={{marginTop:30, marginBottom:30}}>
+                                        <div className="form-group" style={{marginTop: 30, marginBottom: 30}}>
                                             <p className="text-danger">{loginResponse.code > 200 ? loginResponse.message : ""}</p>
                                             <button className="btn btn-primary submit-btn btn-block">Login</button>
                                         </div>
