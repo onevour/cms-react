@@ -204,7 +204,7 @@ class CutiDetailPejabat extends Component {
                                 <hr/>
                                 <article>
                                     <address className="norm">
-                                        <h5>{cuti.user.name}</h5>
+                                        <h5>{cuti.user.nama}</h5>
                                         <p> {cuti.user.nip} <br/>
                                             {formatDateTime(cuti.created_date)}</p>
                                     </address>

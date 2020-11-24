@@ -2,13 +2,13 @@ export const MAX_PENSIUN = 58
 
 export const ROLES = [
     {
-        "value": "STAFF ADMIN",
-        "label": "STAFF ADMIN",
+        "value": "STAFF",
+        "label": "STAFF",
         "description": "Pegawai"
     },
     {
-        "value": "STAFF",
-        "label": "STAFF",
+        "value": "STAFF ADMIN",
+        "label": "STAFF ADMIN",
         "description": "Super Admin"
     },
     {
@@ -29,6 +29,11 @@ export const ROLES = [
     {
         "value": "SEKRETARIS KEPALA UNIT",
         "label": "SEKRETARIS KEPALA UNIT",
+        "description": "Admin Pusat Simpeg"
+    },
+    {
+        "value": "PEJABAT PUSAT",
+        "label": "PEJABAT PUSAT",
         "description": "Admin Pusat Simpeg"
     }
 ]

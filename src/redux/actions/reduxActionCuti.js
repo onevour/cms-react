@@ -95,6 +95,17 @@ export function loadCutiUserLogin() {
     return {type: CUTI_LOAD_USER, payload: payload};
 }
 
+export function loadCutiUserApproval() {
+    const user = JSON.parse(localStorage.getItem('user'))
+    const payload = {
+        url: "/cuti/user/approval",
+        body: {
+            nip: user.nip
+        }
+    }
+    return {type: CUTI_LOAD_USER, payload: payload};
+}
+
 export function submitDateHoliday(param) {
     const user = JSON.parse(localStorage.getItem('user'))
     param.nip = user.nip

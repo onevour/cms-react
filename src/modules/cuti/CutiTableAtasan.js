@@ -5,7 +5,7 @@ import "react-datetime/css/react-datetime.css";
 import {connect} from "react-redux";
 import {clearInput, cutiLabel, disableBeforeDay, formatDate, formatStatusCuti} from "../../application/AppCommons";
 import {Redirect} from "react-router-dom";
-import {loadCutiUserLogin, requestCuti} from "../../redux/actions/reduxActionCuti";
+import {loadCutiUserApproval, loadCutiUserLogin, requestCuti} from "../../redux/actions/reduxActionCuti";
 
 class CutiTableAtasan extends Component {
 
@@ -171,12 +171,12 @@ class CutiTableAtasan extends Component {
             this.formRef.reset();
             clearInput(this.startDateRef)
             clearInput(this.finishDateRef)
-            this.props.loadCutiUserLogin()
+            this.props.loadCutiUserApproval()
         }
     }
 
     componentDidMount() {
-        this.props.loadCutiUserLogin();
+        this.props.loadCutiUserApproval();
     }
 
     renderInput(props, openCalendar, closeCalendar) {
@@ -282,4 +282,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, {submitCuti: requestCuti, loadCutiUserLogin})(CutiTableAtasan);
+export default connect(mapStateToProps, {submitCuti: requestCuti, loadCutiUserApproval})(CutiTableAtasan);

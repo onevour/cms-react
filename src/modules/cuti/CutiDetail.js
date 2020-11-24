@@ -45,7 +45,7 @@ class CutiDetail extends Component {
                     <Fragment>
                         <hr/>
                         <address className="norm">
-                            <h5>{atasan.name}</h5>
+                            <h5>{atasan.nama}</h5>
                             <p> {atasan.nip} <br/>
                                 {formatDateTime(cuti.approve_atasan_date)} <br/><br/>
                                 {cuti.description_atasan}
