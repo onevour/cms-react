@@ -67,8 +67,8 @@ class AppHome extends Component {
                             <Route path="/pensiun" component={Pensiun} exact/>
                             <Route path="/pangkat/dokumen" render={(props) => <PangkatDokumen {...props}/>} exact/>
                             <Route path="/pangkat" component={Pangkat} exact/>
-                            <Route path="/pangkat/kenaikan/pegawai" component={PangkatKenaikanPegawai} exact/>
-                            <Route path="/pangkat/kenaikan/pegawai/candidate"
+                            <Route path="/pangkat/kenaikan/user" component={PangkatKenaikanPegawai} exact/>
+                            <Route path="/pangkat/kenaikan/user/candidate"
                                    render={(props) => <PangkatKenaikanPegawaiForm {...props}/>} exact/>
                             <Route path="/proyeksi_gaji" component={ProyeksiGaji} exact/>
                             <Route path="/calendar" component={CalendarHoliday} exact/>

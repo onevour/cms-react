@@ -327,7 +327,7 @@ class EmployeeDUK extends Component {
             <tr>
                 <th rowSpan={2}>Nama</th>
                 <th rowSpan={2}>Jenis Kelamin</th>
-                <th rowSpan={2}>Nip</th>
+                <th rowSpan={2}>NIP</th>
                 <th colSpan={3}>Pangkat/Golongan Ruang</th>
                 <th rowSpan={2}>Masa waktu dipangkat</th>
                 <th colSpan={2}>Jabatan</th>
