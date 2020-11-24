@@ -75,7 +75,7 @@ class KenaikanPangkatForm extends Component {
         for (let i = 0; i < pangkats.result.length; i++) {
             let tmt = pangkats.result[i]
             console.log(tmt)
-            if (!(tmt.tmt)) {
+            if (!(tmt.tmt) && 'Pensiun' !== tmt.pangkat_golongan.golongan) {
                 pangkatNullTmt.push(tmt);
                 break
             }
