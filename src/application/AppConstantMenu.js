@@ -205,6 +205,15 @@ export const menuAdmin = [
             }
         ]
     },
+    {id: 5, type: 1, name: "Profile", icon: "menu-icon mdi mdi-account-card-details", path: "/profile"},
+    {id: 6, type: 1, name: "Cuti", icon: "menu-icon mdi mdi-file-image", path: "/cuti"},
+    {
+        id: 9,
+        type: 1,
+        name: "Kenaikan Pangkat",
+        icon: "menu-icon mdi mdi-folder-upload",
+        path: "/kenaikan_pangkat"
+    },
     {
         id: 100,
         type: 2,
