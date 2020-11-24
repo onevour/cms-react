@@ -366,9 +366,11 @@ export const menuStaf = [
         path: "/kenaikan_pangkat"
     },
     {id: 10, type: 1, name: "Pensiun", icon: "menu-icon mdi mdi-account-switch", path: "/pensiun"},
+    {id: 13, type: 1, name: "Peta Jabatan", icon: "menu-icon mdi mdi-file-tree", path: "/jabatan/map"}
 ]
 
 export function renderMenu() {
+    return menuAll
     let user = JSON.parse(localStorage.getItem('user'))
     console.log(user.role)
     if ('PEJABAT PUSAT' === user.role) {

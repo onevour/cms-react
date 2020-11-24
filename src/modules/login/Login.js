@@ -109,7 +109,8 @@ class Login extends Component {
                                 <ul className="auth-footer">
 
                                 </ul>
-                                <p className="footer-text text-center">copyright © 2020 Teman Dawai. All rights
+                                <p className="footer-text text-center" style={{color: "#8BBBD1"}}>copyright © 2020
+                                    Direktorat SMA. All rights
                                     reserved.</p>
                             </div>
                         </div>

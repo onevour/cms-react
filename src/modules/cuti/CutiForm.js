@@ -14,9 +14,16 @@ import {
     cutiQuota
 } from "../../redux/actions/reduxActionCuti";
 import {connect} from "react-redux";
-import {clearInput, cutiLabel, disableBeforeDay, formatDate, formatStatusCuti} from "../../application/AppCommons";
+import {
+    clearInput,
+    cutiLabel,
+    disableBeforeDay,
+    formatDate,
+    formatStatusCuti,
+    getFileExtension
+} from "../../application/AppCommons";
 import {Redirect} from "react-router-dom";
-import {CUTI_QUOTA_RESPONSE, DOCUMENT_CRUD_RESPONSE} from "../../redux/constants/reducActionTypes";
+import {BASE_URL, CUTI_QUOTA_RESPONSE, DOCUMENT_CRUD_RESPONSE} from "../../redux/constants/reducActionTypes";
 
 class CutiForm extends Component {
 
@@ -36,6 +43,8 @@ class CutiForm extends Component {
             description: '',
             tlpAddress: '',
             cutiAddress: '',
+            file: null,
+            ext: '',
             // valid
             errorjenisCuti: '',
             errorStartDate: '',
@@ -136,6 +145,20 @@ class CutiForm extends Component {
         this.setState({cutiAddress: event.target.value});
     }
 
+    handleChangeFile(file) {
+        new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file)
+            fileReader.onload = () => {
+                this.setState({file: fileReader.result, ext: getFileExtension(file.name)})
+            }
+            fileReader.onerror = (error) => {
+                this.setState({file: null})
+                // reject(error);
+            }
+        })
+    }
+
     submitFormCuti(event) {
         event.preventDefault()
         // error
@@ -185,6 +208,8 @@ class CutiForm extends Component {
             description: this.state.description,
             tlp_address: this.state.tlpAddress,
             cuti_address: this.state.cutiAddress,
+            file: this.state.file,
+            ext: this.state.ext,
         }
         this.props.requestCuti(request);
 
@@ -204,7 +229,9 @@ class CutiForm extends Component {
                     jenisCuti: '',
                     description: '',
                     tlpAddress: '',
-                    cutiAddress: ''
+                    cutiAddress: '',
+                    file: null,
+                    ext: ''
                 })
 
                 this.formRef.reset();
@@ -232,12 +259,53 @@ class CutiForm extends Component {
 
     renderQuotaCuti(cutiQuotaResponse, flag) {
         if (cutiQuotaResponse.result) {
-            if('A' === flag) {
+            if ('A' === flag) {
                 return (cutiQuotaResponse.result.kuota_cuti)
             }
-            return (cutiQuotaResponse.result.kuota_past_cuti)
+            if ('P1' === flag) {
+                return (cutiQuotaResponse.result.kuota_past_cuti)
+            }
+            return (cutiQuotaResponse.result.kuota_past_two_cuti)
         }
         return 0
+    }
+
+    donwloadLampiran(o) {
+        fetch(BASE_URL + '/cuti/download/lampiran/' + o.id).then(response => {
+            response.blob().then(blob => {
+                let url = window.URL.createObjectURL(blob);
+                let a = document.createElement('a');
+                a.href = url;
+                a.download = 'lampiran.pdf';
+                a.click();
+            })
+        })
+    }
+
+    renderLampiran(o) {
+        console.log(o)
+        if (!o.file_name) {
+            return true
+        }
+        return (
+            <a href="#" style={{marginTop: -10}}
+               onClick={() => {
+                   const {user} = this.state
+                   fetch(BASE_URL + '/cuti/download/lampiran/' + +o.id)
+                       .then(response => {
+                           if (response.ok) {
+                               response.blob().then(blob => {
+                                   let url = window.URL.createObjectURL(blob);
+                                   let a = document.createElement('a');
+                                   a.href = url;
+                                   a.download = 'cuti.' + getFileExtension(o.path);
+                                   a.click();
+                               });
+                           }
+                       }).catch(function (err) {
+                   });
+               }}>download</a>
+        )
     }
 
     render() {
@@ -252,7 +320,8 @@ class CutiForm extends Component {
                                 <h4 className="card-title">Pengajuan Cuti</h4>
                                 <p className="card-description">
                                     Sisa cuti anda({this.renderQuotaCuti(cutiQuotaResponse, 'A')})
-                                    tahun lalu({this.renderQuotaCuti(cutiQuotaResponse, 'P')})
+                                    1 tahun lalu({this.renderQuotaCuti(cutiQuotaResponse, 'P1')})
+                                    2 tahun lalu({this.renderQuotaCuti(cutiQuotaResponse, 'P2')})
                                 </p>
                                 <form className="forms-sample" ref={(ref) => this.formRef = ref}
                                       onSubmit={this.submitFormCuti}
@@ -331,6 +400,17 @@ class CutiForm extends Component {
                                         <span className="text-danger">{this.state.errorAddress}</span>
                                     </div>
                                     <div className="form-group">
+                                        <label>Lmapiran</label>
+                                        <input type="file" className="form-control" placeholder="Lampiran"
+                                               onChange={(e) => {
+                                                   const file = e.target.files[0]
+                                                   if (file) {
+                                                       this.handleChangeFile(file)
+                                                   }
+                                               }}
+                                        />
+                                    </div>
+                                    <div className="form-group">
                                         <span className="text-danger">{this.state.errorServer}</span>
                                     </div>
                                     <button type="submit" className="btn btn-success mr-2">Submit</button>
@@ -372,6 +452,9 @@ class CutiForm extends Component {
                                             <th>
                                                 Approve Pejabat
                                             </th>
+                                            <th>
+                                                Lampiran
+                                            </th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -386,6 +469,7 @@ class CutiForm extends Component {
                                                     <td>{formatStatusCuti(o.cuti_status)}</td>
                                                     <td>{formatDate(o.approve_atasan_date)}</td>
                                                     <td>{formatDate(o.approve_pejabat_date)}</td>
+                                                    <td>{this.renderLampiran(o)}</td>
                                                 </tr>
                                             )
                                         }

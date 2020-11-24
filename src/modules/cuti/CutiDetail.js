@@ -81,7 +81,7 @@ class CutiDetail extends Component {
     downloadCuti() {
         const {user, cuti} = this.state
         console.log(cuti)
-        fetch(BASE_URL + '/api/v1/download/cuti/' + cuti.user.nip + '/' + cuti.id)
+        fetch(BASE_URL + '/user/download/cuti/' + cuti.user.nip + '/' + cuti.id)
             .then(response => {
                 response.blob().then(blob => {
                     let url = window.URL.createObjectURL(blob);

@@ -34,7 +34,7 @@ class Pensiun extends Component {
         for (let i = 0; i < pangkats.result.length; i++) {
             const o = pangkats.result[i]
             // hardcode id
-
+            console.log("golongan is pensiun", o)
             if ((o.pangkat_golongan) && 18 === o.pangkat_golongan.id) {
                 // console.log(o)
                 if (o.pangkat_golongan) {

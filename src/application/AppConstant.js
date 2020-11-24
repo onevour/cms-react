@@ -76,6 +76,10 @@ export const JENIS_CUTI = [
     {
         value: 6,
         label: "LUAR TANGGUNGAN NEGARA"
+    },
+    {
+        value: 7,
+        label: "MENEMANI ISTRI MELAHIRKAN"
     }
 ]
 
