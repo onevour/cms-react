@@ -370,7 +370,7 @@ export const menuStaf = [
 ]
 
 export function renderMenu() {
-    return menuAll
+    // return menuAll
     let user = JSON.parse(localStorage.getItem('user'))
     console.log(user.role)
     if ('PEJABAT PUSAT' === user.role) {
