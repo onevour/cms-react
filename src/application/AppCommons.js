@@ -11,6 +11,11 @@ export function cutiLabel(index) {
     })
 }
 
+export function formatYear(value) {
+    if (null === value || undefined === value) return '-'
+    return moment(value).format('YYYY') //dd mmm yyyy
+}
+
 export function formatDate(value) {
     if (null === value || undefined === value) return '-'
     return moment(value).format('DD MMM YYYY') //dd mmm yyyy
@@ -101,4 +106,8 @@ export function selectedTabClass(o) {
 
 export function getFileExtension(filename) {
     return filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
+}
+
+export function numberOnly(value){
+
 }

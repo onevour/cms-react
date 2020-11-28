@@ -69,6 +69,14 @@ export const menuAll = [
                 name: "User",
                 icon: "menu-icon mdi mdi-account-card-details",
                 path: "/user"
+            },
+            {
+                id: 123,
+                root_id: 12,
+                type: 3,
+                name: "Cuti User",
+                icon: "menu-icon mdi mdi-account-card-details",
+                path: "/cuti/user/admin"
             }
         ]
     },
@@ -202,6 +210,13 @@ export const menuAdmin = [
                 name: "User",
                 icon: "menu-icon mdi mdi-account-card-details",
                 path: "/user"
+            }, {
+                id: 123,
+                root_id: 12,
+                type: 3,
+                name: "Cuti User",
+                icon: "menu-icon mdi mdi-account-card-details",
+                path: "/cuti/user/admin"
             }
         ]
     },
@@ -372,6 +387,7 @@ export const menuStaf = [
 export function renderMenu() {
     // return menuAll
     let user = JSON.parse(localStorage.getItem('user'))
+    if (!user) return []
     console.log(user.role)
     if ('PEJABAT PUSAT' === user.role) {
         return menuPejabat

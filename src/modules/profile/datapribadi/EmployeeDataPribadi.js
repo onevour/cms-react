@@ -4,6 +4,8 @@ import EmployeePendidikan from "./EmployeePendidikan";
 import EmployeeDataKeluargaV2 from "./EmployeeDataKeluargaV2";
 import {BASE_URL} from "../../../redux/constants/reducActionTypes";
 import EmployeeDataDigital from "./EmployeeDataDigital";
+import {Redirect} from "react-router-dom";
+
 // import {Redirect} from "react-router-dom";
 
 class EmployeeDataPribadi extends Component {
@@ -11,6 +13,7 @@ class EmployeeDataPribadi extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            directUpdate: false,
             tabs: [
                 {
                     selected: true,
@@ -31,6 +34,11 @@ class EmployeeDataPribadi extends Component {
             user: JSON.parse(localStorage.getItem('user'))
         }
         this.downloadEmployeeData = this.downloadEmployeeData.bind(this)
+        this.updateEmployeeData = this.updateEmployeeData.bind(this)
+    }
+
+    updateEmployeeData() {
+        this.setState({directUpdate: true})
     }
 
     selectedTab(index) {
@@ -61,6 +69,14 @@ class EmployeeDataPribadi extends Component {
             });
     }
 
+    directUpdate() {
+        if (this.state.directUpdate) {
+            return (
+                <Redirect to='/profile/update'/>
+            )
+        }
+    }
+
     render() {
         const {user, tabs, content} = this.state
         if (user === null) {
@@ -73,10 +89,20 @@ class EmployeeDataPribadi extends Component {
                         <h4 className="card-title">Data Pribadi</h4>
                     </div>
                     <div className="col">
-                        <button type="submit" style={{marginTop: -10}}
-                                onClick={this.downloadEmployeeData}
-                                className="btn btn-success btn-sm mr-2 float-right">Cetak CV
-                        </button>
+
+                        <div>
+                            <button type="submit" style={{marginTop: -10}}
+                                    onClick={this.downloadEmployeeData}
+                                    className="btn btn-success btn-sm mr-2 float-right">
+                                <i className="mdi mdi-18px mdi-printer"/> Cetak CV
+                            </button>
+                        </div>
+                        <div>
+                            <button type="button" className="btn mr-2 btn-warning btn-sm float-right"
+                                    style={{marginTop: -10}} onClick={this.updateEmployeeData}>
+                                <i className="mdi mdi-18px mdi-pencil"/>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div className="row">
@@ -87,7 +113,8 @@ class EmployeeDataPribadi extends Component {
                                 <td>Nama</td>
                                 <td>{user.nama}</td>
                                 <td/>
-                                <td/>
+                                <td>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Tempat, Tgl Lahir</td>
@@ -148,6 +175,7 @@ class EmployeeDataPribadi extends Component {
                     </div>
                     {content}
                 </div>
+                {this.directUpdate()}
             </div>
         )
     }

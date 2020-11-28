@@ -2,6 +2,12 @@ import React, {Component} from "react";
 import {selectedTabClass} from "../../../application/AppCommons";
 import EmployeeMutasi from "./EmployeeMutasi";
 import EmployeePangkat from "./EmployeePangkat";
+import EmployeeSKP from "./EmployeeSKP";
+import EmployeeCredit from "./EmployeeCredit";
+import EmployeeSatyaLencanaForm from "../form/EmployeeSatyaLencanaForm";
+import EmployeeLencana from "./EmployeeLencana";
+import EmployeeDisplin from "./EmployeeDisiplin";
+import EmployeePelatihan from "./EmployeePelatihan";
 
 class EmployeeDataRiwayat extends Component {
 
@@ -18,22 +24,37 @@ class EmployeeDataRiwayat extends Component {
                     selected: false,
                     label: "Pangkat",
                     content: <EmployeePangkat/>,
+
                 },
                 {
                     selected: false,
-                    label: "SKP"
+                    label: "SKP",
+                    content: <EmployeeSKP/>,
                 },
                 {
                     selected: false,
-                    label: "Angka Kredit"
+                    label: "Angka Kredit",
+                    content: <EmployeeCredit/>,
                 },
                 {
                     selected: false,
-                    label: "Satya Lencana"
+                    label: "Satya Lencana",
+                    content: <EmployeeLencana/>,
                 },
                 {
                     selected: false,
-                    label: "Hukuman Disiplin"
+                    label: "Hukuman Disiplin",
+                    content: <EmployeeDisplin/>
+                },
+                {
+                    selected: false,
+                    label: "Pelatihan Jabatan",
+                    content: <EmployeePelatihan type={1}/>
+                },
+                {
+                    selected: false,
+                    label: "Pelatihan Teknis",
+                    content: <EmployeePelatihan type={2}/>
                 }
             ],
             content: <EmployeeMutasi/>,

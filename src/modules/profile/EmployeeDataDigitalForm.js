@@ -61,7 +61,6 @@ class EmployeeDataDigitalForm extends Component {
                 this.props.removeUserDocument(request);
             }
         });
-
     }
 
     handleChangeSelect(e) {

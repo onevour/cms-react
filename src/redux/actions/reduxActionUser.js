@@ -9,13 +9,13 @@ import {
     PANGKAT_DOCUMENT_CRUD_RESPONSE,
     PANGKAT_PAGE,
     PANGKAT_PAGE_RESPONSE,
-    POST, USER_CRUD, USER_CRUD_RESPONSE, USER_HISTORY_PANGKAT_CRUD, USER_HISTORY_PANGKAT_CRUD_RESPONSE,
+    POST, USER, USER_CRUD, USER_CRUD_RESPONSE, USER_HISTORY_PANGKAT_CRUD, USER_HISTORY_PANGKAT_CRUD_RESPONSE,
     USER_HISTORY_PANGKAT_LIST,
     USER_HISTORY_PANGKAT_LIST_RESPONSE,
     USER_LIST,
     USER_LIST_RESPONSE,
     USER_PAGE,
-    USER_PAGE_RESPONSE
+    USER_PAGE_RESPONSE, USER_RESPONSE
 } from "../constants/reducActionTypes";
 
 export function pageUser(param) {
@@ -91,6 +91,7 @@ export function listUserHistoryPangkat() {
 
 export function addPangkat(param) {
     const user = JSON.parse(localStorage.getItem('user'))
+    param.nip = user.nip
     const payload = {
         url: "/user/pangkat/add",
         body: param
@@ -115,6 +116,204 @@ export function removePangkat(param) {
         payload: payload,
         method: POST,
         response: USER_HISTORY_PANGKAT_CRUD_RESPONSE,
+        responseBody: {code: 0, result: null}
+    }
+}
+
+// UPDATE PROFILE
+export function userProfile() {
+    const user = JSON.parse(localStorage.getItem('user'))
+    const payload = {
+        url: "/user/profile/" + user.nip,
+        body: null
+    }
+    return {
+        type: USER,
+        payload: payload,
+        method: GET,
+        response: USER_RESPONSE,
+        responseBody: {code: 0, result: null}
+    }
+}
+
+// UPDATE PROFILE
+export function updateProfile(param) {
+    const user = JSON.parse(localStorage.getItem('user'))
+    param.nip = user.nip
+    const payload = {
+        url: "/user/update/profile",
+        body: param
+    }
+    return {
+        type: USER_CRUD,
+        payload: payload,
+        method: POST,
+        response: USER_CRUD_RESPONSE,
+        responseBody: {code: 0, result: null}
+    }
+}
+
+// UPDATE SKP
+export function updateSKP(param) {
+    const user = JSON.parse(localStorage.getItem('user'))
+    param.nip = user.nip
+    const payload = {
+        url: "/user/update/profile/skp",
+        body: param
+    }
+    return {
+        type: USER_CRUD,
+        payload: payload,
+        method: POST,
+        response: USER_CRUD_RESPONSE,
+        responseBody: {code: 0, result: null}
+    }
+}
+
+export function removeSKP(param) {
+    const user = JSON.parse(localStorage.getItem('user'))
+    param.nip = user.nip
+    const payload = {
+        url: "/user/update/profile/skp/remove/" + param.id,
+        body: param
+    }
+    return {
+        type: USER_CRUD,
+        payload: payload,
+        method: GET,
+        response: USER_CRUD_RESPONSE,
+        responseBody: {code: 0, result: null}
+    }
+}
+
+// UPDATE ANGKA KREDIT
+export function updateCredit(param) {
+    const user = JSON.parse(localStorage.getItem('user'))
+    param.nip = user.nip
+    const payload = {
+        url: "/user/update/profile/credit",
+        body: param
+    }
+    return {
+        type: USER_CRUD,
+        payload: payload,
+        method: POST,
+        response: USER_CRUD_RESPONSE,
+        responseBody: {code: 0, result: null}
+    }
+}
+
+export function removeCredit(param) {
+    const user = JSON.parse(localStorage.getItem('user'))
+    param.nip = user.nip
+    const payload = {
+        url: "/user/update/profile/credit/remove/" + param.id,
+        body: param
+    }
+    return {
+        type: USER_CRUD,
+        payload: payload,
+        method: GET,
+        response: USER_CRUD_RESPONSE,
+        responseBody: {code: 0, result: null}
+    }
+}
+
+// UPDATE SATYA LENCANA
+export function updateLencana(param) {
+    const user = JSON.parse(localStorage.getItem('user'))
+    param.nip = user.nip
+    const payload = {
+        url: "/user/update/profile/lencana",
+        body: param
+    }
+    return {
+        type: USER_CRUD,
+        payload: payload,
+        method: POST,
+        response: USER_CRUD_RESPONSE,
+        responseBody: {code: 0, result: null}
+    }
+}
+
+export function removeLencana(param) {
+    const user = JSON.parse(localStorage.getItem('user'))
+    param.nip = user.nip
+    const payload = {
+        url: "/user/update/profile/lencana/remove/" + param.id,
+        body: param
+    }
+    return {
+        type: USER_CRUD,
+        payload: payload,
+        method: GET,
+        response: USER_CRUD_RESPONSE,
+        responseBody: {code: 0, result: null}
+    }
+}
+
+// UPDATE HUKUMAN DISIPLIN
+export function updateDisiplin(param) {
+    const user = JSON.parse(localStorage.getItem('user'))
+    param.nip = user.nip
+    const payload = {
+        url: "/user/update/profile/disiplin",
+        body: param
+    }
+    return {
+        type: USER_CRUD,
+        payload: payload,
+        method: POST,
+        response: USER_CRUD_RESPONSE,
+        responseBody: {code: 0, result: null}
+    }
+}
+
+export function removeDisiplin(param) {
+    const user = JSON.parse(localStorage.getItem('user'))
+    param.nip = user.nip
+    const payload = {
+        url: "/user/update/profile/disiplin/remove/" + param.id,
+        body: param
+    }
+    return {
+        type: USER_CRUD,
+        payload: payload,
+        method: GET,
+        response: USER_CRUD_RESPONSE,
+        responseBody: {code: 0, result: null}
+    }
+}
+
+// UPDATE PELATIHAN JABATAN
+export function updatePelatihan(param) {
+    const user = JSON.parse(localStorage.getItem('user'))
+    param.nip = user.nip
+    const payload = {
+        url: "/user/update/profile/pelatihan",
+        body: param
+    }
+    return {
+        type: USER_CRUD,
+        payload: payload,
+        method: POST,
+        response: USER_CRUD_RESPONSE,
+        responseBody: {code: 0, result: null}
+    }
+}
+
+export function removePelatihan(param) {
+    const user = JSON.parse(localStorage.getItem('user'))
+    param.nip = user.nip
+    const payload = {
+        url: "/user/update/profile/pelatihan/remove/" + param.id,
+        body: param
+    }
+    return {
+        type: USER_CRUD,
+        payload: payload,
+        method: GET,
+        response: USER_CRUD_RESPONSE,
         responseBody: {code: 0, result: null}
     }
 }

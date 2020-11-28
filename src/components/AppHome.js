@@ -31,6 +31,9 @@ import CutiUser from "../modules/cuti/CutiUser";
 import DocumentPending from "../modules/documents/DocumentPending";
 import User from "../modules/user/User";
 import UserRoleForm from "../modules/user/UserRoleForm";
+import EmployeeForm from "../modules/profile/form/EmployeeForm";
+import CutiUserAdmin from "../modules/cuti/CutiUserAdmin";
+import CutiDetailAdmin from "../modules/cuti/CutiDetailAdmin";
 
 class AppHome extends Component {
 
@@ -49,11 +52,15 @@ class AppHome extends Component {
                             <Route path="/document" component={MasterDocument} exact/>
                             <Route path="/document/pending" component={DocumentPending} exact/>
                             <Route path="/profile" component={Employee} exact/>
+                            <Route path="/profile/update" component={EmployeeForm} exact/>
                             <Route path="/profile/digital" render={(props) => <EmployeeDataDigitalForm {...props}/>}
                                    exact/>
                             <Route path="/sample_table" component={SampleTable} exact/>
                             <Route path="/cuti" component={CutiForm} exact/>
                             <Route path="/cuti/user" component={CutiUser} exact/>
+                            <Route path="/cuti/user/admin" component={CutiUserAdmin} exact/>
+                            <Route path="/cuti/user/admin/detail"
+                                   render={(props) => <CutiDetailAdmin {...props} />} exact/>
                             <Route path="/cuti_approval_atasan" component={CutiTableAtasan} exact/>
                             <Route path="/cuti_approval_pejabat" component={CutiTablePejabat} exact/>
                             <Route path="/cuti_detail" render={(props) => <CutiDetail {...props}/>} exact/>
