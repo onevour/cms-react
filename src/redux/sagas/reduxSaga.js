@@ -41,32 +41,32 @@ import {
     DUK_LIST,
     CUTI_PAGE,
     CUTI_QUOTA,
-    DUK_FILTER_PARAM, USER_CRUD, USER
+    DUK_FILTER_PARAM, USER_CRUD, USER, CUTI_CALCULATE_DAY
 } from "../constants/reducActionTypes";
 
-import {masterDocument, removeUserDocument, uploadUserDocument, userDocument} from "./reduxSagaDataDigital";
 import {getData, postData} from "../../application/ApiRequest";
 import {masterDocumentType} from "./reduxSagaDocumentType";
 
 export default function* watcherSaga() {
     yield takeEvery("DATA_REQUESTED", workerSaga);
-    yield takeEvery(LOGIN, workerSagaLogin);
-    yield takeEvery(LOGOUT, workerSagaLogout);
-    yield takeEvery(CUTI_SUBMIT, workerSagaCuti);
-    yield takeEvery(CUTI_CANCEL_SUBMIT, workerSagaCuti);
-    yield takeEvery(CUTI_APPROVE_ATASAN_SUBMIT, workerSagaCuti);
-    yield takeEvery(CUTI_APPROVE_PEJABAT_SUBMIT, workerSagaCuti);
-    yield takeEvery(CUTI_DAYS, workerSagaCuti);
-    yield takeEvery(CUTI_LOAD_USER, workerSagaCuti);
-    yield takeEvery(HOLIDAYS_SUBMIT, workerSagaLoadHolidays);
-    yield takeEvery(HOLIDAYS_REMOVE, workerSagaLoadHolidays);
-    yield takeEvery(HOLIDAYS_LOAD, workerSagaLoadHolidays);
-    yield takeEvery(HOLIDAYS_LOAD_FUTURE, workerSagaLoadHolidays);
+    yield takeEvery(LOGIN, masterDocumentType);
+    yield takeEvery(LOGOUT, masterDocumentType);
+    yield takeEvery(CUTI_SUBMIT, masterDocumentType);
+    yield takeEvery(CUTI_CALCULATE_DAY, masterDocumentType);
+    yield takeEvery(CUTI_CANCEL_SUBMIT, masterDocumentType);
+    yield takeEvery(CUTI_APPROVE_ATASAN_SUBMIT, masterDocumentType);
+    yield takeEvery(CUTI_APPROVE_PEJABAT_SUBMIT, masterDocumentType);
+    yield takeEvery(CUTI_DAYS, masterDocumentType);
+    yield takeEvery(CUTI_LOAD_USER, masterDocumentType);
+    yield takeEvery(HOLIDAYS_SUBMIT, masterDocumentType);
+    yield takeEvery(HOLIDAYS_REMOVE, masterDocumentType);
+    yield takeEvery(HOLIDAYS_LOAD, masterDocumentType);
+    yield takeEvery(HOLIDAYS_LOAD_FUTURE, masterDocumentType);
     // pisah file
-    yield takeEvery(MASTER_DOCUMENT, masterDocument);
-    yield takeEvery(UPLOAD_DOCUMENT, uploadUserDocument);
-    yield takeEvery(USER_DOCUMENT, userDocument);
-    yield takeEvery(REMOVE_DOCUMENT, removeUserDocument);
+    yield takeEvery(MASTER_DOCUMENT, masterDocumentType);
+    yield takeEvery(UPLOAD_DOCUMENT, masterDocumentType);
+    yield takeEvery(USER_DOCUMENT, masterDocumentType);
+    yield takeEvery(REMOVE_DOCUMENT, masterDocumentType);
 
     // document
     yield takeEvery(DOCUMENT_LIST, masterDocumentType);

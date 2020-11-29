@@ -1,3 +1,5 @@
+import {CUTI_CANCEL_SUBMIT_RESPONSE} from "../redux/constants/reducActionTypes";
+
 export const MAX_PENSIUN = 58
 
 export const ROLES = [
@@ -101,4 +103,16 @@ export const emptyContentPage = {
         first: true,
         last: true
     }
+}
+
+export function defCrud(state, key) {
+    return state[key] ? state[key] : emptyCrud
+}
+
+export function defList(state, key) {
+    return state[key] ? state[key] : emptyContentList
+}
+
+export function defPage(state, key) {
+    return state[key] ? state[key] : emptyContentPage
 }

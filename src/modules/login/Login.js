@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import {Redirect} from 'react-router-dom';
 import {connect} from "react-redux";
 import {getData, login} from "../../redux/actions/reduxAction";
+import {defCrud} from "../../application/AppConstant";
+import {LOGIN_RESPONSE} from "../../redux/constants/reducActionTypes";
 
 class Login extends Component {
 
@@ -39,21 +41,20 @@ class Login extends Component {
         this.props.login(request);
     }
 
-    handleUserChange(evt) {
-        this.setState({
-            username: evt.target.value,
-        });
-    };
+    handleUserChange(e) {
+        this.setState({username: e.target.value})
+    }
 
-    handlePassChange(evt) {
-        this.setState({
-            password: evt.target.value,
-        });
+    handlePassChange(e) {
+        this.setState({password: e.target.value})
     }
 
     render() {
-        const {loginResponse} = this.props
-        if (loginResponse.code === 200) {
+        const {login_response} = this.props
+        console.log(login_response)
+        if (login_response.code === 200 && login_response.result) {
+            localStorage.setItem('user', JSON.stringify(login_response.result))
+            console.log("redirect to home")
             return (
                 <Redirect to='/profile'/>
             )
@@ -100,7 +101,7 @@ class Login extends Component {
                                             </div>
                                         </div>
                                         <div className="form-group" style={{marginTop: 30, marginBottom: 30}}>
-                                            <p className="text-danger">{loginResponse.code > 200 ? loginResponse.message : ""}</p>
+                                            <p className="text-danger">{login.code > 200 ? login.message : ""}</p>
                                             <button className="btn btn-primary submit-btn btn-block">Login</button>
                                         </div>
                                     </form>
@@ -125,11 +126,8 @@ class Login extends Component {
 }
 
 function mapStateToProps(state) {
-    if (state.loginResponse.code === 200) {
-        localStorage.setItem('user', JSON.stringify(state.loginResponse.result))
-    }
     return {
-        loginResponse: state.loginResponse
+        login_response: defCrud(state, LOGIN_RESPONSE)
     }
 }
 

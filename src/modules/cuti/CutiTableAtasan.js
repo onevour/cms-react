@@ -6,6 +6,8 @@ import {connect} from "react-redux";
 import {clearInput, cutiLabel, disableBeforeDay, formatDate, formatStatusCuti} from "../../application/AppCommons";
 import {Redirect} from "react-router-dom";
 import {loadCutiUserApproval, loadCutiUserLogin, requestCuti} from "../../redux/actions/reduxActionCuti";
+import {defList} from "../../application/AppConstant";
+import {CUTI_LOAD_USER_RESPONSE} from "../../redux/constants/reducActionTypes";
 
 class CutiTableAtasan extends Component {
 
@@ -192,7 +194,7 @@ class CutiTableAtasan extends Component {
     }
 
     render() {
-        const {cutiUserResponse} = this.props
+        const {user_cuties} = this.props
         // console.log(cutiUserResponse)
         const {startDate, startDateValue, jenisCuti, description, totalDays, tlpAddress, cutiAddress} = this.state
         return (
@@ -234,7 +236,7 @@ class CutiTableAtasan extends Component {
                                         </thead>
                                         <tbody>
                                         {
-                                            cutiUserResponse.result.map((o, i) =>
+                                            user_cuties.result.map((o, i) =>
                                                 <tr className="clickable" key={i}
                                                     onClick={() => this.handleModalShowHide(o)}>
                                                     <td>{cutiLabel(o.jenis_cuti)}</td>
@@ -278,7 +280,7 @@ function mapStateToProps(state) {
     console.log("state cuti form", state)
     return {
         cutiResponse: state.cutiResponse,
-        cutiUserResponse: state.cutiUserResponse,
+        user_cuties: defList(state, CUTI_LOAD_USER_RESPONSE),
     }
 }
 

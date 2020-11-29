@@ -5,7 +5,7 @@ import Select from "react-select";
 import swal from 'sweetalert';
 import "react-datetime/css/react-datetime.css";
 import moment from "moment-timezone";
-import {emptyCrud, JENIS_CUTI} from "../../application/AppConstant";
+import {defCrud, defList, emptyContentList, emptyCrud, JENIS_CUTI} from "../../application/AppConstant";
 import {
     requestCuti,
     loadCutiUserLogin,
@@ -23,13 +23,25 @@ import {
     getFileExtension
 } from "../../application/AppCommons";
 import {Redirect} from "react-router-dom";
-import {BASE_URL, CUTI_QUOTA_RESPONSE, DOCUMENT_CRUD_RESPONSE} from "../../redux/constants/reducActionTypes";
+import {
+    BASE_URL, CUTI_CALCULATE_DAY_RESPONSE,
+    CUTI_LOAD_USER, CUTI_LOAD_USER_RESPONSE,
+    CUTI_QUOTA_RESPONSE, CUTI_SUBMIT_RESPONSE,
+    DOCUMENT_CRUD_RESPONSE, HOLIDAYS_LOAD_FUTURE_RESPONSE
+} from "../../redux/constants/reducActionTypes";
 
 class CutiForm extends Component {
 
     constructor(props) {
         super(props);
         require("moment-business-days")
+        const user = JSON.parse(localStorage.getItem('user'))
+        let userTelepon = ''
+        user.contacts.map((o, i) => {
+            if (o.type === 1) {
+                userTelepon = o.value
+            }
+        })
         this.state = {
             direct: false,
             directBody: null,
@@ -41,8 +53,8 @@ class CutiForm extends Component {
             totalDays: 0,
             jenisCuti: '',
             description: '',
-            tlpAddress: '',
-            cutiAddress: '',
+            tlpAddress: userTelepon,
+            cutiAddress: user.alamat,
             file: null,
             ext: '',
             // valid
@@ -131,17 +143,14 @@ class CutiForm extends Component {
     }
 
     handleChangeDescription(event) {
-        console.log(event.target.value)
         this.setState({description: event.target.value});
     }
 
     handleChangeTelepon(event) {
-        console.log(event.target.value)
         this.setState({tlpAddress: event.target.value});
     }
 
     handleChangeAddress(event) {
-        console.log(event.target.value)
         this.setState({cutiAddress: event.target.value});
     }
 
@@ -216,10 +225,17 @@ class CutiForm extends Component {
     }
 
     componentDidUpdate(props) {
-        if (props.cutiResponse !== this.props.cutiResponse) {
-            if (this.props.cutiResponse.code === 200) {
+        if (props.cuti_submit !== this.props.cuti_submit) {
+            if (this.props.cuti_submit.code === 200) {
                 swal("Cuti", "Pengajuan cuti berhasil!", "success");
                 // clear
+                const user = JSON.parse(localStorage.getItem('user'))
+                let userTelepon = ''
+                user.contacts.map((o, i) => {
+                    if (o.type === 1) {
+                        userTelepon = o.value
+                    }
+                })
                 this.setState({
                     loading: true,
                     startDate: '',
@@ -228,8 +244,8 @@ class CutiForm extends Component {
                     totalDays: 0,
                     jenisCuti: '',
                     description: '',
-                    tlpAddress: '',
-                    cutiAddress: '',
+                    tlpAddress: userTelepon,
+                    cutiAddress: user.alamat,
                     file: null,
                     ext: ''
                 })
@@ -238,16 +254,16 @@ class CutiForm extends Component {
                 clearInput(this.startDateRef)
                 clearInput(this.finishDateRef)
                 this.setState({errorServer: ''})
-                this.props.loadCutiUserLogin()
                 this.props.calculateDays({})
             } else {
-                this.setState({errorServer: this.props.cutiResponse.message})
+                this.setState({errorServer: this.props.cuti_submit.message})
             }
-        }
-        // holiday
-        if (props.holidaysResponse !== this.props.holidaysResponse) {
+            setTimeout(() => {
+                this.props.loadCutiUserLogin()
+            }, 1500);
 
         }
+        // holiday
     }
 
     componentDidMount() {
@@ -257,17 +273,15 @@ class CutiForm extends Component {
         this.props.calculateDays({})
     }
 
-    renderQuotaCuti(cutiQuotaResponse, flag) {
-        if (cutiQuotaResponse.result) {
-            if ('A' === flag) {
-                return (cutiQuotaResponse.result.kuota_cuti)
-            }
-            if ('P1' === flag) {
-                return (cutiQuotaResponse.result.kuota_past_cuti)
-            }
-            return (cutiQuotaResponse.result.kuota_past_two_cuti)
+    renderQuotaCuti(user_quota, flag) {
+        if (!user_quota.result) return 0
+        if ('A' === flag) {
+            return (user_quota.result.kuota_cuti)
         }
-        return 0
+        if ('P1' === flag) {
+            return (user_quota.result.kuota_past_cuti)
+        }
+        return (user_quota.result.kuota_past_two_cuti)
     }
 
     donwloadLampiran(o) {
@@ -283,7 +297,6 @@ class CutiForm extends Component {
     }
 
     renderLampiran(o) {
-        console.log(o)
         if (!o.file_name) {
             return true
         }
@@ -309,7 +322,7 @@ class CutiForm extends Component {
     }
 
     render() {
-        const {cutiUserResponse, cutiDaysResponse, holidaysResponse, cutiQuotaResponse} = this.props
+        const {user_cuties, cuti_calculate_days, holidays, user_quota} = this.props
         const {startDate, jenisCuti, description, tlpAddress, cutiAddress} = this.state
         return (
             <Fragment>
@@ -319,9 +332,9 @@ class CutiForm extends Component {
                             <div className="card-body">
                                 <h4 className="card-title">Pengajuan Cuti</h4>
                                 <p className="card-description">
-                                    Sisa cuti anda({this.renderQuotaCuti(cutiQuotaResponse, 'A')})
-                                    1 tahun lalu({this.renderQuotaCuti(cutiQuotaResponse, 'P1')})
-                                    2 tahun lalu({this.renderQuotaCuti(cutiQuotaResponse, 'P2')})
+                                    Sisa cuti anda({this.renderQuotaCuti(user_quota, 'A')})
+                                    1 tahun lalu({this.renderQuotaCuti(user_quota, 'P1')})
+                                    2 tahun lalu({this.renderQuotaCuti(user_quota, 'P2')})
                                 </p>
                                 <form className="forms-sample" ref={(ref) => this.formRef = ref}
                                       onSubmit={this.submitFormCuti}
@@ -343,8 +356,8 @@ class CutiForm extends Component {
                                                   isValidDate={(current) => {
                                                       const isWeekend = disableBeforeDay(current);
                                                       if (isWeekend) {
-                                                          for (let i = 0; i < holidaysResponse.result.length; i++) {
-                                                              const o = holidaysResponse.result[i]
+                                                          for (let i = 0; i < holidays.result.length; i++) {
+                                                              const o = holidays.result[i]
                                                               const holiday = moment(o.date)
                                                               if (holiday.isSame(current, 'day')) return false
                                                           }
@@ -364,8 +377,8 @@ class CutiForm extends Component {
                                                   isValidDate={(current) => {
                                                       const isWeekend = disableBeforeDay(current);
                                                       if (isWeekend) {
-                                                          for (let i = 0; i < holidaysResponse.result.length; i++) {
-                                                              const o = holidaysResponse.result[i]
+                                                          for (let i = 0; i < holidays.result.length; i++) {
+                                                              const o = holidays.result[i]
                                                               const holiday = moment(o.date)
                                                               if (holiday.isSame(current, 'day')) return false
                                                           }
@@ -379,7 +392,7 @@ class CutiForm extends Component {
                                     <div className="form-group">
                                         <label>Total Hari</label>
                                         <input readOnly type="text" className="form-control" placeholder="Durasi Cuti"
-                                               value={cutiDaysResponse.result}/>
+                                               value={(cuti_calculate_days.result ? cuti_calculate_days.result : 0)}/>
                                     </div>
                                     <div className="form-group">
                                         <label>Keterangan</label>
@@ -400,7 +413,7 @@ class CutiForm extends Component {
                                         <span className="text-danger">{this.state.errorAddress}</span>
                                     </div>
                                     <div className="form-group">
-                                        <label>Lmapiran</label>
+                                        <label>Lampiran</label>
                                         <input type="file" className="form-control" placeholder="Lampiran"
                                                onChange={(e) => {
                                                    const file = e.target.files[0]
@@ -459,7 +472,7 @@ class CutiForm extends Component {
                                         </thead>
                                         <tbody>
                                         {
-                                            cutiUserResponse.result.map((o, i) =>
+                                            user_cuties.result.map((o, i) =>
                                                 <tr className="clickable" key={i}
                                                     onClick={() => this.handleModalShowHide(o)}>
                                                     <td>{cutiLabel(o.jenis_cuti)}</td>
@@ -502,18 +515,18 @@ class CutiForm extends Component {
 
 function mapStateToProps(state) {
     return {
-        cutiResponse: state.cutiResponse,
-        cutiDaysResponse: state.cutiDaysResponse,
-        cutiUserResponse: state.cutiUserResponse,
-        holidaysResponse: state.holidaysResponse,
-        cutiQuotaResponse: (state[CUTI_QUOTA_RESPONSE] ? state[CUTI_QUOTA_RESPONSE] : emptyCrud)
+        cuti_submit: defCrud(state, CUTI_SUBMIT_RESPONSE),
+        user_quota: defCrud(state, CUTI_QUOTA_RESPONSE),
+        user_cuties: defList(state, CUTI_LOAD_USER_RESPONSE),
+        holidays: defList(state, HOLIDAYS_LOAD_FUTURE_RESPONSE),
+        cuti_calculate_days: defCrud(state, CUTI_CALCULATE_DAY_RESPONSE)
     }
 }
 
 export default connect(mapStateToProps, {
-    requestCuti,
-    cutiQuota,
+    loadHolidaysFuture,
     loadCutiUserLogin,
+    cutiQuota,
     calculateDays,
-    loadHolidaysFuture
+    requestCuti
 })(CutiForm);

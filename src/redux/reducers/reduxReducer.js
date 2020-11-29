@@ -3,7 +3,7 @@ import dataDigitalReducer from "./reduxReducerDataDigital";
 import {documentTypeReducer} from "./reduxReducerDocumentType";
 
 const initialState = {
-    loginResponse: {code: 0},
+    // loginResponse: {code: 0},
     cutiResponse: {code: 0},
     cutiDaysResponse: {code: 0, result: 0},
     cutiUserResponse: {code: 0, result: []},

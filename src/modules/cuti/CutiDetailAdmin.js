@@ -3,8 +3,9 @@ import swal from 'sweetalert';
 import {connect} from "react-redux";
 import {cutiLabel, formatDate, formatDateTime, formatStatusCuti} from "../../application/AppCommons";
 import {Redirect} from "react-router-dom";
-import {BASE_URL} from "../../redux/constants/reducActionTypes";
+import {BASE_URL, CUTI_APPROVE_PEJABAT_SUBMIT_RESPONSE} from "../../redux/constants/reducActionTypes";
 import {approvePejabatCuti} from "../../redux/actions/reduxActionCuti";
+import {defCrud} from "../../application/AppConstant";
 
 class CutiDetailAdmin extends Component {
 
@@ -39,7 +40,7 @@ class CutiDetailAdmin extends Component {
 
 
     componentDidUpdate(props) {
-        if (props.cutiUpdateResponse !== this.props.cutiUpdateResponse) {
+        if (props.update !== this.props.update) {
             var message = "Pembatalan cuti berhasil!";
             if (this.state.approveAction) {
                 message = "Approve cuti berhasil!";
@@ -261,7 +262,7 @@ class CutiDetailAdmin extends Component {
 
 function mapStateToProps(state) {
     return {
-        cutiUpdateResponse: state.cutiUpdateResponse
+        update: defCrud(state, CUTI_APPROVE_PEJABAT_SUBMIT_RESPONSE)
     }
 }
 

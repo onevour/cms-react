@@ -1,14 +1,14 @@
 import {
-    CUTI_APPROVE_ATASAN_SUBMIT,
-    CUTI_APPROVE_PEJABAT_SUBMIT,
-    CUTI_CANCEL_SUBMIT,
+    CUTI_APPROVE_ATASAN_SUBMIT, CUTI_APPROVE_ATASAN_SUBMIT_RESPONSE,
+    CUTI_APPROVE_PEJABAT_SUBMIT, CUTI_APPROVE_PEJABAT_SUBMIT_RESPONSE, CUTI_CALCULATE_DAY, CUTI_CALCULATE_DAY_RESPONSE,
+    CUTI_CANCEL_SUBMIT, CUTI_CANCEL_SUBMIT_RESPONSE,
     CUTI_DAYS,
-    CUTI_LOAD_USER, CUTI_PAGE, CUTI_PAGE_RESPONSE, CUTI_QUOTA, CUTI_QUOTA_RESPONSE,
-    CUTI_SUBMIT,
+    CUTI_LOAD_USER, CUTI_LOAD_USER_RESPONSE, CUTI_PAGE, CUTI_PAGE_RESPONSE, CUTI_QUOTA, CUTI_QUOTA_RESPONSE,
+    CUTI_SUBMIT, CUTI_SUBMIT_RESPONSE,
     DOCUMENT_PAGE,
     DOCUMENT_PAGE_RESPONSE, GET,
     HOLIDAYS_LOAD,
-    HOLIDAYS_LOAD_FUTURE,
+    HOLIDAYS_LOAD_FUTURE, HOLIDAYS_LOAD_FUTURE_RESPONSE,
     HOLIDAYS_REMOVE,
     HOLIDAYS_SUBMIT, JABATAN_LIST, JABATAN_LIST_RESPONSE,
     POST,
@@ -21,7 +21,14 @@ export function requestCuti(param) {
         url: "/cuti/request",
         body: param
     }
-    return {type: CUTI_SUBMIT, payload: payload};
+    // return {type: CUTI_SUBMIT, payload: payload};
+    return {
+        type: CUTI_SUBMIT,
+        payload: payload,
+        method: POST,
+        response: CUTI_SUBMIT_RESPONSE,
+        responseBody: {code: 0, result: null}
+    }
 }
 
 export function cutiQuota() {
@@ -50,7 +57,14 @@ export function cancelCuti(param) {
         body: param
     }
     console.log("event cancel cuti", payload)
-    return {type: CUTI_CANCEL_SUBMIT, payload: payload};
+    // return {type: CUTI_CANCEL_SUBMIT, payload: payload}
+    return {
+        type: CUTI_CANCEL_SUBMIT,
+        payload: payload,
+        method: POST,
+        response: CUTI_CANCEL_SUBMIT_RESPONSE,
+        responseBody: {code: 0, result: null}
+    }
 }
 
 export function approveAtasanCuti(param) {
@@ -60,7 +74,14 @@ export function approveAtasanCuti(param) {
         url: "/cuti/approve/atasan",
         body: param
     }
-    return {type: CUTI_APPROVE_ATASAN_SUBMIT, payload: payload};
+    // return {type: CUTI_APPROVE_ATASAN_SUBMIT, payload: payload}
+    return {
+        type: CUTI_APPROVE_ATASAN_SUBMIT,
+        payload: payload,
+        method: POST,
+        response: CUTI_APPROVE_ATASAN_SUBMIT_RESPONSE,
+        responseBody: {code: 0, result: null}
+    }
 }
 
 export function approvePejabatCuti(param) {
@@ -70,7 +91,14 @@ export function approvePejabatCuti(param) {
         url: "/cuti/approve/pejabat",
         body: param
     }
-    return {type: CUTI_APPROVE_PEJABAT_SUBMIT, payload: payload};
+    return {
+        type: CUTI_APPROVE_PEJABAT_SUBMIT,
+        payload: payload,
+        method: POST,
+        response: CUTI_APPROVE_PEJABAT_SUBMIT_RESPONSE,
+        responseBody: {code: 0, result: null}
+    }
+    // return {type: CUTI_APPROVE_PEJABAT_SUBMIT, payload: payload};
 }
 
 export function calculateDays(param) {
@@ -81,7 +109,14 @@ export function calculateDays(param) {
         body: param
     }
     // console.log("cal date action", payload)
-    return {type: CUTI_DAYS, payload: payload};
+    // return {type: CUTI_DAYS, payload: payload};
+    return {
+        type: CUTI_CALCULATE_DAY,
+        payload: payload,
+        method: POST,
+        response: CUTI_CALCULATE_DAY_RESPONSE,
+        responseBody: {code: 0, result: null}
+    }
 }
 
 export function loadCutiUserLogin() {
@@ -92,7 +127,14 @@ export function loadCutiUserLogin() {
             nip: user.nip
         }
     }
-    return {type: CUTI_LOAD_USER, payload: payload};
+    // return {type: CUTI_LOAD_USER_RESPONSE, payload: payload};
+    return {
+        type: CUTI_LOAD_USER,
+        payload: payload,
+        method: POST,
+        response: CUTI_LOAD_USER_RESPONSE,
+        responseBody: {code: 0, result: null}
+    }
 }
 
 export function loadCutiUserApproval() {
@@ -103,7 +145,12 @@ export function loadCutiUserApproval() {
             nip: user.nip
         }
     }
-    return {type: CUTI_LOAD_USER, payload: payload};
+    return {
+        type: CUTI_LOAD_USER,
+        payload: payload,
+        method: POST,
+        response: CUTI_LOAD_USER_RESPONSE
+    }
 }
 
 export function submitDateHoliday(param) {
@@ -137,7 +184,13 @@ export function loadHolidaysFuture() {
     const payload = {
         url: "/cuti/holiday/future"
     }
-    return {type: HOLIDAYS_LOAD_FUTURE, payload: payload};
+    return {
+        type: HOLIDAYS_LOAD_FUTURE,
+        payload: payload,
+        method: GET,
+        response: HOLIDAYS_LOAD_FUTURE_RESPONSE,
+        responseBody: {code: 0, result: {values: []}}
+    }
 }
 
 export function pageUserCuti(param) {

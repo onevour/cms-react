@@ -84,14 +84,14 @@ class EmployeeSKPForm extends Component {
     submitForm(e) {
         e.preventDefault()
         const {type, ext, file, date, value} = this.state
-        if (!Number(value)) {
+        if ('' === value) {
             console.log('not a number', value)
-            this.setState({errorServer: 'Nilai not a number'})
+            this.setState({errorServer: 'Isi keterangan'})
             return;
         }
         const param = {
             tahun: date,
-            nilai: value,
+            keterangan: value,
             type: type,
             ext: ext,
             file: file
@@ -153,12 +153,13 @@ class EmployeeSKPForm extends Component {
                             <label>Tahun</label>
                             <Datetime dateFormat="YYYY" timeFormat={false} closeOnSelect={true}
                                       value={date}
+                                      inputProps={{placeholder: "Tahun"}}
                                       initialViewMode={"years"}
                                       onChange={this.handleSelectDate}/>
                         </div>
                         <div className="form-group">
-                            <label>Nilai</label>
-                            <input type="text" className="form-control" placeholder="Nilai"
+                            <label>Keterangan</label>
+                            <input type="text" className="form-control" placeholder="Keterangan"
                                    value={value} onChange={this.onChangeValue}/>
                         </div>
                         <div className="form-group">
@@ -171,7 +172,7 @@ class EmployeeSKPForm extends Component {
                         <button type="submit" className="btn btn-success mr-2">ADD</button>
                     </form>
                 </div>
-                <div className="col-md-1"></div>
+                <div className="col-md-1"/>
                 <div className="col-md-8">
                     <div className="table-responsive" style={{marginTop: 20}}>
                         <table className="table">
@@ -179,7 +180,7 @@ class EmployeeSKPForm extends Component {
                             <tr>
                                 <th>Opsi</th>
                                 <th>Tahun</th>
-                                <th>Nilai</th>
+                                <th>Keterangan</th>
                                 <th>Dokumen</th>
                             </tr>
                             </thead>

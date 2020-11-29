@@ -185,6 +185,7 @@ class EmployeePelatihanJabatanForm extends Component {
                             <Datetime dateFormat="YYYY" timeFormat={false} closeOnSelect={true}
                                       value={date}
                                       initialViewMode={"years"}
+                                      inputProps={{placeholder: "Tahun"}}
                                       onChange={this.handleSelectDate}/>
                         </div>
                         <div className="form-group">
@@ -192,6 +193,7 @@ class EmployeePelatihanJabatanForm extends Component {
                             <Datetime dateFormat="YYYY" timeFormat={false} closeOnSelect={true}
                                       value={tmt}
                                       initialViewMode={"years"}
+                                      inputProps={{placeholder: "TMT"}}
                                       onChange={this.handleSelectTmt}/>
                         </div>
                         <div className="form-group">

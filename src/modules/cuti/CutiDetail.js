@@ -4,7 +4,8 @@ import {cancelCuti} from "../../redux/actions/reduxActionCuti";
 import {connect} from "react-redux";
 import {cutiLabel, formatDate, formatDateTime, formatStatusCuti} from "../../application/AppCommons";
 import {Redirect} from "react-router-dom";
-import {BASE_URL} from "../../redux/constants/reducActionTypes";
+import {BASE_URL, CUTI_CANCEL_SUBMIT_RESPONSE} from "../../redux/constants/reducActionTypes";
+import {defCrud, emptyCrud} from "../../application/AppConstant";
 
 class CutiDetail extends Component {
 
@@ -115,7 +116,7 @@ class CutiDetail extends Component {
     }
 
     componentDidUpdate(props) {
-        if (props.cutiUpdateResponse !== this.props.cutiUpdateResponse) {
+        if (props.update !== this.props.update) {
             swal("Pembatalan cuti berhasil!", {icon: "success",}).then((willDelete) => {
                 this.setState({backAction: true})
             });
@@ -233,7 +234,7 @@ class CutiDetail extends Component {
 
 function mapStateToProps(state) {
     return {
-        cutiUpdateResponse: state.cutiUpdateResponse
+        update: defCrud(state, CUTI_CANCEL_SUBMIT_RESPONSE)
     }
 }
 

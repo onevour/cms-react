@@ -3,8 +3,9 @@ import swal from 'sweetalert';
 import {connect} from "react-redux";
 import {cutiLabel, formatDate, formatDateTime, formatStatusCuti} from "../../application/AppCommons";
 import {Redirect} from "react-router-dom";
-import {BASE_URL} from "../../redux/constants/reducActionTypes";
+import {BASE_URL, CUTI_APPROVE_ATASAN_SUBMIT_RESPONSE} from "../../redux/constants/reducActionTypes";
 import {approveAtasanCuti} from "../../redux/actions/reduxActionCuti";
+import {defCrud} from "../../application/AppConstant";
 
 class CutiDetailAtasan extends Component {
 
@@ -39,9 +40,9 @@ class CutiDetailAtasan extends Component {
 
 
     componentDidUpdate(props) {
-        if (props.cutiUpdateResponse !== this.props.cutiUpdateResponse) {
+        if (props.update !== this.props.update) {
             var message = "Pembatalan cuti berhasil!";
-            if(this.state.approveAction) {
+            if (this.state.approveAction) {
                 message = "Approve cuti berhasil!";
             }
             swal(message, {icon: "success",}).then((willDelete) => {
@@ -51,8 +52,7 @@ class CutiDetailAtasan extends Component {
     }
 
     downloadCuti() {
-        const {user, cuti} = this.state
-        console.log(cuti)
+        const {cuti} = this.state
         fetch(BASE_URL + '/user/download/cuti/' + cuti.user.nip + '/' + cuti.id)
             .then(response => {
                 response.blob().then(blob => {
@@ -262,7 +262,7 @@ class CutiDetailAtasan extends Component {
 
 function mapStateToProps(state) {
     return {
-        cutiUpdateResponse: state.cutiUpdateResponse
+        update: defCrud(state, CUTI_APPROVE_ATASAN_SUBMIT_RESPONSE)
     }
 }
 
