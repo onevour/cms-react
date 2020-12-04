@@ -85,19 +85,19 @@ class EmployeeDataPribadi extends Component {
         return (
             <div className="card-body">
                 <div className="row">
-                    <div className="col">
+                    <div className="col-md-6">
                         <h4 className="card-title">Data Pribadi</h4>
                     </div>
-                    <div className="col">
+                    <div className="col-md-6">
 
-                        <div>
+                        <div className="col-md-3 col-sm-3 float-right">
                             <button type="submit" style={{marginTop: -10}}
                                     onClick={this.downloadEmployeeData}
                                     className="btn btn-success btn-sm mr-2 float-right">
                                 <i className="mdi mdi-18px mdi-printer"/> Cetak CV
                             </button>
                         </div>
-                        <div>
+                        <div className="col-md-9 col-sm-9 float-right">
                             <button type="button" className="btn mr-2 btn-warning btn-sm float-right"
                                     style={{marginTop: -10}} onClick={this.updateEmployeeData}>
                                 <i className="mdi mdi-18px mdi-pencil"/>

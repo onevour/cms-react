@@ -71,7 +71,23 @@ export const menuAll = [
                 path: "/user"
             },
             {
-                id: 123,
+                id: 124,
+                root_id: 12,
+                type: 3,
+                name: "User Pensiun",
+                icon: "menu-icon mdi mdi-account-card-details",
+                path: "/user/pensiun"
+            },
+            {
+                id: 125,
+                root_id: 12,
+                type: 3,
+                name: "User Naik Pangkat",
+                icon: "menu-icon mdi mdi-account-card-details",
+                path: "/user/naikpangkat"
+            },
+            {
+                id: 126,
                 root_id: 12,
                 type: 3,
                 name: "Cuti User",
@@ -210,8 +226,25 @@ export const menuAdmin = [
                 name: "User",
                 icon: "menu-icon mdi mdi-account-card-details",
                 path: "/user"
-            }, {
-                id: 123,
+            },
+            {
+                id: 124,
+                root_id: 12,
+                type: 3,
+                name: "User Pensiun",
+                icon: "menu-icon mdi mdi-account-card-details",
+                path: "/user/pensiun"
+            },
+            {
+                id: 125,
+                root_id: 12,
+                type: 3,
+                name: "User Naik Pangkat",
+                icon: "menu-icon mdi mdi-account-card-details",
+                path: "/user/naikpangkat"
+            },
+            {
+                id: 126,
                 root_id: 12,
                 type: 3,
                 name: "Cuti User",
@@ -385,7 +418,7 @@ export const menuStaf = [
 ]
 
 export function renderMenu() {
-    return menuAll
+    // return menuAll
     let user = JSON.parse(localStorage.getItem('user'))
     if (!user) return []
     console.log(user.role)

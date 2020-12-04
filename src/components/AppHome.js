@@ -34,6 +34,8 @@ import UserRoleForm from "../modules/user/UserRoleForm";
 import EmployeeForm from "../modules/profile/form/EmployeeForm";
 import CutiUserAdmin from "../modules/cuti/CutiUserAdmin";
 import CutiDetailAdmin from "../modules/cuti/CutiDetailAdmin";
+import UserPensiun from "../modules/user/UserPensiun";
+import UserNaikPangkat from "../modules/user/UserNaikPangkat";
 
 class AppHome extends Component {
 
@@ -48,6 +50,8 @@ class AppHome extends Component {
                     <div className="main-panel">
                         <div className="content-wrapper">
                             <Route path="/user" component={User} exact/>
+                            <Route path="/user/pensiun" component={UserPensiun} exact/>
+                            <Route path="/user/naikpangkat" component={UserNaikPangkat} exact/>
                             <Route path="/user/update" render={(props) => <UserRoleForm {...props}/>} exact/>
                             <Route path="/document" component={MasterDocument} exact/>
                             <Route path="/document/pending" component={DocumentPending} exact/>

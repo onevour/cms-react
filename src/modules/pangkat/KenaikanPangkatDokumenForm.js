@@ -130,7 +130,12 @@ class KenaikanPangkatDokumenForm extends Component {
     }
 
     renderTableData(userDocument) {
-        console.log(userDocument)
+        if (!this.state.pangkat.pangkat_golongan) {
+            return;
+        }
+        if (!this.state.pangkat.pangkat_golongan.document_pangkat) {
+            return;
+        }
         return this.state.pangkat.pangkat_golongan.document_pangkat.map((o, i) => {
 
             return (

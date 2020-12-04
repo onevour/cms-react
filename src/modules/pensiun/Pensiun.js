@@ -1,12 +1,13 @@
 import React, {Component, Fragment} from "react";
+import moment from "moment-timezone";
 import {Button, Modal} from 'react-bootstrap'
 import "react-datetime/css/react-datetime.css";
 import {connect} from "react-redux";
 import {loadUserDocument, userUploadDocument} from "../../redux/actions/reduxActionDataDigital";
 import {BASE_URL, USER_HISTORY_PANGKAT_LIST_RESPONSE} from "../../redux/constants/reducActionTypes";
-import {emptyContentList} from "../../application/AppConstant";
+import {emptyContentList, MAX_PENSIUN} from "../../application/AppConstant";
 import {listUserHistoryPangkat} from "../../redux/actions/reduxActionUser";
-import {getFileExtension} from "../../application/AppCommons";
+import {formatDate, getFileExtension} from "../../application/AppCommons";
 
 class Pensiun extends Component {
 
@@ -34,7 +35,7 @@ class Pensiun extends Component {
         for (let i = 0; i < pangkats.result.length; i++) {
             const o = pangkats.result[i]
             // hardcode id
-            console.log("golongan is pensiun", o)
+            // console.log("golongan is pensiun", o)
             if ((o.pangkat_golongan) && 18 === o.pangkat_golongan.id) {
                 // console.log(o)
                 if (o.pangkat_golongan) {
@@ -131,7 +132,6 @@ class Pensiun extends Component {
 
     renderTableData(documents, userDocument) {
         return documents.map((o, i) => {
-
             return (
                 <tr key={i}>
                     <td>{i + 1}</td>
@@ -147,12 +147,38 @@ class Pensiun extends Component {
                 </tr>
             )
         })
-
     }
 
     render() {
         const documents = this.pensiunDocument()
         const {userDocument} = this.props
+        const {user} = this.state
+        // validate pensiun
+        // let year = moment(user.tanggal_lahir).startOf('years').fromNow()
+        let diff = moment().diff(moment(user.tanggal_lahir), 'milliseconds')
+        let duration = moment.duration(diff)
+        let isPensiun = duration.years() < MAX_PENSIUN;
+        isPensiun = false
+        if (isPensiun) {
+            let pensiun = moment(user.tanggal_lahir).add(MAX_PENSIUN, 'years');
+            return (
+                <Fragment>
+                    <div className="row">
+                        <div className="col-md-12 grid-margin">
+                            <div className="card mb-3">
+                                <div className="card-body">
+                                    <h4 className="card-title">Anda belum memasuki masa pensiun</h4>
+                                    <p className="card-description">
+                                        Perkiraan pensiun
+                                        anda:<b> {formatDate(pensiun)}</b> ({MAX_PENSIUN - duration.years()} Tahun {duration.months()} Bulan)
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Fragment>
+            )
+        }
         return (
             <Fragment>
                 <div className="row">
