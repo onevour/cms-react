@@ -19,7 +19,16 @@ export function login(param) {
 }
 
 export function logout(param) {
-    const payload = {}
-    return {type: LOGOUT, payload: payload};
+    const payload = {
+        url:  "/user/login",
+        body: param
+    }
+    // return {type: LOGIN, payload: payload};
+    return {
+        type: LOGIN,
+        payload: payload,
+        method: POST,
+        response: LOGIN_RESPONSE
+    }
 }
 
