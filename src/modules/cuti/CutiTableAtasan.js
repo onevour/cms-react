@@ -3,11 +3,25 @@ import {Button, Modal} from 'react-bootstrap';
 import swal from 'sweetalert';
 import "react-datetime/css/react-datetime.css";
 import {connect} from "react-redux";
-import {clearInput, cutiLabel, disableBeforeDay, formatDate, formatStatusCuti} from "../../application/AppCommons";
+import {
+    clearInput,
+    cutiLabel,
+    disableBeforeDay,
+    formatDate,
+    formatStatusCuti,
+    selectedTabClass
+} from "../../application/AppCommons";
 import {Redirect} from "react-router-dom";
 import {loadCutiUserApproval, loadCutiUserLogin, requestCuti} from "../../redux/actions/reduxActionCuti";
 import {defList} from "../../application/AppConstant";
 import {CUTI_LOAD_USER_RESPONSE} from "../../redux/constants/reducActionTypes";
+import EmployeeMutasi from "../profile/riwayat/EmployeeMutasi";
+import EmployeePangkat from "../profile/riwayat/EmployeePangkat";
+import EmployeeSKP from "../profile/riwayat/EmployeeSKP";
+import EmployeeCredit from "../profile/riwayat/EmployeeCredit";
+import EmployeeLencana from "../profile/riwayat/EmployeeLencana";
+import EmployeeDisplin from "../profile/riwayat/EmployeeDisiplin";
+import EmployeePelatihan from "../profile/riwayat/EmployeePelatihan";
 
 class CutiTableAtasan extends Component {
 
@@ -18,6 +32,20 @@ class CutiTableAtasan extends Component {
             direct: false,
             directBody: null,
             showHide: false,
+            tabs: [
+                {
+                    selected: true,
+                    label: "Pending",
+                    content: 0,
+                },
+                {
+                    selected: false,
+                    label: "Approve",
+                    content: 1,
+
+                }
+            ],
+            content: 0,
         }
         this.formRef = null;
         this.startDateRef = React.createRef();
@@ -193,10 +221,31 @@ class CutiTableAtasan extends Component {
         );
     }
 
+    selectedTab(index) {
+        var content = null
+        const tabs = this.state.tabs.map((val, i) => {
+            val.selected = index === i
+            if (val.selected) {
+                content = val.content;
+            }
+            return val
+        })
+        this.setState({tabs: tabs, content: content})
+    }
+
     render() {
         const {user_cuties} = this.props
-        // console.log(cutiUserResponse)
-        const {startDate, startDateValue, jenisCuti, description, totalDays, tlpAddress, cutiAddress} = this.state
+        const {tabs, content} = this.state
+        const filter_cuti = user_cuties.result.filter(item => {
+            console.log(item)
+            if (0 === content) {
+                return item.cuti_status === 3
+            }
+            if (1 === content) {
+                return item.cuti_status !== 3
+            }
+            return false
+        })
         return (
             <Fragment>
                 <div className="row">
@@ -207,6 +256,17 @@ class CutiTableAtasan extends Component {
                                 <p className="card-description">
                                     Verifikasi cuti pegawai (Atasan)
                                 </p>
+                                <ul className="nav nav-tabs">
+                                    {tabs.map((o, i) =>
+                                        <li className="nav-item" key={i}>
+                                            <a className={selectedTabClass(o)}
+                                               onClick={(e) => {
+                                                   e.preventDefault();
+                                                   this.selectedTab(i)
+                                               }} href="#">{o.label}</a>
+                                        </li>
+                                    )}
+                                </ul>
                                 <div className="table-responsive">
                                     <table className="table table-hover">
                                         <thead>
@@ -236,7 +296,7 @@ class CutiTableAtasan extends Component {
                                         </thead>
                                         <tbody>
                                         {
-                                            user_cuties.result.map((o, i) =>
+                                            filter_cuti.map((o, i) =>
                                                 <tr className="clickable" key={i}
                                                     onClick={() => this.handleModalShowHide(o)}>
                                                     <td>{cutiLabel(o.jenis_cuti)}</td>
