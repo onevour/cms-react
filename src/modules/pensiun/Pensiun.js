@@ -12,14 +12,19 @@ import {
 import {defCrud, defList, emptyContentList, MAX_PENSIUN} from "../../application/AppConstant";
 import {listUserHistoryPangkat} from "../../redux/actions/reduxActionUser";
 import {formatDate, getFileExtension} from "../../application/AppCommons";
+import DocumentViewer from "../../plugins/DocumentViewer";
 
 class Pensiun extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            user: JSON.parse(localStorage.getItem('user'))
+            user: JSON.parse(localStorage.getItem('user')),
+            url: '',
+            path: '',
+            modalShow: false
         }
+        this.onModalClose = this.onModalClose.bind(this)
     }
 
     componentDidMount(props) {
@@ -28,7 +33,7 @@ class Pensiun extends Component {
     }
 
     componentDidUpdate(props) {
-        if (props.uploadDocument !== this.props.uploadDocument) {
+        if (props.uploads !== this.props.uploads) {
             this.props.loadUserDocument()
             this.props.listUserHistoryPangkat()
         }
@@ -96,6 +101,7 @@ class Pensiun extends Component {
 
     renderDownloadView(o, userDocument) {
         console.log(userDocument)
+        const {user} = this.state
         if (userDocument) {
             // console.log(o)
             let value = null
@@ -109,27 +115,47 @@ class Pensiun extends Component {
             }
             if (value && value.path) {
                 return (
-                    <a href="#" style={{marginTop: -10}}
-                       onClick={() => {
-                           const {user} = this.state
-                           fetch(BASE_URL + '/user/download/digital/' + user.nip + '/' + value.id)
-                               .then(response => {
-                                   if (response.ok) {
-                                       response.blob().then(blob => {
-                                           let url = window.URL.createObjectURL(blob);
-                                           let a = document.createElement('a');
-                                           a.href = url;
-                                           a.download = user.nip + '-' + value.document.label + '.' + getFileExtension(value.path);
-                                           a.click();
-                                       });
-                                   }
-                               }).catch(function (err) {
-                           });
-                       }}>download</a>
+                    <>
+
+                        <button type="button"
+                                className="btn btn-success btn-sm btn-option mr-2"
+                                onClick={() => {
+                                    fetch(BASE_URL + '/user/download/digital/' + user.nip + '/' + value.id)
+                                        .then(response => {
+                                            if (response.ok) {
+                                                response.blob().then(blob => {
+                                                    let url = window.URL.createObjectURL(blob);
+                                                    let a = document.createElement('a');
+                                                    a.href = url;
+                                                    a.download = user.nip + '-' + value.document + '.' + getFileExtension(value.path);
+                                                    a.click();
+                                                });
+                                            }
+                                        }).catch(function (err) {
+                                    })
+                                }}>
+                            <i className="mdi mdi-24px mdi-download"/>
+                        </button>
+                        <button type="button"
+                                className="btn btn-success btn-sm btn-option mr-2"
+                                onClick={() => {
+                                    this.setState({
+                                        url: BASE_URL + '/user/download/digital/' + user.nip + '/' + value.id,
+                                        modalShow: true,
+                                        path: value.path
+                                    })
+                                }}>
+                            <i className="mdi mdi-24px mdi-file-pdf-box"/>
+                        </button>
+                    </>
                 )
             }
         }
+    }
 
+    onModalClose() {
+        console.log("callback from child")
+        this.setState({modalShow: false})
     }
 
     renderTableData(documents, userDocument) {
@@ -138,12 +164,14 @@ class Pensiun extends Component {
                 <tr key={i}>
                     <td>{i + 1}</td>
                     <td>{o.label}</td>
-                    <td><input type="file" onChange={(e) => {
-                        const file = e.target.files[0]
-                        if (file) {
-                            this.handleChangeFile(file, o)
-                        }
-                    }}/></td>
+                    <td>
+                        <input type="file" onChange={(e) => {
+                            const file = e.target.files[0]
+                            if (file) {
+                                this.handleChangeFile(file, o)
+                            }
+                        }}/>
+                    </td>
                     <td>{this.renderStatus(o, userDocument)}</td>
                     <td>{this.renderDownloadView(o, userDocument)}</td>
                 </tr>
@@ -151,18 +179,18 @@ class Pensiun extends Component {
         })
     }
 
+
     render() {
         const documents = this.pensiunDocument()
+        console.log(documents)
         const {userDocument} = this.props
-        const {user} = this.state
+        const {user, url, modalShow, path} = this.state
         // validate pensiun
-        // let year = moment(user.tanggal_lahir).startOf('years').fromNow()
         let diff = moment().diff(moment(user.tanggal_lahir), 'milliseconds')
         let duration = moment.duration(diff)
         let isPensiun = duration.years() < MAX_PENSIUN;
-        // isPensiun = false
+        let pensiun = moment(user.tanggal_lahir).add(MAX_PENSIUN, 'years');
         if (isPensiun) {
-            let pensiun = moment(user.tanggal_lahir).add(MAX_PENSIUN, 'years');
             return (
                 <Fragment>
                     <div className="row">
@@ -181,6 +209,7 @@ class Pensiun extends Component {
                 </Fragment>
             )
         }
+
         return (
             <Fragment>
                 <div className="row">
@@ -189,7 +218,8 @@ class Pensiun extends Component {
                             <div className="card-body">
                                 <h4 className="card-title">Dokumen Pensiun</h4>
                                 <p className="card-description">
-                                    Dokumen pensiun pegawai
+                                    Perkiraan pensiun anda
+                                    anda:<b> {formatDate(pensiun)}</b> ({Math.abs(MAX_PENSIUN - duration.years())} Tahun {duration.months()} Bulan)
                                 </p>
                                 <div className="table-responsive">
                                     <table className="table table-hover">
@@ -223,6 +253,7 @@ class Pensiun extends Component {
                         </div>
                     </div>
                 </div>
+                <DocumentViewer url={url} modalShow={modalShow} path={path} callback={this.onModalClose}/>
             </Fragment>
         )
     }

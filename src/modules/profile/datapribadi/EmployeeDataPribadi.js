@@ -1,10 +1,11 @@
 import React, {Component} from "react";
-import {formatDate, selectedTabClass} from "../../../application/AppCommons";
+import {formatDate, getFileExtension, selectedTabClass} from "../../../application/AppCommons";
 import EmployeePendidikan from "./EmployeePendidikan";
 import EmployeeDataKeluargaV2 from "./EmployeeDataKeluargaV2";
 import {BASE_URL} from "../../../redux/constants/reducActionTypes";
 import EmployeeDataDigital from "./EmployeeDataDigital";
 import {Redirect} from "react-router-dom";
+import DocumentViewer from "../../../plugins/DocumentViewer";
 
 // import {Redirect} from "react-router-dom";
 
@@ -13,6 +14,9 @@ class EmployeeDataPribadi extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            url: '',
+            path: '',
+            modalShow: false,
             directUpdate: false,
             tabs: [
                 {
@@ -35,6 +39,7 @@ class EmployeeDataPribadi extends Component {
         }
         this.downloadEmployeeData = this.downloadEmployeeData.bind(this)
         this.updateEmployeeData = this.updateEmployeeData.bind(this)
+        this.onModalClose = this.onModalClose.bind(this)
     }
 
     updateEmployeeData() {
@@ -77,8 +82,12 @@ class EmployeeDataPribadi extends Component {
         }
     }
 
+    onModalClose() {
+        this.setState({modalShow: false})
+    }
+
     render() {
-        const {user, tabs, content} = this.state
+        const {user, tabs, content, url, modalShow, path} = this.state
         if (user === null) {
             return (<></>)
         }
@@ -89,19 +98,29 @@ class EmployeeDataPribadi extends Component {
                         <h4 className="card-title">Data Pribadi</h4>
                     </div>
                     <div className="col-md-6">
-
-                        <div className="col-md-3 col-sm-3 float-right">
-                            <button type="submit" style={{marginTop: -10}}
-                                    onClick={this.downloadEmployeeData}
-                                    className="btn btn-success btn-sm mr-2 float-right">
-                                <i className="mdi mdi-18px mdi-printer"/> Cetak CV
-                            </button>
-                        </div>
                         <div className="col-md-9 col-sm-9 float-right">
-                            <button type="button" className="btn mr-2 btn-warning btn-sm float-right"
-                                    style={{marginTop: -10}} onClick={this.updateEmployeeData}>
-                                <i className="mdi mdi-18px mdi-pencil"/>
+                            <button type="button" style={{marginTop: -10}}
+                                    className="btn btn-success btn-sm btn-option mr-2 float-right"
+                                    onClick={this.downloadEmployeeData}>
+                                <i className="mdi mdi-24px mdi-download"/>
                             </button>
+                            <button type="button" style={{marginTop: -10}}
+                                    className="btn btn-success btn-sm btn-option mr-2 float-right"
+                                    onClick={() => {
+                                        this.setState({
+                                            url: BASE_URL + '/user/download/cv/' + user.nip,
+                                            path: 'user.pdf',
+                                            modalShow: true
+                                        })
+                                    }}>
+                                <i className="mdi mdi-24px mdi-file-pdf-box"/>
+                            </button>
+                            <button type="button" style={{marginTop: -10}}
+                                    className="btn btn-success btn-sm btn-option mr-2 float-right"
+                                    onClick={this.updateEmployeeData}>
+                                <i className="mdi mdi-24px mdi-pencil"/>
+                            </button>
+
                         </div>
                     </div>
                 </div>
@@ -175,6 +194,7 @@ class EmployeeDataPribadi extends Component {
                     </div>
                     {content}
                 </div>
+                <DocumentViewer url={url} modalShow={modalShow} path={path} callback={this.onModalClose}/>
                 {this.directUpdate()}
             </div>
         )

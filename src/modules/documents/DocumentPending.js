@@ -270,9 +270,7 @@ class DocumentPending extends Component {
                                         {
                                             documents.result.map((o, i) =>
                                                 <tr className="clickable" key={i}>
-                                                    <td>
-                                                        {this.renderOption(o)}
-                                                    </td>
+                                                    <td>{this.renderOption(o)}</td>
                                                     <td>{o.nip}</td>
                                                     <td>{o.nama}</td>
                                                     <td>{o.document}</td>

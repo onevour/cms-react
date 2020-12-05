@@ -16756,3 +16756,7 @@ tr.clickable {
 .btn i.mdi {
   margin-right: 0rem;
 }
+
+.table th, .table td {
+  padding: 15px 30px!important;
+}
