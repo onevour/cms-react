@@ -20,7 +20,7 @@ import {
     disableBeforeDay,
     formatDate,
     formatStatusCuti,
-    getFileExtension
+    getFileExtension, selectedTabClass
 } from "../../application/AppCommons";
 import {Redirect} from "react-router-dom";
 import {
@@ -66,6 +66,26 @@ class CutiForm extends Component {
             errorAddress: '',
             errorServer: '',
             // table
+            tabs: [
+                {
+                    selected: true,
+                    label: "Pending",
+                    content: 0,
+                },
+                {
+                    selected: false,
+                    label: "Approve",
+                    content: 1,
+
+                },
+                {
+                    selected: false,
+                    label: "Cancel",
+                    content: 2,
+
+                }
+            ],
+            content: 0,
 
         }
         this.formRef = null;
@@ -321,9 +341,34 @@ class CutiForm extends Component {
         )
     }
 
+    selectedTab(index) {
+        var content = null
+        const tabs = this.state.tabs.map((val, i) => {
+            val.selected = index === i
+            if (val.selected) {
+                content = val.content;
+            }
+            return val
+        })
+        this.setState({tabs: tabs, content: content})
+    }
+
     render() {
         const {user_cuties, cuti_calculate_days, holidays, user_quota} = this.props
-        const {startDate, jenisCuti, description, tlpAddress, cutiAddress} = this.state
+        const {tabs, content, startDate, jenisCuti, description, tlpAddress, cutiAddress} = this.state
+        const filter_cuti = user_cuties.result.filter(item => {
+            console.log(item)
+            if (0 === content) {
+                return item.cuti_status === 3 || item.cuti_status === 4 || item.cuti_status === 5
+            }
+            if (1 === content) {
+                return item.cuti_status > 5
+            }
+            if (2 === content) {
+                return item.cuti_status < 3
+            }
+            return false
+        })
         return (
             <Fragment>
                 <div className="row">
@@ -440,6 +485,17 @@ class CutiForm extends Component {
                                 <p className="card-description">
                                     Cuti Anda
                                 </p>
+                                <ul className="nav nav-tabs">
+                                    {tabs.map((o, i) =>
+                                        <li className="nav-item" key={i}>
+                                            <a className={selectedTabClass(o)}
+                                               onClick={(e) => {
+                                                   e.preventDefault();
+                                                   this.selectedTab(i)
+                                               }} href="#">{o.label}</a>
+                                        </li>
+                                    )}
+                                </ul>
                                 <div className="table-responsive">
                                     <table className="table table-hover">
                                         <thead>
@@ -472,7 +528,7 @@ class CutiForm extends Component {
                                         </thead>
                                         <tbody>
                                         {
-                                            user_cuties.result.map((o, i) =>
+                                            filter_cuti.map((o, i) =>
                                                 <tr className="clickable" key={i}
                                                     onClick={() => this.handleModalShowHide(o)}>
                                                     <td>{cutiLabel(o.jenis_cuti)}</td>

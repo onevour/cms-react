@@ -418,7 +418,7 @@ export const menuStaf = [
 ]
 
 export function renderMenu() {
-    // return menuAll
+    return menuAll
     let user = JSON.parse(localStorage.getItem('user'))
     if (!user) return []
     console.log(user.role)

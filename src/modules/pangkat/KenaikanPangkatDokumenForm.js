@@ -154,7 +154,6 @@ class KenaikanPangkatDokumenForm extends Component {
         })
     }
 
-
     render() {
         const {userDocument} = this.props
         console.log(userDocument)
@@ -164,7 +163,7 @@ class KenaikanPangkatDokumenForm extends Component {
                     <div className="col-md-12 grid-margin">
                         <div className="card mb-3">
                             <div className="card-body">
-                                <h4 className="card-title">Dokumen Pomosi</h4>
+                                <h4 className="card-title">Dokumen Kenaikan Pangkat</h4>
                                 <p className="card-description">
                                     Dokumen pegawai
                                 </p>

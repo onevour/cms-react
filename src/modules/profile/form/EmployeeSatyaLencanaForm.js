@@ -165,8 +165,8 @@ class EmployeeSatyaLencanaForm extends Component {
                                       onChange={this.handleSelectDate}/>
                         </div>
                         <div className="form-group">
-                            <label>Satya Lencana</label>
-                            <input type="text" className="form-control" placeholder="Satya Lencana"
+                            <label>Satya Lancana</label>
+                            <input type="text" className="form-control" placeholder="Satya Lancana"
                                    value={value} onChange={this.onChangeValue}/>
                         </div>
                         <div className="form-group">
@@ -179,7 +179,7 @@ class EmployeeSatyaLencanaForm extends Component {
                         <button type="submit" className="btn btn-success mr-2">ADD</button>
                     </form>
                 </div>
-                <div className="col-md-1"></div>
+                <div className="col-md-1"/>
                 <div className="col-md-8">
                     <div className="table-responsive" style={{marginTop: 20}}>
                         <table className="table">
@@ -187,7 +187,7 @@ class EmployeeSatyaLencanaForm extends Component {
                             <tr>
                                 <th>Opsi</th>
                                 <th>Tahun</th>
-                                <th>Satya Lencana</th>
+                                <th>Satya Lancana</th>
                                 <th>Dokumen</th>
                             </tr>
                             </thead>

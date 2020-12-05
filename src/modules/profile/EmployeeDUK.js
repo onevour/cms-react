@@ -370,7 +370,7 @@ class EmployeeDUK extends Component {
                     <td>{o.kelamin}</td>
                     <td>{o.nip}</td>
                     <td>{o.pangkat}</td>
-                    <td>{o.pangkat_detail.gol}</td>
+                    <td>{(o.pangkat_detail ? o.pangkat_detail.gol : '')}</td>
                     <td>{formatDate(o.tmt_gol)}</td>
                     <td>{this.masaKerjaGolongan(o.tmt_gol)}</td>
                     <td>{o.jabatan}</td>

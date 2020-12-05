@@ -177,9 +177,12 @@ class PangkatKenaikanPegawaiForm extends Component {
                 modalUserSelected: [],
             })
         }
-
+        if (!this.state.tmtDate) {
+            this.setState({errorTMT:'Pilih TMT'})
+            return
+        }
         let pangkat = this.state.pangkat
-        // pangkat.tmt = this.state.tmtDate.format()
+        pangkat.tmt = this.state.tmtDate.format()
         pangkat.sumber_data = 'TEMAN_DAWAI'
         const param = {
             pangkat: pangkat,
@@ -367,7 +370,8 @@ class PangkatKenaikanPegawaiForm extends Component {
                     <div className="form-group row">
                         <div className="col-md-4">
                             <div className="form-group row">
-                                <label className="col-sm-12 col-form-label">Jumlah pegawai kenaikan pangkat</label>
+                                <label className="col-sm-12 col-form-label">Jumlah pegawai kenaikan pangkat
+                                    ({modalUserSelected.length})</label>
                             </div>
                         </div>
                         <div className="col-md-4">

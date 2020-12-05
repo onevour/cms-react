@@ -32,6 +32,7 @@ class KenaikanPangkatForm extends Component {
 
     componentDidMount(props) {
         this.props.listUserHistoryPangkat()
+        console.log("load history pangkat")
     }
 
     showDocument(o) {
@@ -69,25 +70,24 @@ class KenaikanPangkatForm extends Component {
     }
 
     renderTableKenaikanPangkat(pangkats) {
-        // get onlu tmt null
-        console.log(pangkats)
-        let pangkatNullTmt = []
+        // get last but not pensiun
+        let lastPangkat = []
         for (let i = 0; i < pangkats.result.length; i++) {
             let tmt = pangkats.result[i]
-            console.log(tmt)
-            if (!(tmt.tmt) && 'Pensiun' !== tmt.pangkat_golongan.golongan) {
-                pangkatNullTmt.push(tmt);
-                break
-            }
+            if (!tmt || !tmt.pangkat_golongan) continue
+            if ('Pensiun' === tmt.pangkat_golongan.golongan) continue
+            lastPangkat.push(tmt)
+            break
         }
         return (
             <>
                 {
-                    pangkatNullTmt.map((o, i) =>
+                    lastPangkat.map((o, i) =>
                         <tr className="clickable" key={i} onClick={() => {
                             this.showDocument(o)
                         }}>
                             <td>{i + 1}</td>
+                            <td>{formatDate(o.tmt)}</td>
                             <td>{o.pangkat_golongan.nama}</td>
                             <td>{o.pangkat_golongan.golongan}</td>
                         </tr>
@@ -147,6 +147,9 @@ class KenaikanPangkatForm extends Component {
                                                 No.
                                             </th>
                                             <th>
+                                                TMT
+                                            </th>
+                                            <th>
                                                 Pangkat
                                             </th>
                                             <th>
@@ -167,9 +170,9 @@ class KenaikanPangkatForm extends Component {
                     <div className="col-md-12 grid-margin">
                         <div className="card mb-3">
                             <div className="card-body">
-                                <h4 className="card-title">Kenaikan Pangkat</h4>
+                                <h4 className="card-title">History Kenaikan Pangkat</h4>
                                 <p className="card-description">
-                                    History Kenaikan Pangkat
+                                    History Kenaikan Pangkat Anda
                                 </p>
                                 <div className="table-responsive">
                                     <table className="table table-hover">

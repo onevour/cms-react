@@ -43,6 +43,12 @@ class CutiTableAtasan extends Component {
                     label: "Approve",
                     content: 1,
 
+                },
+                {
+                    selected: false,
+                    label: "Cancel",
+                    content: 2,
+
                 }
             ],
             content: 0,
@@ -242,7 +248,10 @@ class CutiTableAtasan extends Component {
                 return item.cuti_status === 3
             }
             if (1 === content) {
-                return item.cuti_status !== 3
+                return item.cuti_status > 3
+            }
+            if (2 === content) {
+                return item.cuti_status < 3
             }
             return false
         })

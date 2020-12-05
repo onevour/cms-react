@@ -4,8 +4,12 @@ import {Button, Modal} from 'react-bootstrap'
 import "react-datetime/css/react-datetime.css";
 import {connect} from "react-redux";
 import {loadUserDocument, userUploadDocument} from "../../redux/actions/reduxActionDataDigital";
-import {BASE_URL, USER_HISTORY_PANGKAT_LIST_RESPONSE} from "../../redux/constants/reducActionTypes";
-import {emptyContentList, MAX_PENSIUN} from "../../application/AppConstant";
+import {
+    BASE_URL,
+    UPLOAD_DOCUMENT_RESPONSE, USER_DOCUMENT_RESPONSE,
+    USER_HISTORY_PANGKAT_LIST_RESPONSE
+} from "../../redux/constants/reducActionTypes";
+import {defCrud, defList, emptyContentList, MAX_PENSIUN} from "../../application/AppConstant";
 import {listUserHistoryPangkat} from "../../redux/actions/reduxActionUser";
 import {formatDate, getFileExtension} from "../../application/AppCommons";
 
@@ -34,10 +38,7 @@ class Pensiun extends Component {
         const {pangkats} = this.props
         for (let i = 0; i < pangkats.result.length; i++) {
             const o = pangkats.result[i]
-            // hardcode id
-            // console.log("golongan is pensiun", o)
             if ((o.pangkat_golongan) && 18 === o.pangkat_golongan.id) {
-                // console.log(o)
                 if (o.pangkat_golongan) {
                     console.log(o.pangkat_golongan)
                     return o.pangkat_golongan.document_pangkat
@@ -94,6 +95,7 @@ class Pensiun extends Component {
     }
 
     renderDownloadView(o, userDocument) {
+        console.log(userDocument)
         if (userDocument) {
             // console.log(o)
             let value = null
@@ -158,7 +160,7 @@ class Pensiun extends Component {
         let diff = moment().diff(moment(user.tanggal_lahir), 'milliseconds')
         let duration = moment.duration(diff)
         let isPensiun = duration.years() < MAX_PENSIUN;
-        isPensiun = false
+        // isPensiun = false
         if (isPensiun) {
             let pensiun = moment(user.tanggal_lahir).add(MAX_PENSIUN, 'years');
             return (
@@ -228,9 +230,9 @@ class Pensiun extends Component {
 
 function mapStateToProps(state) {
     return {
-        pangkats: (state[USER_HISTORY_PANGKAT_LIST_RESPONSE] ? state[USER_HISTORY_PANGKAT_LIST_RESPONSE] : emptyContentList),
-        uploads: state.uploadDocument,
-        userDocument: state.userDocument
+        pangkats: defList(state, USER_HISTORY_PANGKAT_LIST_RESPONSE),
+        uploads: defCrud(state, UPLOAD_DOCUMENT_RESPONSE),
+        userDocument: defList(state, USER_DOCUMENT_RESPONSE)
     }
 }
 

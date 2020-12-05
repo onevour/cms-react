@@ -6,6 +6,7 @@ import {
 } from "../../redux/constants/reducActionTypes";
 import {emptyContentPage} from "../../application/AppConstant";
 import {pageUserCuti} from "../../redux/actions/reduxActionCuti";
+import {selectedTabClass} from "../../application/AppCommons";
 
 class CutiUser extends Component {
 
@@ -14,7 +15,27 @@ class CutiUser extends Component {
         this.state = {
             page: 0,
             id: 0,
-            name: ''
+            name: '',
+            tabs: [
+                {
+                    selected: true,
+                    label: "Pending",
+                    content: 0,
+                },
+                {
+                    selected: false,
+                    label: "Approve",
+                    content: 1,
+
+                },
+                {
+                    selected: false,
+                    label: "Cancel",
+                    content: 2,
+
+                }
+            ],
+            content: 0,
         };
         this.changePage = this.changePage.bind(this)
         this.handleChangeName = this.handleChangeName.bind(this)
@@ -85,6 +106,7 @@ class CutiUser extends Component {
     render() {
         const {page, name} = this.state
         const {cuties} = this.props
+        const {tabs, content} = this.state
         return (
             <Fragment>
                 <div className="row">
@@ -92,6 +114,17 @@ class CutiUser extends Component {
                         <div className="card">
                             <div className="card-body">
                                 <h4 className="card-title">Cuti Pegawai</h4>
+                                <ul className="nav nav-tabs">
+                                    {tabs.map((o, i) =>
+                                        <li className="nav-item" key={i}>
+                                            <a className={selectedTabClass(o)}
+                                               onClick={(e) => {
+                                                   e.preventDefault();
+                                                   this.selectedTab(i)
+                                               }} href="#">{o.label}</a>
+                                        </li>
+                                    )}
+                                </ul>
                                 <div className="table-responsive">
                                     <table className="table table-hover">
                                         <thead>

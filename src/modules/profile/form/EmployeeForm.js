@@ -39,7 +39,7 @@ class EmployeeForm extends Component {
                     content: <EmployeeAngkaKreditForm/>
                 }, {
                     selected: false,
-                    label: "Satya Lencana",
+                    label: "Satya Lancana",
                     content: <EmployeeSatyaLencanaForm/>
                 }, {
                     selected: false,

@@ -4,7 +4,14 @@ import {
     BASE_URL, DUK_FILTER_PARAM, DUK_FILTER_PARAM_RESPONSE,
     DUK_PAGE_RESPONSE, USER_PAGE_RESPONSE
 } from "../../redux/constants/reducActionTypes";
-import {emptyContentPage, emptyCrud, MAX_PENSIUN, STATUS_PEGAWAI} from "../../application/AppConstant";
+import {
+    emptyContentPage,
+    emptyCrud,
+    JENIS_CUTI,
+    MAX_PENSIUN,
+    MONTHS,
+    STATUS_PEGAWAI
+} from "../../application/AppConstant";
 import {connect} from "react-redux";
 import {listDuk, pageDuk, paramDuk} from "../../redux/actions/reduxActionMasterDUK";
 import {formatDate, getFileExtension} from "../../application/AppCommons";
@@ -20,11 +27,15 @@ class UserNaikPangkat extends Component {
         this.state = {
             page: 0,
             filter: '',
+            year: moment().year(),
+            month: moment().month(),
             directBody: null,
             direct: false
         };
         this.changePage = this.changePage.bind(this)
-        this.downloadEmployeeData = this.downloadEmployeeData.bind(this)
+        this.downloadEmployeeNaikPangkat = this.downloadEmployeeNaikPangkat.bind(this)
+        this.handleChangeYearSelect = this.handleChangeYearSelect.bind(this)
+        this.handleChangeMonthSelect = this.handleChangeMonthSelect.bind(this)
         this.handleChangeName = this.handleChangeName.bind(this)
     }
 
@@ -32,10 +43,11 @@ class UserNaikPangkat extends Component {
         this.props.pageUser({
             filter: '',
             module: 'naikpangkat',
+            year: this.state.year,
+            month: this.state.month,
             page: 0
         })
     }
-
 
     componentDidUpdate(props) {
         if (props.crud !== this.props.crud) {
@@ -47,7 +59,9 @@ class UserNaikPangkat extends Component {
     changePage(page) {
         this.setState({page: page - 1})
         const request = {
-            filter: this.state.name,
+            filter: this.state.filter,
+            year: this.state.year,
+            month: this.state.month,
             module: 'naikpangkat',
             page: page - 1
         }
@@ -55,27 +69,32 @@ class UserNaikPangkat extends Component {
     }
 
     handleChangeName(event) {
-        this.setState({name: event.target.value})
         const request = {
-            filter: this.state.name,
+            filter: event.target.value,
+            year: this.state.year,
+            month: this.state.month,
             module: 'naikpangkat',
             page: 0
         }
         this.props.pageUser(request)
+        this.setState({filter: event.target.value})
     }
 
     renderHeader() {
         return (
             <thead>
             <tr>
-                <th>Nama</th>
-                <th>NIP</th>
-                <th>Jabatan</th>
+                <th rowSpan={2}>Nama</th>
+                <th rowSpan={2}>NIP</th>
+                <th colSpan={2}>Posisi Awal</th>
+                <th colSpan={2}>Posisi Akhir</th>
+                <th rowSpan={2}>Jabatan</th>
+            </tr>
+            <tr>
                 <th>Pangkat</th>
                 <th>Golongan</th>
                 <th>Pangkat</th>
                 <th>Golongan</th>
-                <th>Jabatan</th>
             </tr>
             </thead>
 
@@ -105,22 +124,43 @@ class UserNaikPangkat extends Component {
 
     pangkatTerakhir(o, index) {
         if (0 === o.pangkats.length) return ''
-        let last = o.pangkats[o.pangkats.length - 2]
-        if (!last.pangkat_golongan) return ''
-        if (0 === index) {
-            return last.pangkat_golongan.golongan
+        let pangkats = o.pangkats.filter(i => {
+            if (!i) return false
+            if (!i.pangkat_golongan) return false
+            return "PENSIUN" !== i.pangkat_golongan.golongan.toUpperCase();
+        })
+        let counter = 0
+        for (let last of pangkats) {
+            if (counter === 0) {
+                counter++
+                continue
+            }
+            if (!last) return ''
+            let pangkat_golongan = last.pangkat_golongan
+            if (!pangkat_golongan) return ''
+            if (0 === index) {
+                return pangkat_golongan.golongan
+            }
+            return pangkat_golongan.nama
         }
-        return last.pangkat_golongan.nama
     }
 
     pangkatAjuan(o, index) {
         if (0 === o.pangkats.length) return ''
-        let last = o.pangkats[o.pangkats.length - 1]
-        if (!last.pangkat_golongan) return ''
-        if (0 === index) {
-            return last.pangkat_golongan.golongan
+        let pangkats = o.pangkats.filter(i => {
+            if (!i) return false
+            if (!i.pangkat_golongan) return false
+            return "PENSIUN" !== i.pangkat_golongan.golongan.toUpperCase();
+        })
+        for (let last of pangkats) {
+            if (!last) return ''
+            let pangkat_golongan = last.pangkat_golongan
+            if (!pangkat_golongan) return ''
+            if (0 === index) {
+                return pangkat_golongan.golongan
+            }
+            return pangkat_golongan.nama
         }
-        return last.pangkat_golongan.nama
     }
 
     downloadBlanko(o, index) {
@@ -149,34 +189,70 @@ class UserNaikPangkat extends Component {
         return (
             users.result.values.map((o, i) =>
                 <tr className="clickable" key={i}>
-                    <td>{o.nip}</td>
                     <td>{o.nama}</td>
-                    <td>{o.jabatan}</td>
+                    <td>{o.nip}</td>
                     <td>{this.pangkatTerakhir(o, 0)}</td>
                     <td>{this.pangkatTerakhir(o, 1)}</td>
                     <td>{this.pangkatAjuan(o, 0)}</td>
                     <td>{this.pangkatAjuan(o, 1)}</td>
+                    <td>{o.jabatan}</td>
                 </tr>
             )
         )
     }
 
-    downloadEmployeeData() {
-        const {user} = this.state
-        fetch(BASE_URL + '/user/download/cv/' + user.nip)
+    downloadEmployeeNaikPangkat() {
+        fetch(BASE_URL + '/user/download/naikpangkat/' + this.state.year + '/' + this.state.month)
             .then(response => {
                 response.blob().then(blob => {
                     let url = window.URL.createObjectURL(blob);
                     let a = document.createElement('a');
                     a.href = url;
-                    a.download = user.nip + '-' + user.nama + '.pdf';
+                    a.download = 'Naik Pangkat Pegawai Periode' + this.state.year + '-' + this.state.month + '.pdf';
                     a.click();
                 });
             });
     }
 
+    handleChangeYearSelect(event) {
+        const request = {
+            filter: this.state.filter,
+            year: event.value,
+            month: this.state.month,
+            module: 'naikpangkat',
+            page: 0
+        }
+        this.props.pageUser(request)
+        this.setState({year: event.value})
+    }
+
+    handleChangeMonthSelect(event) {
+        const request = {
+            filter: this.state.filter,
+            year: this.state.year,
+            month: event.value,
+            module: 'naikpangkat',
+            page: 0
+        }
+        this.props.pageUser(request)
+        this.setState({month: event.value})
+    }
+
+    years() {
+        let thisYear = moment().year();
+        let first = moment().add(-38, 'years').year();
+        let years = []
+        for (let start = thisYear; start > (first); start--) {
+            years.push({
+                value: start,
+                label: start
+            })
+        }
+        return years
+    }
+
     render() {
-        const {page, name} = this.state
+        const {page, filter, month, year} = this.state
         const {users} = this.props
 
         return (
@@ -188,24 +264,61 @@ class UserNaikPangkat extends Component {
                                 <h4 className="card-title">Data Pegawai Naik Pangkat</h4>
                                 <div className="row">
                                     <div className="col-md-3">
-
-                                        <div className="col-md-3 col-sm-3">
-                                            <button type="submit" style={{marginTop: -10}}
-                                                    onClick={this.downloadEmployeeData}
-                                                    className="btn btn-success btn-sm mr-2 ">
-                                                <i className="mdi mdi-18px mdi-printer"/> Cetak
-                                            </button>
+                                        <div className="row">
+                                            <div className="col-md-3">
+                                                <div className="form-group row">
+                                                    <button type="submit" style={{marginTop: -10}}
+                                                            onClick={this.downloadEmployeeNaikPangkat}
+                                                            className="btn btn-success btn-sm mr-2 ">
+                                                        <i className="mdi mdi-18px mdi-printer"/> Cetak
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="col-md-6">
+                                    <div className="col-md-9">
+                                        <div className="row">
+                                            <div className="col-md-3">
+                                                <div className="form-group row">
+                                                    <label className="col-sm-4 col-form-label">Tahun</label>
+                                                    <div className="col-sm-8">
+                                                        <Select className="form-control select-tmd"
+                                                                options={this.years()}
+                                                                value={this.years().filter(function (option) {
+                                                                    return option.value === year
+                                                                })}
+                                                                onChange={this.handleChangeYearSelect}
+                                                                label="Single select"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-3">
+                                                <div className="form-group row">
+                                                    <label className="col-sm-4 col-form-label">Bulan</label>
+                                                    <div className="col-sm-8">
+                                                        <Select className="form-control select-tmd"
+                                                                options={MONTHS}
+                                                                value={MONTHS.filter(function (option) {
+                                                                    return option.value === month
+                                                                })}
+                                                                onChange={this.handleChangeMonthSelect}
+                                                                label="Single select"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-6">
+                                                <div className="form-group row">
+                                                    <label className="col-sm-4 col-form-label">Nama</label>
+                                                    <div className="col-sm-8">
+                                                        <input type="text" className="form-control"
+                                                               value={this.state.filter}
+                                                               onChange={this.handleChangeName}
+                                                               placeholder="Nama pegawai"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                    </div>
-                                    <div className="col-md-3">
-
-                                        <input type="text" className="form-control"
-                                               value={this.state.name}
-                                               onChange={this.handleChangeName}
-                                               placeholder="Nama pegawai"/>
                                     </div>
                                 </div>
 

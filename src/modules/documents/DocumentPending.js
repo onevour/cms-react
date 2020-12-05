@@ -19,12 +19,20 @@ import {emptyContentList, emptyContentPage, emptyCrud} from "../../application/A
 import {Modal} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import {getFileExtension} from "../../application/AppCommons";
+//import {PDFReader} from "reactjs-pdf-reader/src/components/PDFReader/index";
+import {PDFReader} from 'reactjs-pdf-reader'
+// import PDFView from 'react.pdf.stream';
+// import {Document, Page, pdfjs} from 'react-pdf';
+// import { Document } from 'react-pdf/dist/esm/entry.webpack';
+
 
 class DocumentPending extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            url: '',
+            path: '',
             modalShow: false, modalState: 0,
             page: 0,
             id: 0,
@@ -44,7 +52,8 @@ class DocumentPending extends Component {
             this.props.listDocumentPending()
             if (200 === this.props.crud.code) {
                 swal("Dokumen", "Approve document berhasil!", "success");
-            } if (201 === this.props.crud.code) {
+            }
+            if (201 === this.props.crud.code) {
                 swal("Dokumen", "Tolak document berhasil!", "warning");
             }
         }
@@ -137,6 +146,27 @@ class DocumentPending extends Component {
         this.setState({modalShow: false, modalState: 0})
     }
 
+    renderOptionBAK(o) {
+        return (
+            <>
+                <button type="button"
+                        className="btn btn-danger btn-sm btn-option mr-2"
+                        onClick={() => this.delete(o)}>
+                    <i className="mdi mdi-24px mdi-delete-circle"/>
+                </button>
+                <button type="button"
+                        className="btn btn-success btn-sm btn-option mr-2"
+                        onClick={() => this.update(o)}>
+                    <i className="mdi mdi-24px mdi-check-circle-outline"/>
+                </button>
+                <a href={BASE_URL + '/user/view/digital/' + o.nip + '/' + o.id} download={true}
+                   style={{marginTop: -10}}
+                   className="ml-2" target={"_blank"}>download</a>
+
+            </>
+        )
+    }
+
     renderOption(o) {
         return (
             <>
@@ -150,23 +180,36 @@ class DocumentPending extends Component {
                         onClick={() => this.update(o)}>
                     <i className="mdi mdi-24px mdi-check-circle-outline"/>
                 </button>
-                <a href="#" style={{marginTop: -10}}
-                   onClick={() => {
-                       fetch(BASE_URL + '/user/view/digital/' + o.nip + '/' + o.id)
-                           .then(response => {
-                               if (response.ok) {
-                                   response.blob().then(blob => {
-                                       let url = window.URL.createObjectURL(blob);
-                                       let a = document.createElement('a');
-                                       a.href = url;
-                                       a.target = "_blank";
-                                       a.download = o.nip + '-' + o.document + '.' + getFileExtension(o.path);
-                                       a.click();
-                                   });
-                               }
-                           }).catch(function (err) {
-                       });
-                   }}>download</a>
+                <button type="button"
+                        className="btn btn-success btn-sm btn-option mr-2"
+                        onClick={() => {
+                            fetch(BASE_URL + '/user/view/digital/' + o.nip + '/' + o.id)
+                                .then(response => {
+                                    if (response.ok) {
+                                        response.blob().then(blob => {
+                                            let url = window.URL.createObjectURL(blob);
+                                            let a = document.createElement('a');
+                                            a.href = url;
+                                            a.download = o.nip + '-' + o.document + '.' + getFileExtension(o.path);
+                                            a.click();
+                                        });
+                                    }
+                                }).catch(function (err) {
+                            });
+                        }}>
+                    <i className="mdi mdi-24px mdi-download"/>
+                </button>
+                <button type="button"
+                        className="btn btn-success btn-sm btn-option mr-2"
+                        onClick={() => {
+                            this.setState({
+                                url: BASE_URL + '/user/view/digital/' + o.nip + '/' + o.id,
+                                modalShow: true,
+                                path: o.path
+                            })
+                        }}>
+                    <i className="mdi mdi-24px mdi-file-pdf-box"/>
+                </button>
             </>
         )
     }
@@ -178,11 +221,24 @@ class DocumentPending extends Component {
     }
 
     renderModalContent() {
-
+        const {url, path} = this.state
+        if (!path) return
+        let ext = getFileExtension(path);
+        if ('pdf' === ext || 'PDF' === ext) {
+            return (<PDFReader url={url} showAllPage={true}/>)
+        } else {
+            return (
+                <div className="text-center">
+                    <img src={url} alt="view"/>
+                </div>
+            )
+        }
     }
 
     render() {
-        const {page, name} = this.state
+        const {url, page, name} = this.state
+        // const url = BASE_URL +'/user/view/digital/198909152014041001/5'
+        // const url = "http://localhost:8081/api/v1/user/view/digital/196406241987032001/5"
         const {documents} = this.props
         console.log(documents)
         return (
@@ -191,7 +247,7 @@ class DocumentPending extends Component {
                     <div className="col-md-12 grid-margin stretch-card">
                         <div className="card">
                             <div className="card-body">
-                                <h4 className="card-title">Document Pending</h4>
+                                <h4 className="card-title">Dokumen Pending</h4>
                                 <div className="table-responsive">
                                     <table className="table table-hover">
                                         <thead>
@@ -230,30 +286,16 @@ class DocumentPending extends Component {
                             </div>
                         </div>
                     </div>
-
                 </div>
 
                 <Modal size="lg" show={this.state.modalShow} onHide={this.modalClose} onShow={this.modalOnShow}
                        animation={false} backdrop="static">
                     <Modal.Header closeButton style={{backgroundColor: "white"}}>
-                        <Modal.Title>List Pegawai</Modal.Title>
+                        <Modal.Title>View Document</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body style={{backgroundColor: "white"}}>
+                    <Modal.Body style={{backgroundColor: "#f2f8f9"}}>
                         {this.renderModalContent()}
                     </Modal.Body>
-                    <Modal.Footer style={{backgroundColor: "white"}}>
-                        <Button variant="secondary" onClick={() => {
-                            const stateModal = this.state.modalState
-                            if (stateModal === 1) {
-                                this.setState({modalState: 0})
-                            } else {
-                                this.modalClose()
-                            }
-
-                        }}>{this.state.modalState === 0 ? 'CLOSE' : 'BACK'}</Button>
-                        <Button variant="primary"
-                                onClick={this.modalNext}>{this.state.modalState === 0 ? 'NEXT' : 'SAVE'}</Button>
-                    </Modal.Footer>
                 </Modal>
             </Fragment>
         )
