@@ -230,9 +230,9 @@ class Pensiun extends Component {
 
 function mapStateToProps(state) {
     return {
-        pangkats: defList(state, USER_HISTORY_PANGKAT_LIST_RESPONSE),
+        userDocument: defList(state, USER_DOCUMENT_RESPONSE),
         uploads: defCrud(state, UPLOAD_DOCUMENT_RESPONSE),
-        userDocument: defList(state, USER_DOCUMENT_RESPONSE)
+        pangkats: defList(state, USER_HISTORY_PANGKAT_LIST_RESPONSE)
     }
 }
 

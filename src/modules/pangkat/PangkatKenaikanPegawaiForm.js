@@ -303,8 +303,7 @@ class PangkatKenaikanPegawaiForm extends Component {
                 <div className="form-group" key={index}>
                     <div className="form-check form-check-flat">
                         <label className="form-check-label">
-                            <input type="checkbox" className="form-check-input" checked={true}/>
-                            {o.label}
+                            <input type="checkbox" className="form-check-input" checked={true}/>{o.label}
                             <i className="input-helper"/>
                         </label>
                     </div>
