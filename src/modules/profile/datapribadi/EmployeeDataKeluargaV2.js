@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {selectedTabClass} from "../../../application/AppCommons";
+import {formatDate, formatStatusFamily, selectedTabClass} from "../../../application/AppCommons";
 
 class EmployeeDataKeluargaV2 extends Component {
 
@@ -92,7 +92,7 @@ class EmployeeDataKeluargaV2 extends Component {
                         {families.map((o, i) =>
                             <tr key={i}>
                                 <td>{i + 1}</td>
-                                <td>{o.family_status}</td>
+                                <td>{formatStatusFamily(o.family_status)}</td>
                                 <td>{o.name}</td>
                                 <td>{o.occupation}</td>
                             </tr>

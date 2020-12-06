@@ -209,7 +209,10 @@ class Pensiun extends Component {
                 </Fragment>
             )
         }
-
+        let label_pensiun =  MAX_PENSIUN - duration.years() + ' Tahun ' + duration.months() + ' Bulan'
+        if (0 > (MAX_PENSIUN - duration.years())) {
+            label_pensiun = 'Sudah Pensiun'
+        }
         return (
             <Fragment>
                 <div className="row">
@@ -219,7 +222,7 @@ class Pensiun extends Component {
                                 <h4 className="card-title">Dokumen Pensiun</h4>
                                 <p className="card-description">
                                     Perkiraan pensiun anda
-                                    anda:<b> {formatDate(pensiun)}</b> ({Math.abs(MAX_PENSIUN - duration.years())} Tahun {duration.months()} Bulan)
+                                    anda:<b> {formatDate(pensiun)}</b> ({label_pensiun})
                                 </p>
                                 <div className="table-responsive">
                                     <table className="table table-hover">

@@ -11,6 +11,16 @@ export function cutiLabel(index) {
     })
 }
 
+export function formatStatusFamily(value) {
+    if (null === value || undefined === value) return '-'
+    if ('SAUDARAKANDUNG' === value) return 'SAUDARA KANDUNG'
+    if ('BAPAKMERTUA' === value) return 'BAPAK MERTUA'
+    if ('IBUMERTUA' === value) return 'IBU MERTUA'
+    if ('BAPAKKANDUNG' === value) return 'BAPAK KANDUNG'
+    if ('IBUKANDUNG' === value) return 'IBU KANDUNG'
+    return value
+}
+
 export function formatYear(value) {
     if (null === value || undefined === value) return '-'
     return moment(value).format('YYYY') //dd mmm yyyy
@@ -108,6 +118,6 @@ export function getFileExtension(filename) {
     return filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
 }
 
-export function numberOnly(value){
+export function numberOnly(value) {
 
 }
