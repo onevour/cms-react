@@ -86,6 +86,38 @@ class EmployeeDataPribadi extends Component {
         this.setState({modalShow: false})
     }
 
+    warningProfile() {
+        const {user} = this.state
+        console.log(user.educations)
+        let last_pangkat = user.pangkats[0]
+        let last_educate = user.educations[user.educations.length - 1]
+        let message = null;
+        if (last_pangkat.pangkat_golongan.id < 12) {
+            if (last_educate.type.includes('S1') || last_educate.type.includes('S2')) {
+                console.log(last_pangkat)
+            } else {
+                // warning message
+                message = 'Mohon update data pendidikan anda di applikasi simpeg!'
+            }
+        }
+        if (last_pangkat.pangkat_golongan.id < 13) {
+            if (last_educate.type.includes('S2')) {
+                console.log(last_pangkat)
+            } else {
+                // warning message
+                message = 'Mohon update data pendidikan anda di applikasi simpeg!'
+            }
+        }
+        if(!message) return
+        return (
+            <div className="col-md-12">
+                <div className="alert alert-warning" role="alert">
+                    {message}
+                </div>
+            </div>
+        )
+    }
+
     render() {
         const {user, tabs, content, url, modalShow, path} = this.state
         if (user === null) {
@@ -123,6 +155,7 @@ class EmployeeDataPribadi extends Component {
 
                         </div>
                     </div>
+                    {this.warningProfile()}
                 </div>
                 <div className="row">
                     <div className="table-responsive">

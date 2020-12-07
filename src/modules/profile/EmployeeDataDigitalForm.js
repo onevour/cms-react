@@ -8,10 +8,16 @@ import {
     removeUserDocument
 } from "../../redux/actions/reduxActionDataDigital";
 import swal from "sweetalert";
-import {BASE_URL} from "../../redux/constants/reducActionTypes";
+import {
+    BASE_URL,
+    MASTER_DOCUMENT_RESPONSE,
+    UPLOAD_DOCUMENT_RESPONSE,
+    USER_DOCUMENT_RESPONSE
+} from "../../redux/constants/reducActionTypes";
 import {Button} from "react-bootstrap";
 import {Redirect} from "react-router-dom";
 import {getFileExtension} from "../../application/AppCommons";
+import {defCrud, defList} from "../../application/AppConstant";
 
 class EmployeeDataDigitalForm extends Component {
 
@@ -177,7 +183,7 @@ class EmployeeDataDigitalForm extends Component {
                                 <form className="forms-sample" onSubmit={this.handleUpload}>
                                     <div className="form-group">
                                         <label htmlFor="exampleInputEmail1">Tipe Dokumen</label>
-                                        <Select className="form-control select-tmd" options={masterDocument}
+                                        <Select className="form-control select-tmd" options={masterDocument.result}
                                                 onChange={this.handleChangeSelect}
                                                 label="Single select"
                                         />
@@ -249,9 +255,9 @@ class EmployeeDataDigitalForm extends Component {
 
 function mapStateToProps(state) {
     return {
-        masterDocument: state.masterDocument.result,
-        uploadDocument: state.uploadDocument,
-        userDocument: state.userDocument
+        masterDocument: defList(state, MASTER_DOCUMENT_RESPONSE),
+        uploadDocument: defCrud(state, UPLOAD_DOCUMENT_RESPONSE),
+        userDocument: defList(state, USER_DOCUMENT_RESPONSE)
     }
 }
 

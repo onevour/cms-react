@@ -18,6 +18,20 @@ import {
     USER_PAGE_RESPONSE, USER_RESPONSE
 } from "../constants/reducActionTypes";
 
+export function listUser(param) {
+    const payload = {
+        url: "/user/list",
+        body: param
+    }
+    return {
+        type: USER_LIST,
+        payload: payload,
+        method: POST,
+        response: USER_LIST_RESPONSE,
+        responseBody: {code: 0, result: {values: []}}
+    }
+}
+
 export function pageUser(param) {
     const payload = {
         url: "/user/page",

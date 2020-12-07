@@ -1,6 +1,6 @@
 import {
     GET,
-    MASTER_DOCUMENT, POST,
+    MASTER_DOCUMENT, MASTER_DOCUMENT_RESPONSE, POST,
     REMOVE_DOCUMENT,
     UPLOAD_DOCUMENT, UPLOAD_DOCUMENT_RESPONSE,
     USER_DOCUMENT, USER_DOCUMENT_RESPONSE,
@@ -11,7 +11,14 @@ export function loadMasterDocument() {
     const payload = {
         url: "/user/document/type"
     }
-    return {type: MASTER_DOCUMENT, payload}
+    return {
+        type: MASTER_DOCUMENT,
+        payload: payload,
+        method: GET,
+        response: MASTER_DOCUMENT_RESPONSE,
+        responseBody: {code: 0, result: {values: []}}
+    }
+    // return {type: MASTER_DOCUMENT, payload}
 }
 
 export function userUploadDocument(param) {
@@ -55,5 +62,12 @@ export function removeUserDocument(param) {
         url: "/user/document/remove",
         body: param
     }
-    return {type: REMOVE_DOCUMENT, payload}
+    // return {type: REMOVE_DOCUMENT, payload}
+    return {
+        type: UPLOAD_DOCUMENT,
+        payload: payload,
+        method: POST,
+        response: UPLOAD_DOCUMENT_RESPONSE,
+        responseBody: {code: 0, result: {values: []}}
+    }
 }

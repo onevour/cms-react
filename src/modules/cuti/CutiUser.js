@@ -103,6 +103,18 @@ class CutiUser extends Component {
         )
     }
 
+    selectedTab(index) {
+        var content = null
+        const tabs = this.state.tabs.map((val, i) => {
+            val.selected = index === i
+            if (val.selected) {
+                content = val.content;
+            }
+            return val
+        })
+        this.setState({tabs: tabs, content: content})
+    }
+
     render() {
         const {page, name} = this.state
         const {cuties} = this.props
@@ -114,17 +126,7 @@ class CutiUser extends Component {
                         <div className="card">
                             <div className="card-body">
                                 <h4 className="card-title">Cuti Pegawai</h4>
-                                <ul className="nav nav-tabs">
-                                    {tabs.map((o, i) =>
-                                        <li className="nav-item" key={i}>
-                                            <a className={selectedTabClass(o)}
-                                               onClick={(e) => {
-                                                   e.preventDefault();
-                                                   this.selectedTab(i)
-                                               }} href="#">{o.label}</a>
-                                        </li>
-                                    )}
-                                </ul>
+
                                 <div className="table-responsive">
                                     <table className="table table-hover">
                                         <thead>
