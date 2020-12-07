@@ -97,7 +97,7 @@ class EmployeeDataPribadi extends Component {
                 console.log(last_pangkat)
             } else {
                 // warning message
-                message = 'Mohon update data pendidikan anda di applikasi simpeg!'
+                message = 'Mohon update data pendidikan anda di aplikasi SIMPEG!'
             }
         }
         if (last_pangkat.pangkat_golongan.id < 13) {
@@ -105,7 +105,7 @@ class EmployeeDataPribadi extends Component {
                 console.log(last_pangkat)
             } else {
                 // warning message
-                message = 'Mohon update data pendidikan anda di applikasi simpeg!'
+                message = 'Mohon update data pendidikan anda di aplikasi SIMPEG!'
             }
         }
         if(!message) return
