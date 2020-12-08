@@ -76,7 +76,10 @@ class KenaikanPangkatForm extends Component {
         const pangkats_no_pensiun = pangkats.result.filter(o => 18 !== o.pangkat_golongan.id)
         if (!pangkats_no_pensiun[0]) return
         const last_pangkat = [pangkats_no_pensiun[0]]
-        if (moment(last_pangkat.tmt).isBefore(moment())) return
+        if (moment(last_pangkat.tmt).isBefore(moment())) {
+            return (<></>)
+        }
+        console.log(last_pangkat)
         return (
             <>
                 {
