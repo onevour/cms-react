@@ -9,6 +9,7 @@ import {
 } from "../../redux/constants/reducActionTypes";
 import {emptyContentPage, emptyCrud} from "../../application/AppConstant";
 import {mergeJabatan, pageJabatan, removeJabatan} from "../../redux/actions/reduxActionMasterJabatan";
+import swal from "sweetalert";
 
 class MasterJabatan extends Component {
 
@@ -42,7 +43,15 @@ class MasterJabatan extends Component {
     componentDidUpdate(props) {
         if (props.crud !== this.props.crud) {
             this.setState({id: 0, name: ''})
+            swal("Jabatan", "Update jabatan berhasil!", "success");
             this.props.pageJabatan({filter: "", page: this.state.page})
+            this.setState({
+                id: 0,
+                name: '',
+                jenis_jabatan: '',
+                kelas_jabatan: '0',
+                kebutuhan: '0'
+            })
         }
         if (props.documents !== this.props.documents) {
 
@@ -135,7 +144,6 @@ class MasterJabatan extends Component {
             kelas_jabatan: parseInt(kelas_jabatan),
             kebutuhan: parseInt(kebutuhan)
         }
-        console.log("submit", request)
         this.props.mergeJabatan(request)
     }
 
