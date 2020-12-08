@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {formatDate} from "../../../application/AppCommons";
+import moment from "moment";
 
 class EmployeePangkat extends Component {
 
@@ -10,9 +11,27 @@ class EmployeePangkat extends Component {
         }
     }
 
-    render() {
+    renderTable() {
         const {user} = this.state
-        const {pangkats} = user
+        if (!user) return;
+        if (!user.pangkats) return;
+        if (!user.pangkats) return;
+        const pangkats_no_pensiun = user.pangkats.filter(o =>
+            18 !== o.pangkat_golongan.id && (o.tmt) && moment(o.tmt).isBefore(moment())
+        )
+        return (
+            pangkats_no_pensiun.map((o, i) =>
+                <tr key={i}>
+                    <td>{i + 1}</td>
+                    <td>{formatDate(o.tmt)}</td>
+                    <td>{(o.pangkat_golongan ? o.pangkat_golongan.golongan : '')}</td>
+                    <td>{(o.pangkat_golongan ? o.pangkat_golongan.nama : '')}</td>
+                </tr>
+            )
+        )
+    }
+
+    render() {
         return (
             <div className="table-responsive">
                 <table className="table">
@@ -25,14 +44,7 @@ class EmployeePangkat extends Component {
                     </tr>
                     </thead>
                     <tbody>
-                    {pangkats.map((o, i) =>
-                        <tr key={i}>
-                            <td>{i + 1}</td>
-                            <td>{formatDate(o.tmt)}</td>
-                            <td>{(o.pangkat_golongan ? o.pangkat_golongan.golongan : '')}</td>
-                            <td>{(o.pangkat_golongan ? o.pangkat_golongan.nama : '')}</td>
-                        </tr>
-                    )}
+                    {this.renderTable()}
                     </tbody>
                 </table>
             </div>

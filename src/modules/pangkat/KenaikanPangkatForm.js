@@ -12,6 +12,7 @@ import {listDocument} from "../../redux/actions/reduxActionMasterDocument";
 import {mergePangkatDocument} from "../../redux/actions/reduxActionMasterPangkat";
 import {listUserHistoryPangkat} from "../../redux/actions/reduxActionUser";
 import {formatDate} from "../../application/AppCommons";
+import moment from "moment";
 
 class KenaikanPangkatForm extends Component {
 
@@ -71,18 +72,15 @@ class KenaikanPangkatForm extends Component {
 
     renderTableKenaikanPangkat(pangkats) {
         // get last but not pensiun
-        let lastPangkat = []
-        for (let i = 0; i < pangkats.result.length; i++) {
-            let tmt = pangkats.result[i]
-            if (!tmt || !tmt.pangkat_golongan) continue
-            if ('Pensiun' === tmt.pangkat_golongan.golongan) continue
-            lastPangkat.push(tmt)
-            break
-        }
+        if (!pangkats.result) return
+        const pangkats_no_pensiun = pangkats.result.filter(o => 18 !== o.pangkat_golongan.id)
+        if (!pangkats_no_pensiun[0]) return
+        const last_pangkat = [pangkats_no_pensiun[0]]
+        if (moment(last_pangkat.tmt).isBefore(moment())) return
         return (
             <>
                 {
-                    lastPangkat.map((o, i) =>
+                    last_pangkat.map((o, i) =>
                         <tr className="clickable" key={i} onClick={() => {
                             this.showDocument(o)
                         }}>
@@ -98,20 +96,16 @@ class KenaikanPangkatForm extends Component {
     }
 
     renderTableKenaikanPangkatHis(pangkats) {
-        // get onlu tmt null
-        console.log(pangkats)
-        let pangkatNullTmt = []
-        for (let i = 0; i < pangkats.result.length; i++) {
-            let tmt = pangkats.result[i]
-            console.log(tmt)
-            if (tmt.tmt) {
-                pangkatNullTmt.push(tmt);
-            }
+        if (!pangkats.result) {
+            return
         }
+        const pangkats_history = pangkats.result.filter(o => {
+            return 18 !== o.pangkat_golongan.id && (o.tmt)
+        })
         return (
             <>
                 {
-                    pangkatNullTmt.map((o, i) =>
+                    pangkats_history.map((o, i) =>
                         <tr className="clickable" key={i} onClick={() => {
                             this.showDocument(o)
                         }}>
