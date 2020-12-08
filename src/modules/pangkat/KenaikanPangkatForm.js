@@ -74,28 +74,30 @@ class KenaikanPangkatForm extends Component {
         // get last but not pensiun
         if (!pangkats.result) return
         const pangkats_no_pensiun = pangkats.result.filter(o => 18 !== o.pangkat_golongan.id)
-        if (!pangkats_no_pensiun[0]) return
-        const last_pangkat = [pangkats_no_pensiun[0]]
+        const last_pangkat = pangkats_no_pensiun[0]
+        if (!last_pangkat) return
         if (moment(last_pangkat.tmt).isBefore(moment())) {
             return (<></>)
+        } else {
+            const last_pangkats = [last_pangkat]
+            return (
+                <>
+                    {
+                        last_pangkats.map((o, i) =>
+                            <tr className="clickable" key={i} onClick={() => {
+                                this.showDocument(o)
+                            }}>
+                                <td>{i + 1}</td>
+                                <td>{formatDate(o.tmt)}</td>
+                                <td>{o.pangkat_golongan.nama}</td>
+                                <td>{o.pangkat_golongan.golongan}</td>
+                            </tr>
+                        )
+                    }
+                </>
+            )
         }
-        console.log(last_pangkat)
-        return (
-            <>
-                {
-                    last_pangkat.map((o, i) =>
-                        <tr className="clickable" key={i} onClick={() => {
-                            this.showDocument(o)
-                        }}>
-                            <td>{i + 1}</td>
-                            <td>{formatDate(o.tmt)}</td>
-                            <td>{o.pangkat_golongan.nama}</td>
-                            <td>{o.pangkat_golongan.golongan}</td>
-                        </tr>
-                    )
-                }
-            </>
-        )
+
     }
 
     renderTableKenaikanPangkatHis(pangkats) {
