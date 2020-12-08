@@ -6,6 +6,12 @@ import "react-datetime/css/react-datetime.css";
 import {connect} from "react-redux";
 import {clearInput, cutiLabel, disableBeforeDay, formatDate, formatStatusCuti} from "../../application/AppCommons";
 import {loadHolidays, removeDateHoliday, submitDateHoliday} from "../../redux/actions/reduxActionCuti";
+import {defList} from "../../application/AppConstant";
+import {
+    HOLIDAYS_LOAD_RESPONSE,
+    HOLIDAYS_REMOVE_RESPONSE,
+    HOLIDAYS_SUBMIT_RESPONSE
+} from "../../redux/constants/reducActionTypes";
 
 class CalendarHoliday extends Component {
 
@@ -207,9 +213,9 @@ class CalendarHoliday extends Component {
 function mapStateToProps(state) {
     console.log("state holiday form", state)
     return {
-        holidayRemoveResponse: state.holidayRemoveResponse,
-        holidaySubmitResponse: state.holidaySubmitResponse,
-        holidaysResponse: state.holidaysResponse,
+        holidayRemoveResponse: defList(state, HOLIDAYS_REMOVE_RESPONSE),
+        holidaySubmitResponse: defList(state, HOLIDAYS_SUBMIT_RESPONSE),
+        holidaysResponse: defList(state, HOLIDAYS_LOAD_RESPONSE),
     }
 }
 

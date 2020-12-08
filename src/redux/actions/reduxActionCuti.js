@@ -8,9 +8,9 @@ import {
     DOCUMENT_PAGE,
     DOCUMENT_PAGE_RESPONSE, GET,
     HOLIDAYS_LOAD,
-    HOLIDAYS_LOAD_FUTURE, HOLIDAYS_LOAD_FUTURE_RESPONSE,
-    HOLIDAYS_REMOVE,
-    HOLIDAYS_SUBMIT, JABATAN_LIST, JABATAN_LIST_RESPONSE,
+    HOLIDAYS_LOAD_FUTURE, HOLIDAYS_LOAD_FUTURE_RESPONSE, HOLIDAYS_LOAD_RESPONSE,
+    HOLIDAYS_REMOVE, HOLIDAYS_REMOVE_RESPONSE,
+    HOLIDAYS_SUBMIT, HOLIDAYS_SUBMIT_RESPONSE, JABATAN_LIST, JABATAN_LIST_RESPONSE,
     POST,
 } from "../constants/reducActionTypes";
 
@@ -160,7 +160,14 @@ export function submitDateHoliday(param) {
         url: "/cuti/holiday/create",
         body: param
     }
-    return {type: HOLIDAYS_SUBMIT, payload: payload};
+    // return {type: HOLIDAYS_SUBMIT, payload: payload};
+    return {
+        type: HOLIDAYS_SUBMIT,
+        payload: payload,
+        method: POST,
+        response: HOLIDAYS_SUBMIT_RESPONSE,
+        responseBody: {code: 0, result: {values: []}}
+    }
 }
 
 export function removeDateHoliday(param) {
@@ -170,14 +177,28 @@ export function removeDateHoliday(param) {
         url: "/cuti/holiday/remove",
         body: param
     }
-    return {type: HOLIDAYS_REMOVE, payload: payload};
+    // return {type: HOLIDAYS_REMOVE, payload: payload};
+    return {
+        type: HOLIDAYS_REMOVE,
+        payload: payload,
+        method: POST,
+        response: HOLIDAYS_REMOVE_RESPONSE,
+        responseBody: {code: 0, result: {values: []}}
+    }
 }
 
 export function loadHolidays() {
     const payload = {
         url: "/cuti/holiday/list"
     }
-    return {type: HOLIDAYS_LOAD, payload: payload};
+    // return {type: HOLIDAYS_LOAD, payload: payload};
+    return {
+        type: HOLIDAYS_LOAD,
+        payload: payload,
+        method: GET,
+        response: HOLIDAYS_LOAD_RESPONSE,
+        responseBody: {code: 0, result: {values: []}}
+    }
 }
 
 export function loadHolidaysFuture() {

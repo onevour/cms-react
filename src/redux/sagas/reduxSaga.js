@@ -58,6 +58,7 @@ export default function* watcherSaga() {
     yield takeEvery(CUTI_APPROVE_PEJABAT_SUBMIT, masterDocumentType);
     yield takeEvery(CUTI_DAYS, masterDocumentType);
     yield takeEvery(CUTI_LOAD_USER, masterDocumentType);
+    // holidays
     yield takeEvery(HOLIDAYS_SUBMIT, masterDocumentType);
     yield takeEvery(HOLIDAYS_REMOVE, masterDocumentType);
     yield takeEvery(HOLIDAYS_LOAD, masterDocumentType);
