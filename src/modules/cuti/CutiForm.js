@@ -359,10 +359,11 @@ class CutiForm extends Component {
         const filter_cuti = user_cuties.result.filter(item => {
             console.log(item)
             if (0 === content) {
-                return item.cuti_status === 3 || item.cuti_status === 4 || item.cuti_status === 5
+                return item.cuti_status === 3 || item.cuti_status === 4
+                    //|| item.cuti_status === 5
             }
             if (1 === content) {
-                return item.cuti_status > 5
+                return item.cuti_status >= 5
             }
             if (2 === content) {
                 return item.cuti_status < 3

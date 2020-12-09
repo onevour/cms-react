@@ -92,6 +92,8 @@ class EmployeeDataPribadi extends Component {
         let last_pangkat = user.pangkats[0]
         let last_educate = user.educations[user.educations.length - 1]
         let message = null;
+        console.log(last_educate)
+        console.log(last_pangkat)
         if (last_pangkat.pangkat_golongan.id < 12) {
             if (last_educate.type.includes('S1') || last_educate.type.includes('S2')) {
                 console.log(last_pangkat)
@@ -100,7 +102,7 @@ class EmployeeDataPribadi extends Component {
                 message = 'Mohon update data pendidikan anda di aplikasi SIMPEG!'
             }
         }
-        if (last_pangkat.pangkat_golongan.id < 13) {
+        if (last_pangkat.pangkat_golongan.id === 13) {
             if (last_educate.type.includes('S2')) {
                 console.log(last_pangkat)
             } else {
