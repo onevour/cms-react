@@ -74,7 +74,7 @@ export const menuAll = [
                 id: 124,
                 root_id: 12,
                 type: 3,
-                name: "User Pensiun",
+                name: "Pegawai Pensiun",
                 icon: "menu-icon mdi mdi-account-card-details",
                 path: "/user/pensiun"
             },
@@ -82,7 +82,7 @@ export const menuAll = [
                 id: 125,
                 root_id: 12,
                 type: 3,
-                name: "User Naik Pangkat",
+                name: "Pegawai Naik Pangkat",
                 icon: "menu-icon mdi mdi-account-card-details",
                 path: "/user/naikpangkat"
             },
@@ -231,7 +231,7 @@ export const menuAdmin = [
                 id: 124,
                 root_id: 12,
                 type: 3,
-                name: "User Pensiun",
+                name: "Pegawai Pensiun",
                 icon: "menu-icon mdi mdi-account-card-details",
                 path: "/user/pensiun"
             },

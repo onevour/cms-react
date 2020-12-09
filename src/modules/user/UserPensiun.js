@@ -73,7 +73,7 @@ class UserPensiun extends Component {
                 <th>Pangkat</th>
                 <th>Masa Kerja</th>
                 <th>Usia</th>
-                <th>Pengajuan</th>
+                <th>Pengantar</th>
                 <th>Blanko 1</th>
                 <th>Blanko 2</th>
                 <th>Blanko 3</th>
