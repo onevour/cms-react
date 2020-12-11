@@ -104,8 +104,20 @@ class KenaikanPangkatForm extends Component {
         if (!pangkats.result) {
             return
         }
+        //
         const pangkats_history = pangkats.result.filter(o => {
-            return 18 !== o.pangkat_golongan.id && (o.tmt)
+            if (o.tmt) {
+                if ( 18 === o.pangkat_golongan.id) {
+                    return false
+                }
+                // moment(o.tmt)
+                const today = moment(o.tmt);
+                return  moment().isAfter(today);
+                // if (isBefore) {
+                // }
+            }
+            return false;
+            // return 18 !== o.pangkat_golongan.id && (o.tmt)
         })
         return (
             <>
