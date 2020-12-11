@@ -186,10 +186,15 @@ class Pensiun extends Component {
         const {userDocument} = this.props
         const {user, url, modalShow, path} = this.state
         // validate pensiun
-        let diff = moment().diff(moment(user.tanggal_lahir), 'milliseconds')
-        let duration = moment.duration(diff)
-        let isPensiun = duration.years() < MAX_PENSIUN;
         let pensiun = moment(user.tanggal_lahir).add(MAX_PENSIUN, 'years');
+        // let diff = moment(user.tanggal_lahir).diff(pensiun, 'milliseconds')
+        // let diff = moment(user.tanggal_lahir).diff(pensiun)
+        // let diff = pensiun.diff(moment(user.tanggal_lahir))
+        let diff = pensiun.diff(moment())
+        let duration = moment.duration(diff)
+        console.log(duration.years(),duration.months(), moment(user.tanggal_lahir).format("MM-DD-YYYY"))
+        let isPensiun = duration.years() < MAX_PENSIUN;
+
         if (isPensiun) {
             return (
                 <Fragment>
@@ -200,7 +205,7 @@ class Pensiun extends Component {
                                     <h4 className="card-title">Anda belum memasuki masa pensiun</h4>
                                     <p className="card-description">
                                         Perkiraan pensiun
-                                        anda:<b> {formatDate(pensiun)}</b> ({MAX_PENSIUN - duration.years()} Tahun {duration.months()} Bulan)
+                                        anda:<b> {formatDate(pensiun)}</b> ({duration.years()} Tahun {duration.months()} Bulan)
                                     </p>
                                 </div>
                             </div>
