@@ -187,15 +187,12 @@ class Pensiun extends Component {
         const {user, url, modalShow, path} = this.state
         // validate pensiun
         let pensiun = moment(user.tanggal_lahir).add(MAX_PENSIUN, 'years');
-        // let diff = moment(user.tanggal_lahir).diff(pensiun, 'milliseconds')
-        // let diff = moment(user.tanggal_lahir).diff(pensiun)
-        // let diff = pensiun.diff(moment(user.tanggal_lahir))
         let diff = pensiun.diff(moment())
         let duration = moment.duration(diff)
-        console.log(duration.years(),duration.months(), moment(user.tanggal_lahir).format("MM-DD-YYYY"))
-        let isPensiun = duration.years() < MAX_PENSIUN;
+        console.log(duration.years(), duration.months(), moment(user.tanggal_lahir).format("MM-DD-YYYY"))
+        let isPensiun = duration.years() === 0 || duration.years() <= 0
 
-        if (isPensiun) {
+        if (!isPensiun) {
             return (
                 <Fragment>
                     <div className="row">
@@ -214,8 +211,8 @@ class Pensiun extends Component {
                 </Fragment>
             )
         }
-        let label_pensiun =  MAX_PENSIUN - duration.years() + ' Tahun ' + duration.months() + ' Bulan'
-        if (0 > (MAX_PENSIUN - duration.years())) {
+        let label_pensiun = duration.years() + ' Tahun ' + duration.months() + ' Bulan'
+        if (duration.years() < 0) {
             label_pensiun = 'Sudah Pensiun'
         }
         return (
