@@ -119,5 +119,25 @@ export function getFileExtension(filename) {
 }
 
 export function numberOnly(value) {
+    return Number(value) || '' === value
+    // try {
+    // let val = parseInt(value);
+    // Number.isInteger(value)
+    // if (Number.isInteger(parseInt(value)) && !Number.isNaN(parseInt(value))) {
+    //     console.log(value)
+    //     return value
+    // } else {
+    // return ''
+    // }
+    // } catch (e) {
+    // ignore
+    // }
+}
 
+export function color() {
+    var num = Math.round(0xffffff * Math.random());
+    var r = num >> 16;
+    var g = num >> 8 & 255;
+    var b = num & 255;
+    return 'rgb(' + r + ', ' + g + ', ' + b + ')';
 }

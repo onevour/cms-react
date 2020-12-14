@@ -94,7 +94,16 @@ class EmployeeDataPribadi extends Component {
         let message = null;
         console.log(last_educate)
         console.log(last_pangkat)
-        if (last_pangkat.pangkat_golongan.id < 12) {
+
+        if (last_pangkat.pangkat_golongan.id < 9) {
+            if (last_educate.type.includes('SMA') || last_educate.type.includes('SMEA')
+                || last_educate.type.includes('STM')|| last_educate.type.includes('SMK')) {
+                console.log(last_pangkat)
+            } else {
+                // warning message
+                message = 'Mohon update data pendidikan anda di aplikasi SIMPEG!'
+            }
+        } else if (last_pangkat.pangkat_golongan.id < 12) {
             if (last_educate.type.includes('S1') || last_educate.type.includes('S2')) {
                 console.log(last_pangkat)
             } else {

@@ -7,6 +7,7 @@ import {emptyCrud} from "../../../application/AppConstant";
 import {connect} from "react-redux";
 import {updateProfile, userProfile} from "../../../redux/actions/reduxActionUser";
 import swal from "sweetalert";
+import {numberOnly} from "../../../application/AppCommons";
 
 class EmployeeProfileForm extends Component {
 
@@ -18,6 +19,9 @@ class EmployeeProfileForm extends Component {
             no_rekening: '',
             nama_rekening: '',
             nama_bank: '',
+            nip_camat: '',
+            nama_camat: '',
+            alamat_pensiun: '',
             request: 0,
             errorServer: '',
         }
@@ -27,6 +31,9 @@ class EmployeeProfileForm extends Component {
         this.onChangeNoRek = this.onChangeNoRek.bind(this)
         this.onChangeNamaRek = this.onChangeNamaRek.bind(this)
         this.onChangeNamaBank = this.onChangeNamaBank.bind(this)
+        this.onChangeAlamatPensiun = this.onChangeAlamatPensiun.bind(this)
+        this.onChangeNipCamat = this.onChangeNipCamat.bind(this)
+        this.onChangeNamaCamat = this.onChangeNamaCamat.bind(this)
     }
 
     componentDidMount() {
@@ -50,6 +57,9 @@ class EmployeeProfileForm extends Component {
                 no_rekening: user.no_rekening,
                 nama_rekening: user.nama_rekening,
                 nama_bank: user.nama_bank,
+                nip_camat: user.nip_camat,
+                nama_camat: user.nama_camat,
+                alamat_pensiun: user.alamat_pensiun,
                 request: 0,
                 errorServer: '',
             })
@@ -58,15 +68,21 @@ class EmployeeProfileForm extends Component {
     }
 
     onChangeNIK(e) {
-        this.setState({'nik': e.target.value})
+        if (numberOnly(e.target.value)) {
+            this.setState({'nik': e.target.value})
+        }
     }
 
     onChangeKK(e) {
-        this.setState({'kk': e.target.value})
+        if (numberOnly(e.target.value)) {
+            this.setState({'kk': e.target.value})
+        }
     }
 
     onChangeNoRek(e) {
-        this.setState({'no_rekening': e.target.value})
+        if (numberOnly(e.target.value)) {
+            this.setState({'no_rekening': e.target.value})
+        }
     }
 
     onChangeNamaRek(e) {
@@ -77,27 +93,47 @@ class EmployeeProfileForm extends Component {
         this.setState({'nama_bank': e.target.value})
     }
 
+    onChangeAlamatPensiun(e) {
+        this.setState({'alamat_pensiun': e.target.value})
+    }
+
+    onChangeNipCamat(e) {
+        if (numberOnly(e.target.value)) {
+            this.setState({'nip_camat': e.target.value})
+        }
+    }
+
+    onChangeNamaCamat(e) {
+        this.setState({'nama_camat': e.target.value})
+    }
+
     submitForm(e) {
         e.preventDefault()
-        const {nik, kk, no_rekening, nama_rekening, nama_bank} = this.state
+        const {nik, kk, no_rekening, nama_rekening, nama_bank, nip_camat, nama_camat, alamat_pensiun} = this.state
         const param = {
             nik: nik,
             kk: kk,
             no_rekening: no_rekening,
             nama_rekening: nama_rekening,
             nama_bank: nama_bank,
+            nip_camat: nip_camat,
+            nama_camat: nama_camat,
+            alamat_pensiun: alamat_pensiun,
         }
         this.props.updateProfile(param)
         this.setState({request: 1})
     }
 
     render() {
-        const {nik, kk, no_rekening, nama_rekening, nama_bank} = this.state
+        const {nik, kk, no_rekening, nama_rekening, nama_bank, alamat_pensiun, nip_camat, nama_camat} = this.state
         return (
             <div className="col-md-12">
                 <form className="forms-sample" ref={(ref) => this.formRef = ref}
                       onSubmit={this.submitForm}
                       noValidate>
+                    <div className="col-md-12">
+                        <h4 className="card-title">Data Pribadi</h4>
+                    </div>
                     <div className="form-group">
                         <label>NIK</label>
                         <input type="text" className="form-control" placeholder="Nomor Induk KTP"
@@ -109,6 +145,9 @@ class EmployeeProfileForm extends Component {
                         <input type="text" className="form-control" placeholder="Nomor Kartu Keluarga"
                                value={kk} onChange={this.onChangeKK}
                         />
+                    </div>
+                    <div className="col-md-12">
+                        <h4 className="card-title">Data Pensiun</h4>
                     </div>
                     <div className="form-group">
                         <label>No. Rekening</label>
@@ -125,6 +164,21 @@ class EmployeeProfileForm extends Component {
                         <label>Nama Bank</label>
                         <input type="text" className="form-control" placeholder="Nama Bank pensiun"
                                value={nama_bank} onChange={this.onChangeNamaBank}/>
+                    </div>
+                    <div className="form-group">
+                        <label>Alamat Pensiun</label>
+                        <input type="text" className="form-control" placeholder="Alamat pensiun"
+                               value={alamat_pensiun} onChange={this.onChangeAlamatPensiun}/>
+                    </div>
+                    <div className="form-group">
+                        <label>NIP Camat</label>
+                        <input type="text" className="form-control" placeholder="NIP Camat"
+                               value={nip_camat} onChange={this.onChangeNipCamat}/>
+                    </div>
+                    <div className="form-group">
+                        <label>Nama Camat</label>
+                        <input type="text" className="form-control" placeholder="Nama Camat"
+                               value={nama_camat} onChange={this.onChangeNamaCamat}/>
                     </div>
                     <div className="form-group">
                         <span className="text-danger">{this.state.errorServer}</span>

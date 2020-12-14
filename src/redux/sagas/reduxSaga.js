@@ -41,7 +41,15 @@ import {
     DUK_LIST,
     CUTI_PAGE,
     CUTI_QUOTA,
-    DUK_FILTER_PARAM, USER_CRUD, USER, CUTI_CALCULATE_DAY
+    DUK_FILTER_PARAM,
+    USER_CRUD,
+    USER,
+    CUTI_CALCULATE_DAY,
+    DASHBOARD_JENIS_JABATAN_JENIS_KELAMIN,
+    DASHBOARD_JABATAN_JENIS_KELAMIN,
+    DASHBOARD_JABATAN_NAIK_PANGKAT,
+    DASHBOARD_JABATAN_PENDIDIKAN,
+    DASHBOARD_JABATAN_USIA
 } from "../constants/reducActionTypes";
 
 import {getData, postData} from "../../application/ApiRequest";
@@ -97,7 +105,15 @@ export default function* watcherSaga() {
     yield takeEvery(USER_LIST, masterDocumentType);
     yield takeEvery(USER_HISTORY_PANGKAT_CRUD, masterDocumentType);
     yield takeEvery(USER_HISTORY_PANGKAT_LIST, masterDocumentType);
+
+    // dashboard
+    yield takeEvery(DASHBOARD_JENIS_JABATAN_JENIS_KELAMIN, masterDocumentType)
+    yield takeEvery(DASHBOARD_JABATAN_JENIS_KELAMIN, masterDocumentType)
+    yield takeEvery(DASHBOARD_JABATAN_NAIK_PANGKAT, masterDocumentType)
+    yield takeEvery(DASHBOARD_JABATAN_PENDIDIKAN, masterDocumentType)
+    yield takeEvery(DASHBOARD_JABATAN_USIA, masterDocumentType)
 }
+
 
 function* workerSagaLogin(action) {
     try {

@@ -36,6 +36,7 @@ import CutiUserAdmin from "../modules/cuti/CutiUserAdmin";
 import CutiDetailAdmin from "../modules/cuti/CutiDetailAdmin";
 import UserPensiun from "../modules/user/UserPensiun";
 import UserNaikPangkatContainer from "../modules/user/UserNaikPangkatContainer";
+import Dashboard from "../modules/dashboard/Dashboard";
 
 class AppHome extends Component {
 
@@ -49,6 +50,7 @@ class AppHome extends Component {
                     </nav>
                     <div className="main-panel">
                         <div className="content-wrapper">
+                            <Route path="/dashboard" component={Dashboard} exact/>
                             <Route path="/user" component={User} exact/>
                             <Route path="/user/pensiun" component={UserPensiun} exact/>
                             <Route path="/user/naikpangkat" component={UserNaikPangkatContainer} exact/>

@@ -1,5 +1,12 @@
 export const menuAll = [
     {
+        id: 0,
+        type: 1,
+        name: "Dashboard",
+        icon: "menu-icon mdi mdi-account-check",
+        path: "/dashboard"
+    },
+    {
         id: 1,
         type: 2,
         expand: false,
@@ -418,7 +425,7 @@ export const menuStaf = [
 ]
 
 export function renderMenu() {
-    // return menuAll
+    return menuAll
     let user = JSON.parse(localStorage.getItem('user'))
     if (!user) return []
     console.log(user.role)
