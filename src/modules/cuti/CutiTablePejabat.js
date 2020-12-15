@@ -64,12 +64,12 @@ class CutiTablePejabat extends Component {
     }
 
     handleChangeCuti(event) {
-        console.log(event)
+        // console.log(event)
         this.setState({jenisCuti: event.value})
     }
 
     handleTypeSelect(e) {
-        console.log("handle selected")
+        // console.log("handle selected")
         return e.value;
     }
 
@@ -119,17 +119,17 @@ class CutiTablePejabat extends Component {
     }
 
     handleChangeDescription(event) {
-        console.log(event.target.value)
+        // console.log(event.target.value)
         this.setState({description: event.target.value});
     }
 
     handleChangeTelepon(event) {
-        console.log(event.target.value)
+        // console.log(event.target.value)
         this.setState({tlpAddress: event.target.value});
     }
 
     handleChangeAddress(event) {
-        console.log(event.target.value)
+        // console.log(event.target.value)
         this.setState({cutiAddress: event.target.value});
     }
 
@@ -183,7 +183,7 @@ class CutiTablePejabat extends Component {
     componentDidUpdate(props) {
         // if(prevProps.value !== this.props.value){ alert(prevProps.value) }
         if (props.cutiResponse !== this.props.cutiResponse) {
-            console.log("update redux trigger")
+            // console.log("update redux trigger")
             swal("Cuti", "Pengajuan cuti berhasil!", "success");
             // clear
             this.setState({
@@ -237,7 +237,7 @@ class CutiTablePejabat extends Component {
         const {user_cuties} = this.props
         const {tabs, content} = this.state
         const filter_cuti = user_cuties.result.filter(item => {
-            console.log(item)
+            // console.log(item)
             if (0 === content) {
                 return item.cuti_status === 4
             }
@@ -249,7 +249,7 @@ class CutiTablePejabat extends Component {
             }
             return false
         })
-        // console.log(cutiUserResponse)
+        // // console.log(cutiUserResponse)
         const {startDate, startDateValue, jenisCuti, description, totalDays, tlpAddress, cutiAddress} = this.state
         return (
             <Fragment>
@@ -342,7 +342,7 @@ class CutiTablePejabat extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log("state cuti form", state)
+    // console.log("state cuti form", state)
     return {
         cutiResponse: state.cutiResponse,
         user_cuties: defList(state, CUTI_LOAD_USER_RESPONSE),

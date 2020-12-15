@@ -35,7 +35,7 @@ class KenaikanPangkatDokumenForm extends Component {
             return true
         }
         // const param = JSON.parse(this.props.location.state.body)
-        // console.log("body", param);
+        // // console.log("body", param);
     }
 
     handleModalShowHide() {
@@ -50,7 +50,7 @@ class KenaikanPangkatDokumenForm extends Component {
     }
 
     componentDidUpdate(props) {
-        console.log(this.props.uploadDocument)
+        // console.log(this.props.uploadDocument)
         if (props.uploadDocument !== this.props.uploadDocument) {
             //swal("Cuti", "Pengajuan cuti berhasil!", "success");
             // this.props.loadUserDocument()
@@ -156,7 +156,7 @@ class KenaikanPangkatDokumenForm extends Component {
 
     render() {
         const {userDocument} = this.props
-        console.log(userDocument)
+        // console.log(userDocument)
         return (
             <Fragment>
                 <div className="row">

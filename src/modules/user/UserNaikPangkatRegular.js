@@ -136,7 +136,7 @@ class UserNaikPangkatRegular extends Component {
             return pangkat.pangkat_golongan.golongan
         }
         return pangkat.pangkat_golongan.nama
-        // console.log(pangkats)
+        // // console.log(pangkats)
         // let counter = 0
         // for (let last of pangkats) {
         //     if (counter === 0) {
@@ -208,7 +208,7 @@ class UserNaikPangkatRegular extends Component {
     }
 
     renderTable(users) {
-        console.log(users)
+        // console.log(users)
         return (
             users.result.map((o, i) =>
                 <tr className="clickable" key={i}>
@@ -271,7 +271,7 @@ class UserNaikPangkatRegular extends Component {
                 label: start
             })
         }
-        // console.log(years)
+        // // console.log(years)
         return years
     }
 

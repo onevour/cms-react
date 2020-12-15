@@ -51,23 +51,23 @@ class CalendarHoliday extends Component {
     }
 
     handleChangeDescription(event) {
-        console.log(event.target.value)
+        // console.log(event.target.value)
         this.setState({description: event.target.value});
     }
 
     handleModalShowHide(id) {
-        console.log("id, ", id)
+        // console.log("id, ", id)
         // this.setState({showHide: !this.state.showHide})
         const request = {
             id: id,
         }
-        console.log("request form")
+        // console.log("request form")
         this.props.removeDateHoliday(request);
     }
 
     submitHoliday(event) {
         event.preventDefault()
-        console.log("submit ")
+        // console.log("submit ")
         // error
         var hasError = false
         if (null === this.state.date) {
@@ -85,14 +85,14 @@ class CalendarHoliday extends Component {
             date: this.state.date,
             description: this.state.description
         }
-        console.log("request form")
+        // console.log("request form")
         this.props.submitDateHoliday(request);
     }
 
     componentDidUpdate(props) {
         // if(prevProps.value !== this.props.value){ alert(prevProps.value) }
         if (props.holidaySubmitResponse !== this.props.holidaySubmitResponse) {
-            console.log("update redux trigger")
+            // console.log("update redux trigger")
             swal("Hari libur", "Penambahan tanggal berhasil!", "success");
             // clear
             this.setState({
@@ -211,7 +211,7 @@ class CalendarHoliday extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log("state holiday form", state)
+    // console.log("state holiday form", state)
     return {
         holidayRemoveResponse: defList(state, HOLIDAYS_REMOVE_RESPONSE),
         holidaySubmitResponse: defList(state, HOLIDAYS_SUBMIT_RESPONSE),

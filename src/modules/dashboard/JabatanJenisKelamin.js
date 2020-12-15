@@ -77,7 +77,7 @@ class JabatanJenisKelamin extends Component {
                 ],
             },
         }
-        console.log(data)
+        // console.log(data)
         return (
             <Fragment>
                 <div className="row">

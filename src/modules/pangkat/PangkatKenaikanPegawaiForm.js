@@ -189,7 +189,7 @@ class PangkatKenaikanPegawaiForm extends Component {
             users: newUsers
         }
         this.props.addPangkat(param)
-        console.log(param)
+        // console.log(param)
         /*
         if (this.state.tmtDate) {
             let pangkat = this.state.pangkat
@@ -200,7 +200,7 @@ class PangkatKenaikanPegawaiForm extends Component {
                 users: newUsers
             }
             this.props.addPangkat(param)
-            console.log(param)
+            // console.log(param)
         } else {
             this.setState({errorTMT: 'pilih tanggal tmt'})
         }
@@ -496,7 +496,7 @@ class PangkatKenaikanPegawaiForm extends Component {
                 }
                 return false
             })
-            console.log(usersList.result)
+            // console.log(usersList.result)
             return (
                 result.map((o, i) =>
                     <tr className="clickable" key={i}>
@@ -516,7 +516,7 @@ class PangkatKenaikanPegawaiForm extends Component {
     render() {
         const {pangkat} = this.state
         const {usersPage, usersList} = this.props
-        console.log(pangkat)
+        // console.log(pangkat)
         return (
             <Fragment>
                 <div className="row">

@@ -21,7 +21,7 @@ class EmployeePelatihanJabatanForm extends Component {
             file: null,
             errorServer: ''
         }
-        console.log("type: ", props.type)
+        // console.log("type: ", props.type)
         this.handleSelectDate = this.handleSelectDate.bind(this)
         this.handleSelectTmt = this.handleSelectTmt.bind(this)
         this.onChangeValue = this.onChangeValue.bind(this)
@@ -93,7 +93,7 @@ class EmployeePelatihanJabatanForm extends Component {
         e.preventDefault()
         const {type, ext, file, date, tmt, value} = this.state
         if (value === '') {
-            console.log('not a number', value)
+            // console.log('not a number', value)
             this.setState({errorServer: 'Hukuman disiplin empty'})
             return;
         }
@@ -126,7 +126,7 @@ class EmployeePelatihanJabatanForm extends Component {
     }
 
     renderDownloadView(user, index, o) {
-        console.log(user)
+        // console.log(user)
         if (!user && !o) return
         if (!o.path) return
         return (

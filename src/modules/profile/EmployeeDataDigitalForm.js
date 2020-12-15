@@ -42,7 +42,7 @@ class EmployeeDataDigitalForm extends Component {
     }
 
     componentDidUpdate(props) {
-        // console.log(this.props.uploadDocument)
+        // // console.log(this.props.uploadDocument)
         if (props.uploadDocument !== this.props.uploadDocument) {
             swal("Cuti", "Pengajuan cuti berhasil!", "success");
             this.props.loadUserDocument()
@@ -169,7 +169,7 @@ class EmployeeDataDigitalForm extends Component {
             )
         }
         const {masterDocument, userDocument} = this.props
-        console.log(userDocument.result)
+        // console.log(userDocument.result)
         return (
             <Fragment>
                 <div className="row">

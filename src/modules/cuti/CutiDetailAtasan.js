@@ -113,7 +113,7 @@ class CutiDetailAtasan extends Component {
 
     componentDidMount(props) {
         if (this.props.location.state === undefined || this.props.location.state === null) {
-            console.log("location state is null")
+            // console.log("location state is null")
             // return true
         } else {
             const param = JSON.parse(this.props.location.state.body)

@@ -88,24 +88,24 @@ class EmployeeDataPribadi extends Component {
 
     warningProfile() {
         const {user} = this.state
-        console.log(user.educations)
+        // console.log(user.educations)
         let last_pangkat = user.pangkats[0]
         let last_educate = user.educations[user.educations.length - 1]
         let message = null;
-        console.log(last_educate)
-        console.log(last_pangkat)
+        // console.log(last_educate)
+        // console.log(last_pangkat)
 
         if (last_pangkat.pangkat_golongan.id < 9) {
             if (last_educate.type.includes('SMA') || last_educate.type.includes('SMEA')
                 || last_educate.type.includes('STM')|| last_educate.type.includes('SMK')) {
-                console.log(last_pangkat)
+                // console.log(last_pangkat)
             } else {
                 // warning message
                 message = 'Mohon update data pendidikan anda di aplikasi SIMPEG!'
             }
         } else if (last_pangkat.pangkat_golongan.id < 12) {
             if (last_educate.type.includes('S1') || last_educate.type.includes('S2')) {
-                console.log(last_pangkat)
+                // console.log(last_pangkat)
             } else {
                 // warning message
                 message = 'Mohon update data pendidikan anda di aplikasi SIMPEG!'
@@ -113,7 +113,7 @@ class EmployeeDataPribadi extends Component {
         }
         if (last_pangkat.pangkat_golongan.id === 13) {
             if (last_educate.type.includes('S2')) {
-                console.log(last_pangkat)
+                // console.log(last_pangkat)
             } else {
                 // warning message
                 message = 'Mohon update data pendidikan anda di aplikasi SIMPEG!'

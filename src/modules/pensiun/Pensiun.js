@@ -45,7 +45,7 @@ class Pensiun extends Component {
             const o = pangkats.result[i]
             if ((o.pangkat_golongan) && 18 === o.pangkat_golongan.id) {
                 if (o.pangkat_golongan) {
-                    console.log(o.pangkat_golongan)
+                    // console.log(o.pangkat_golongan)
                     return o.pangkat_golongan.document_pangkat
                 } else return []
             }
@@ -77,11 +77,11 @@ class Pensiun extends Component {
 
     renderStatus(o, userDocument) {
         if (userDocument) {
-            // console.log(o)
+            // // console.log(o)
             let value = null
             for (let i = 0; i < userDocument.length; i++) {
                 let tmp = userDocument[i]
-                // console.log(tmp)
+                // // console.log(tmp)
                 if (tmp.document.value === o.value) {
                     value = tmp
                     break
@@ -100,14 +100,14 @@ class Pensiun extends Component {
     }
 
     renderDownloadView(o, userDocument) {
-        console.log(userDocument)
+        // console.log(userDocument)
         const {user} = this.state
         if (userDocument) {
-            // console.log(o)
+            // // console.log(o)
             let value = null
             for (let i = 0; i < userDocument.length; i++) {
                 let tmp = userDocument[i]
-                // console.log(tmp)
+                // // console.log(tmp)
                 if (tmp.document.value === o.value) {
                     value = tmp
                     break
@@ -154,7 +154,7 @@ class Pensiun extends Component {
     }
 
     onModalClose() {
-        console.log("callback from child")
+        // console.log("callback from child")
         this.setState({modalShow: false})
     }
 
@@ -182,14 +182,14 @@ class Pensiun extends Component {
 
     render() {
         const documents = this.pensiunDocument()
-        console.log(documents)
+        // console.log(documents)
         const {userDocument} = this.props
         const {user, url, modalShow, path} = this.state
         // validate pensiun
         let pensiun = moment(user.tanggal_lahir).add(MAX_PENSIUN, 'years');
         let diff = pensiun.diff(moment())
         let duration = moment.duration(diff)
-        console.log(duration.years(), duration.months(), moment(user.tanggal_lahir).format("MM-DD-YYYY"))
+        // console.log(duration.years(), duration.months(), moment(user.tanggal_lahir).format("MM-DD-YYYY"))
         let isPensiun = duration.years() === 0 || duration.years() <= 0
 
         if (!isPensiun) {

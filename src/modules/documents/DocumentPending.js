@@ -77,7 +77,7 @@ class DocumentPending extends Component {
         //             id: o.id,
         //             approval: 1
         //         }
-        //         console.log("request form")
+        //         // console.log("request form")
         //         this.props.approveDocument(request);
         //     }
         // });
@@ -101,7 +101,7 @@ class DocumentPending extends Component {
                 approval: 1,
                 message: name
             }
-            console.log("request form")
+            // console.log("request form")
             this.props.approveDocument(request);
             //return true
             //return fetch(`https://itunes.apple.com/search?term=${name}&entity=movie`);
@@ -122,7 +122,7 @@ class DocumentPending extends Component {
                     id: o.id,
                     approval: 2
                 }
-                console.log("request form")
+                // console.log("request form")
                 this.props.approveDocument(request);
             }
         });
@@ -134,7 +134,7 @@ class DocumentPending extends Component {
             id: this.state.id,
             name: this.state.name
         }
-        console.log("submit")
+        // console.log("submit")
         this.props.mergeDocument(request)
     }
 
@@ -240,7 +240,7 @@ class DocumentPending extends Component {
         // const url = BASE_URL +'/user/view/digital/198909152014041001/5'
         // const url = "http://localhost:8081/api/v1/user/view/digital/196406241987032001/5"
         const {documents} = this.props
-        console.log(documents)
+        // console.log(documents)
         return (
             <Fragment>
                 <div className="row">

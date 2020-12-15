@@ -108,7 +108,7 @@ class CutiForm extends Component {
     }
 
     handleTypeSelect(e) {
-        console.log("handle selected")
+        // console.log("handle selected")
         return e.value;
     }
 
@@ -357,7 +357,7 @@ class CutiForm extends Component {
         const {user_cuties, cuti_calculate_days, holidays, user_quota} = this.props
         const {tabs, content, startDate, jenisCuti, description, tlpAddress, cutiAddress} = this.state
         const filter_cuti = user_cuties.result.filter(item => {
-            console.log(item)
+            // console.log(item)
             if (0 === content) {
                 return item.cuti_status === 3 || item.cuti_status === 4
                     //|| item.cuti_status === 5

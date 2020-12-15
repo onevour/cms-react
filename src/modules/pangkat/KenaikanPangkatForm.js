@@ -33,7 +33,7 @@ class KenaikanPangkatForm extends Component {
 
     componentDidMount(props) {
         this.props.listUserHistoryPangkat()
-        console.log("load history pangkat")
+        // console.log("load history pangkat")
     }
 
     showDocument(o) {
@@ -62,7 +62,7 @@ class KenaikanPangkatForm extends Component {
     }
 
     handleChangeText(e) {
-        console.log(e)
+        // console.log(e)
         this.setState({siapa: e.target.value})
     }
 

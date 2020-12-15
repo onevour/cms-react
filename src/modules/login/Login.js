@@ -51,10 +51,10 @@ class Login extends Component {
 
     render() {
         const {login_response} = this.props
-        console.log(login_response)
+        // console.log(login_response)
         if (login_response.code === 200 && login_response.result) {
             localStorage.setItem('user', JSON.stringify(login_response.result))
-            console.log("redirect to home")
+            // console.log("redirect to home")
             return (
                 <Redirect to='/profile'/>
             )

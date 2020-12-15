@@ -34,7 +34,7 @@ class EmployeePelatihan extends Component {
 
     render() {
         const {type} = this.props
-        console.log(type)
+        // console.log(type)
         const {user} = this.state
         return (
             <div className="table-responsive">

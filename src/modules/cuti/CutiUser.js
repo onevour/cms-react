@@ -64,7 +64,7 @@ class CutiUser extends Component {
     }
 
     handleChangeName(event) {
-        console.log(event.target.value)
+        // console.log(event.target.value)
         this.setState({name: event.target.value})
     }
 
@@ -76,7 +76,7 @@ class CutiUser extends Component {
         const request = {
             id: o.value
         }
-        console.log("request form")
+        // console.log("request form")
         this.props.removeDocument(request);
     }
 
@@ -90,7 +90,7 @@ class CutiUser extends Component {
             id: this.state.id,
             name: this.state.name
         }
-        console.log("submit")
+        // console.log("submit")
         this.props.mergeDocument(request)
     }
 

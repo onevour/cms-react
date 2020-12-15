@@ -87,7 +87,7 @@ export function clearInput(domRef) {
         var event = new Event('input', {bubbles: true});
         native(element, null)
         element.dispatchEvent(event)
-        console.log("trigger event")
+        // console.log("trigger event")
     }
 
 }
@@ -124,7 +124,7 @@ export function numberOnly(value) {
     // let val = parseInt(value);
     // Number.isInteger(value)
     // if (Number.isInteger(parseInt(value)) && !Number.isNaN(parseInt(value))) {
-    //     console.log(value)
+    //     // console.log(value)
     //     return value
     // } else {
     // return ''

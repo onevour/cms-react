@@ -428,7 +428,7 @@ export function renderMenu() {
     return menuAll
     let user = JSON.parse(localStorage.getItem('user'))
     if (!user) return []
-    console.log(user.role)
+    // console.log(user.role)
     if ('PEJABAT PUSAT' === user.role) {
         return menuPejabat
     }

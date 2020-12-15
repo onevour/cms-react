@@ -70,22 +70,22 @@ class MasterJabatan extends Component {
     }
 
     handleChangeName(event) {
-        console.log(event.target.value)
+        // console.log(event.target.value)
         this.setState({name: event.target.value})
     }
 
     handleChangeJenis(event) {
-        console.log(event.target.value)
+        // console.log(event.target.value)
         this.setState({jenis_jabatan: event.target.value})
     }
 
     handleChangeKelas(event) {
-        console.log(event.target.value)
+        // console.log(event.target.value)
         this.setState({kelas_jabatan: event.target.value})
     }
 
     handleChangeKebutuhan(event) {
-        console.log(event.target.value)
+        // console.log(event.target.value)
         this.setState({kebutuhan: event.target.value})
     }
 
@@ -107,7 +107,7 @@ class MasterJabatan extends Component {
         const request = {
             id: o.value
         }
-        console.log("request form")
+        // console.log("request form")
         this.props.removeJabatan(request);
     }
 
@@ -124,7 +124,7 @@ class MasterJabatan extends Component {
     submitForm(event) {
         event.preventDefault()
         const {id, name, jenis_jabatan, kelas_jabatan, kebutuhan} = this.state
-        console.log(kebutuhan)
+        // console.log(kebutuhan)
         if (!(name) || '' === name) {
             this.setState({errorName: 'nama jabatan harus diisi'})
             return true

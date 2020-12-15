@@ -152,7 +152,7 @@ function* workerSagaCuti(action) {
             || CUTI_APPROVE_PEJABAT_SUBMIT === action.type
             || CUTI_APPROVE_ATASAN_SUBMIT === action.type
         ) {
-            // console.log("api request", action.payload)
+            // // console.log("api request", action.payload)
             const payload = yield call(postData, action.payload);
             yield put({type: CUTI_UPDATE_RESPONSE, payload});
         }
@@ -175,7 +175,7 @@ function* workerSagaLoadHolidays(action) {
             const payload = yield call(getData, action.payload);
             yield put({type: HOLIDAYS_LOAD_RESPONSE, payload});
         }
-        // console.log("load holiday from saga", action.type)
+        // // console.log("load holiday from saga", action.type)
     } catch (e) {
         yield put({type: "API_ERRORED", payload: e});
     }
@@ -183,7 +183,7 @@ function* workerSagaLoadHolidays(action) {
 
 function* workerSaga(action) {
     try {
-        // console.log("worker saga")
+        // // console.log("worker saga")
         const payload = yield call(getData, action.payload.url);
         yield put({type: "DATA_LOADED", payload});
     } catch (e) {

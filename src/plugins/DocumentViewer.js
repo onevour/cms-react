@@ -19,7 +19,7 @@ class DocumentViewer extends Component {
     }
 
     componentWillReceiveProps(props) {
-        console.log(props.path, props.url)
+        // console.log(props.path, props.url)
         this.setState({modalShow: props.modalShow, url: props.url, path: props.path, callback: props.callback})
     }
 

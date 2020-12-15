@@ -1,14 +1,10 @@
 import React, {Component, Fragment} from "react";
-import Pagination from "react-bootstrap-4-pagination";
 import {
-    BASE_URL, DUK_FILTER_PARAM, DUK_FILTER_PARAM_RESPONSE,
-    DUK_PAGE_RESPONSE, USER_CRUD_RESPONSE, USER_PAGE_RESPONSE
+    USER_CRUD_RESPONSE
 } from "../../redux/constants/reducActionTypes";
-import {emptyContentPage, emptyCrud, MAX_PENSIUN, ROLES, STATUS_PEGAWAI} from "../../application/AppConstant";
+import {emptyCrud, ROLES} from "../../application/AppConstant";
 import {connect} from "react-redux";
-import {listDuk, pageDuk, paramDuk} from "../../redux/actions/reduxActionMasterDUK";
-import {formatDate} from "../../application/AppCommons";
-import moment from "moment";
+import {paramDuk} from "../../redux/actions/reduxActionMasterDUK";
 import Select from "react-select";
 import {pageUser, userUpdateRole} from "../../redux/actions/reduxActionUser";
 import {Redirect} from "react-router-dom";
@@ -44,12 +40,12 @@ class UserRoleForm extends Component {
     }
 
     cancel(event) {
-        console.log(event)
+        // console.log(event)
         this.setState({direct: true})
     }
 
     handleChangeRole(event) {
-        console.log(event)
+        // console.log(event)
         this.setState({role: event})
     }
 
@@ -96,13 +92,13 @@ class UserRoleForm extends Component {
 
     submitForm(e) {
         e.preventDefault()
-        // console.log(this.state)
+        // // console.log(this.state)
         const request = {
             role: this.state.role.value,
             nip: this.state.user.nip,
         }
         this.props.userUpdate(request);
-        console.log(request)
+        // console.log(request)
     }
 
     renderRedirect() {
@@ -115,7 +111,7 @@ class UserRoleForm extends Component {
 
     render() {
         const {user} = this.state
-        console.log(user)
+        // console.log(user)
         return (
             <Fragment>
                 <div className="row">

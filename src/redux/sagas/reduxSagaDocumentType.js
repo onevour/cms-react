@@ -14,7 +14,7 @@ export function* masterDocumentType(action) {
         }
         if (action.method === POST) {
             const payloadResponse = yield call(postData, action.payload);
-            console.log({action})
+            // console.log({action})
             yield put({type: action.response, event: action.response, payload: payloadResponse, responseBody: action.responseBody});
         }
     } catch (e) {

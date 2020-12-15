@@ -4,7 +4,7 @@ import {
     BASE_URL, DUK_FILTER_PARAM, DUK_FILTER_PARAM_RESPONSE,
     DUK_PAGE_RESPONSE, USER_PAGE_RESPONSE
 } from "../../redux/constants/reducActionTypes";
-import {emptyContentPage, emptyCrud, MAX_PENSIUN, STATUS_PEGAWAI} from "../../application/AppConstant";
+import {defPage, emptyContentPage, emptyCrud, MAX_PENSIUN, STATUS_PEGAWAI} from "../../application/AppConstant";
 import {connect} from "react-redux";
 import {listDuk, pageDuk, paramDuk} from "../../redux/actions/reduxActionMasterDUK";
 import {formatDate} from "../../application/AppCommons";
@@ -55,7 +55,7 @@ class User extends Component {
     handleChangeName(event) {
         this.setState({name: event.target.value})
         const request = {
-            filter: this.state.name,
+            filter: event.target.value,
             page: 0
         }
         this.props.pageUser(request)
@@ -114,7 +114,6 @@ class User extends Component {
     render() {
         const {page, name} = this.state
         const {users} = this.props
-
         return (
             <Fragment>
                 <div className="row">
@@ -163,7 +162,7 @@ class User extends Component {
 
 function mapStateToProps(state) {
     return {
-        users: (state[USER_PAGE_RESPONSE] ? state[USER_PAGE_RESPONSE] : emptyContentPage)
+        users: defPage(state, USER_PAGE_RESPONSE)
     }
 }
 

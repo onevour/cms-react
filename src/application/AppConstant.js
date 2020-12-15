@@ -34,9 +34,9 @@ export const ROLES = [
         "description": "Admin Pusat Simpeg"
     },
     {
-        "value": "PEJABAT PUSAT",
-        "label": "PEJABAT PUSAT",
-        "description": "Admin Pusat Simpeg"
+        "value": "PEJABAT",
+        "label": "PEJABAT",
+        "description": "Pejabat Pusat Simpeg"
     }
 ]
 

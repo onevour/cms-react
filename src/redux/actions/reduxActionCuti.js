@@ -56,7 +56,7 @@ export function cancelCuti(param) {
         url: "/cuti/cancel",
         body: param
     }
-    console.log("event cancel cuti", payload)
+    // console.log("event cancel cuti", payload)
     // return {type: CUTI_CANCEL_SUBMIT, payload: payload}
     return {
         type: CUTI_CANCEL_SUBMIT,
@@ -108,7 +108,7 @@ export function calculateDays(param) {
         url: "/cuti/day",
         body: param
     }
-    // console.log("cal date action", payload)
+    // // console.log("cal date action", payload)
     // return {type: CUTI_DAYS, payload: payload};
     return {
         type: CUTI_CALCULATE_DAY,

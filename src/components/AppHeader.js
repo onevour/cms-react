@@ -46,13 +46,13 @@ class AppHeader extends Component {
         // event.preventDefault()
         const domNode = ReactDOM.findDOMNode(this);
         if (!domNode || !domNode.contains(event.target)) {
-            // console.log("outer, hide " + this.state.user)
+            // // console.log("outer, hide " + this.state.user)
             if ("nav-item dropdown d-none d-xl-inline-block" !== this.state.menuUserClass) {
                 this.setState({menuUserClass: "nav-item dropdown d-none d-xl-inline-block"})
                 this.setState({menuUserDropdownClass: "dropdown-menu dropdown-menu-right navbar-dropdown"})
-                console.log("hide menu profile")
+                // console.log("hide menu profile")
             }
-        } else console.log("inner")
+        } else // console.log("inner")
         return true
     }
 
@@ -73,7 +73,7 @@ class AppHeader extends Component {
             this.setState({menuUserClass: "nav-item dropdown d-none d-xl-inline-block show"})
             this.setState({menuUserDropdownClass: "dropdown-menu dropdown-menu-right navbar-dropdown show"})
         }
-        console.log("show menu")
+        // console.log("show menu")
     }
 
     render() {

@@ -81,7 +81,7 @@ class CutiDetail extends Component {
 
     downloadCuti() {
         const {user, cuti} = this.state
-        console.log(cuti)
+        // console.log(cuti)
         fetch(BASE_URL + '/user/download/cuti/' + cuti.user.nip + '/' + cuti.id)
             .then(response => {
                 response.blob().then(blob => {
@@ -147,7 +147,7 @@ class CutiDetail extends Component {
 
     componentDidMount(props) {
         if (this.props.location.state === undefined || this.props.location.state === null) {
-            console.log("location state is null")
+            // console.log("location state is null")
             // return true
         } else {
             const param = JSON.parse(this.props.location.state.body)

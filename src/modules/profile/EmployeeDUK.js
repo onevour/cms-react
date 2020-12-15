@@ -222,7 +222,7 @@ class EmployeeDUK extends Component {
     }
 
     handleChangeStatus(event) {
-        console.log(event.value)
+        // console.log(event.value)
         this.setState({status: event})
     }
 
@@ -268,7 +268,7 @@ class EmployeeDUK extends Component {
             page: this.state.page
         }
         this.props.pageDuk(request)
-        console.log("submit", request)
+        // console.log("submit", request)
     }
 
     latesPendidikan(educations, key) {

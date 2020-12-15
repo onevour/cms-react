@@ -56,7 +56,7 @@ class EmployeeDataDigital extends Component {
 
     renderTable(userDocument) {
         let result = userDocument.result.filter(item => item.approval === 2)
-        console.log(result)
+        // console.log(result)
         return (
             result.map((o, i) =>
                 <tr key={i}>

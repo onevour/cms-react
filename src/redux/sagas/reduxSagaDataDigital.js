@@ -16,7 +16,7 @@ export function* masterDocument(action) {
 
 export function* uploadUserDocument(action) {
     try {
-        console.log(action)
+        // console.log(action)
         const payload = yield call(postData, action.payload);
         yield put({type: USER_DOCUMENT_RESPONSE, payload});
     } catch (e) {
@@ -26,7 +26,7 @@ export function* uploadUserDocument(action) {
 
 export function* userDocument(action) {
     try {
-        console.log(action)
+        // console.log(action)
         const payload = yield call(postData, action.payload);
         yield put({type: USER_DOCUMENT_RESPONSE, payload});
     } catch (e) {
@@ -36,7 +36,7 @@ export function* userDocument(action) {
 
 export function* removeUserDocument(action) {
     try {
-        console.log(action)
+        // console.log(action)
         const payload = yield call(postData, action.payload);
         yield put({type: USER_DOCUMENT_RESPONSE, payload});
     } catch (e) {

@@ -85,7 +85,7 @@ class EmployeeAngkaKreditForm extends Component {
         e.preventDefault()
         const {type, ext, file, date, value} = this.state
         if (!Number(value)) {
-            console.log('not a number', value)
+            // console.log('not a number', value)
             this.setState({errorServer: 'Nilai not a number'})
             return;
         }
@@ -115,7 +115,7 @@ class EmployeeAngkaKreditForm extends Component {
     }
 
     renderDownloadView(user, index, o) {
-        console.log(user)
+        // console.log(user)
         if (!user && !o) return
         if (!o.path) return
         return (

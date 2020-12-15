@@ -126,7 +126,7 @@ class MasterJabatanMap extends Component {
 
     render() {
         const {jabatans} = this.props
-        console.log(jabatans)
+        // console.log(jabatans)
         return (
             <Fragment>
 

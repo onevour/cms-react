@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from "react";
-import {formatDate, formatYear, getFileExtension} from "../../../application/AppCommons";
+import {formatYear, getFileExtension} from "../../../application/AppCommons";
 import swal from "sweetalert";
 import {BASE_URL, USER_CRUD_RESPONSE, USER_RESPONSE} from "../../../redux/constants/reducActionTypes";
 import Datetime from "react-datetime";
@@ -95,7 +95,7 @@ class EmployeeHukumanDisiplinForm extends Component {
         e.preventDefault()
         const {type, ext, file, date, value} = this.state
         if (value === '') {
-            console.log('not a number', value)
+            // console.log('not a number', value)
             this.setState({errorServer: 'Hukuman disiplin empty'})
             return;
         }
@@ -126,7 +126,7 @@ class EmployeeHukumanDisiplinForm extends Component {
     }
 
     renderDownloadView(user, index, o) {
-        console.log(user)
+        // console.log(user)
         if (!user && !o) return
         if (!o.path) return
         return (
