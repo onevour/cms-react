@@ -137,20 +137,6 @@ class DashboardJabatanPendidikan extends Component {
                                 </div>
                                 <div className="row">
                                     <div className="col-md-12 col-sm-12">
-                                        <div className="table-responsive">
-                                            <table className="table table-hover">
-                                                <thead>
-                                                <tr>
-                                                    {this.buildTableHeader()}
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                {this.buildTableRow()}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-12 col-sm-12">
                                         <Bar data={values}
                                              width={100}
                                              height={50}
@@ -171,6 +157,21 @@ class DashboardJabatanPendidikan extends Component {
         )
     }
 }
+
+// <div className="col-md-12 col-sm-12">
+//     <div className="table-responsive">
+//         <table className="table table-hover">
+//             <thead>
+//             <tr>
+//                 {this.buildTableHeader()}
+//             </tr>
+//             </thead>
+//             <tbody>
+//             {this.buildTableRow()}
+//             </tbody>
+//         </table>
+//     </div>
+// </div>
 
 function mapStateToProps(state) {
     return {
