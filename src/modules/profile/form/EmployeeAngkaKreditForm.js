@@ -18,8 +18,9 @@ class EmployeeAngkaKreditForm extends Component {
             type: 0,
             ext: '',
             file: null,
-            errorServer: ''
+            errorServer: '',
         }
+        this.fileUpload = React.createRef()
         this.handleSelectDate = this.handleSelectDate.bind(this)
         this.onChangeValue = this.onChangeValue.bind(this)
         this.handleChangeFile = this.handleChangeFile.bind(this)
@@ -50,6 +51,7 @@ class EmployeeAngkaKreditForm extends Component {
                 file: null,
                 errorServer: ''
             })
+            this.fileUpload.current.value = null
 
         }
     }
@@ -164,7 +166,7 @@ class EmployeeAngkaKreditForm extends Component {
                         </div>
                         <div className="form-group">
                             <label>Dokumen</label>
-                            <input type="file" className="form-control" onChange={this.handleChangeFile}/>
+                            <input type="file" className="form-control" onChange={this.handleChangeFile} ref={this.fileUpload}/>
                         </div>
                         <div className="form-group">
                             <span className="text-danger">{this.state.errorServer}</span>
@@ -172,7 +174,7 @@ class EmployeeAngkaKreditForm extends Component {
                         <button type="submit" className="btn btn-success mr-2">ADD</button>
                     </form>
                 </div>
-                <div className="col-md-1"></div>
+                <div className="col-md-1"/>
                 <div className="col-md-8">
                     <div className="table-responsive" style={{marginTop: 20}}>
                         <table className="table">

@@ -1,15 +1,5 @@
 import React, {Component, Fragment} from "react";
-import Select from "react-select";
-import {JENIS_CUTI} from "../../../application/AppConstant";
-import Datetime from "react-datetime";
-import {disableBeforeDay, selectedTabClass} from "../../../application/AppCommons";
-import moment from "moment-timezone";
-import EmployeePendidikan from "../datapribadi/EmployeePendidikan";
-import EmployeeDataKeluargaV2 from "../datapribadi/EmployeeDataKeluargaV2";
-import EmployeeDataDigital from "../datapribadi/EmployeeDataDigital";
-import EmployeeDataPribadi from "../datapribadi/EmployeeDataPribadi";
-import EmployeeDataKepegawaian from "../kepegawaian/EmployeeDataKepegawaian";
-import EmployeeDataRiwayat from "../riwayat/EmployeeDataRiwayat";
+import {selectedTabClass} from "../../../application/AppCommons";
 import EmployeeProfileForm from "./EmployeeProfileForm";
 import EmployeeSKPForm from "./EmployeeSKPForm";
 import EmployeeAngkaKreditForm from "./EmployeeAngkaKreditForm";

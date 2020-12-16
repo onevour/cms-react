@@ -21,6 +21,7 @@ class EmployeePelatihanJabatanForm extends Component {
             file: null,
             errorServer: ''
         }
+        this.fileUpload = React.createRef()
         // console.log("type: ", props.type)
         this.handleSelectDate = this.handleSelectDate.bind(this)
         this.handleSelectTmt = this.handleSelectTmt.bind(this)
@@ -54,6 +55,7 @@ class EmployeePelatihanJabatanForm extends Component {
                 file: null,
                 errorServer: ''
             })
+            this.fileUpload.current.value = null
 
         }
     }
@@ -203,7 +205,7 @@ class EmployeePelatihanJabatanForm extends Component {
                         </div>
                         <div className="form-group">
                             <label>Dokumen</label>
-                            <input type="file" className="form-control" onChange={this.handleChangeFile}/>
+                            <input type="file" className="form-control" onChange={this.handleChangeFile} ref={this.fileUpload}/>
                         </div>
                         <div className="form-group">
                             <span className="text-danger">{this.state.errorServer}</span>
