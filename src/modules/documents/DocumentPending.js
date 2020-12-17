@@ -229,7 +229,7 @@ class DocumentPending extends Component {
         } else {
             return (
                 <div className="text-center">
-                    <img src={url} alt="view"/>
+                    <img src={url} className="img-fluid" alt="view"/>
                 </div>
             )
         }

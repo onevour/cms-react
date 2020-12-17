@@ -12,7 +12,16 @@ export function postData(payload) {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(payload.body)
     };
-    return fetch(BASE_URL +payload.url, requestOptions).then(response =>
+    return fetch(BASE_URL + payload.url, requestOptions).then(response =>
         response.json()
     );
+}
+
+export function downloadData(payload) {
+    const requestOptions = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(payload.body)
+    }
+    return fetch(BASE_URL + payload.url, requestOptions)
 }

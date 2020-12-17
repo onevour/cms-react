@@ -87,40 +87,40 @@ export const JENIS_CUTI = [
 
 export const MONTHS = [
     {
-        value: 0,
+        value: 1,
         label: "Januari"
     }, {
-        value: 1,
+        value: 2,
         label: "Februari"
     }, {
-        value: 2,
+        value: 3,
         label: "Maret"
     }, {
-        value: 3,
+        value: 4,
         label: "April"
     }, {
-        value: 4,
+        value: 5,
         label: "Mei"
     }, {
-        value: 5,
+        value: 6,
         label: "Juni"
     }, {
-        value: 6,
+        value: 7,
         label: "Juli"
     }, {
-        value: 7,
+        value: 8,
         label: "Agustus"
     }, {
-        value: 8,
+        value: 9,
         label: "September"
     }, {
-        value: 9,
+        value: 10,
         label: "Oktober"
     }, {
-        value: 10,
+        value: 11,
         label: "November"
     }, {
-        value: 11,
+        value: 12,
         label: "Desember"
     }
 ]

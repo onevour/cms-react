@@ -2,7 +2,7 @@ import React, {Component, Fragment} from "react";
 import {Modal} from "react-bootstrap";
 import {getFileExtension} from "../application/AppCommons";
 import {PDFReader} from "reactjs-pdf-reader";
-
+import { ResponsiveImage, ResponsiveImageSize } from 'react-responsive-image';
 
 class DocumentViewer extends Component {
 
@@ -41,7 +41,7 @@ class DocumentViewer extends Component {
         } else {
             return (
                 <div className="text-center">
-                    <img src={url} alt="view"/>
+                    <img src={url} className="img-fluid" alt="view"/>
                 </div>
             )
         }

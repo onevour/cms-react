@@ -29,7 +29,7 @@ class UserNaikPangkatRegular extends Component {
             page: 0,
             filter: '',
             year: moment().year(),
-            month: moment().month(),
+            month: moment().month() + 1,
             directBody: null,
             direct: false
         };
@@ -123,61 +123,44 @@ class UserNaikPangkatRegular extends Component {
         )
     }
 
-    pangkatTerakhir(o, index) {
-        if (0 === o.pangkats.length) return ''
-        let pangkats = o.pangkats.filter(i => {
+    excludePensiun(o) {
+        if (0 === o.pangkats.length) return []
+        // exclude pensiun
+        return o.pangkats.filter(i => {
             if (!i) return false
             if (!i.pangkat_golongan) return false
             return "PENSIUN" !== i.pangkat_golongan.golongan.toUpperCase();
         })
-        let pangkat = pangkats[pangkats.length - 2]
+    }
+
+    pangkatEqualYearMonth(pangkats, year, month) {
+        let pangkat = null
+        pangkats.map((o, i) => {
+            let tmt = moment(o.tmt)
+            if (tmt.year() === year && tmt.month() + 1 === month) {
+                pangkat = o
+            }
+        })
+        return pangkat
+    }
+
+    pangkatTerakhir(o, index) {
+        if (0 === o.pangkats.length) return ''
+        const pangkats = this.excludePensiun(o)
+        const {year, month} = this.state
+        let pangkat = this.pangkatEqualYearMonth(pangkats, year - 4, month)
         if (!pangkat) return ''
         if (0 === index) {
             return pangkat.pangkat_golongan.golongan
         }
         return pangkat.pangkat_golongan.nama
-        // // console.log(pangkats)
-        // let counter = 0
-        // for (let last of pangkats) {
-        //     if (counter === 0) {
-        //         counter++
-        //         continue
-        //     }
-        //     if (!last) return ''
-        //     let pangkat_golongan = last.pangkat_golongan
-        //     if (!pangkat_golongan) return ''
-        //     if (0 === index) {
-        //         return pangkat_golongan.golongan
-        //     }
-        //     return pangkat_golongan.nama
-        // }
     }
 
     pangkatAjuan(o, index) {
-        /*
         if (0 === o.pangkats.length) return ''
-        let pangkats = o.pangkats.filter(i => {
-            if (!i) return false
-            if (!i.pangkat_golongan) return false
-            return "PENSIUN" !== i.pangkat_golongan.golongan.toUpperCase();
-        })
-        for (let last of pangkats) {
-            if (!last) return ''
-            let pangkat_golongan = last.pangkat_golongan
-            if (!pangkat_golongan) return ''
-            if (0 === index) {
-                return pangkat_golongan.golongan
-            }
-            return pangkat_golongan.nama
-        }
-         */
-        if (0 === o.pangkats.length) return ''
-        let pangkats = o.pangkats.filter(i => {
-            if (!i) return false
-            if (!i.pangkat_golongan) return false
-            return "PENSIUN" !== i.pangkat_golongan.golongan.toUpperCase();
-        })
-        let pangkat = pangkats[pangkats.length - 1]
+        const pangkats = this.excludePensiun(o)
+        const {year, month} = this.state
+        let pangkat = this.pangkatEqualYearMonth(pangkats, year, month)
         if (!pangkat) return ''
         if (0 === index) {
             return pangkat.pangkat_golongan.golongan
@@ -208,7 +191,6 @@ class UserNaikPangkatRegular extends Component {
     }
 
     renderTable(users) {
-        // console.log(users)
         return (
             users.result.map((o, i) =>
                 <tr className="clickable" key={i}>
