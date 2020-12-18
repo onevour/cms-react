@@ -4,12 +4,21 @@ import {
     BASE_URL, DUK_FILTER_PARAM, DUK_FILTER_PARAM_RESPONSE,
     DUK_PAGE_RESPONSE
 } from "../../redux/constants/reducActionTypes";
-import {emptyContentPage, emptyCrud, MAX_PENSIUN, STATUS_PEGAWAI} from "../../application/AppConstant";
+import {
+    defCrud,
+    defPage,
+    emptyContentPage,
+    emptyCrud,
+    MAX_PENSIUN,
+    STATUS_PEGAWAI
+} from "../../application/AppConstant";
 import {connect} from "react-redux";
 import {listDuk, pageDuk, paramDuk} from "../../redux/actions/reduxActionMasterDUK";
 import {formatDate} from "../../application/AppCommons";
 import moment from "moment";
 import Select from "react-select";
+import {Button, Modal} from "react-bootstrap";
+import ViewEmployee from "../views/profiles/ViewEmployee";
 
 
 class EmployeeDUK extends Component {
@@ -17,10 +26,11 @@ class EmployeeDUK extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            modalShow: false,
             page: 0,
             id: 0,
-            status: {label: 'ALL', value: 0},
             name: '',
+            status: {label: 'ALL', value: 0},
             golongan: {label: 'ALL', value: 0},
             masaKerja: {label: 'ALL', value: -1},
             pangkat: {label: 'ALL', value: 0},
@@ -28,6 +38,7 @@ class EmployeeDUK extends Component {
             jabatan: {label: 'ALL', value: 0},
             usia: {label: 'ALL', value: 0}
         };
+        this.modalClose = this.modalClose.bind(this)
         this.changePage = this.changePage.bind(this)
         this.handleChangeName = this.handleChangeName.bind(this)
         this.handleChangeStatus = this.handleChangeStatus.bind(this)
@@ -222,7 +233,6 @@ class EmployeeDUK extends Component {
     }
 
     handleChangeStatus(event) {
-        // console.log(event.value)
         this.setState({status: event})
     }
 
@@ -268,7 +278,6 @@ class EmployeeDUK extends Component {
             page: this.state.page
         }
         this.props.pageDuk(request)
-        // console.log("submit", request)
     }
 
     latesPendidikan(educations, key) {
@@ -321,6 +330,24 @@ class EmployeeDUK extends Component {
         return yearCPNS + ' Tahun ' + monthCPNS + ' Bulan'
     }
 
+    modalClose() {
+        this.setState({modalShow: false})
+    }
+
+    viewProfile(o) {
+        localStorage.setItem('user-view', JSON.stringify(o))
+        this.setState({modalShow: true})
+    }
+
+    renderContent() {
+        const {modalShow} = this.state
+        if (modalShow) {
+            return (
+                <ViewEmployee/>
+            )
+        }
+    }
+
     renderHeader() {
         return (
             <thead>
@@ -365,7 +392,7 @@ class EmployeeDUK extends Component {
     renderTable(duks) {
         return (
             duks.result.values.map((o, i) =>
-                <tr className="clickable" key={i}>
+                <tr className="clickable" key={i} onClick={()=>{this.viewProfile(o)}}>
                     <td>{o.nama}</td>
                     <td>{o.kelamin}</td>
                     <td>{o.nip}</td>
@@ -398,7 +425,7 @@ class EmployeeDUK extends Component {
     }
 
     render() {
-        const {page, name} = this.state
+        const {page, modalShow} = this.state
         const {duks, filter} = this.props
 
         return (
@@ -564,8 +591,18 @@ class EmployeeDUK extends Component {
                             </div>
                         </div>
                     </div>
-
                 </div>
+
+                <Modal size="lg" show={modalShow} onHide={this.modalClose} onShow={this.modalOnShow}
+                       animation={false} backdrop="static" scrollable={true}>
+                    <Modal.Header closeButton style={{backgroundColor: "white"}}>
+                        <Modal.Title>Profile</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        {this.renderContent()}
+                    </Modal.Body>
+                </Modal>
+
             </Fragment>
         )
     }
@@ -573,8 +610,10 @@ class EmployeeDUK extends Component {
 
 function mapStateToProps(state) {
     return {
-        duks: (state[DUK_PAGE_RESPONSE] ? state[DUK_PAGE_RESPONSE] : emptyContentPage),
-        filter: (state[DUK_FILTER_PARAM_RESPONSE] ? state[DUK_FILTER_PARAM_RESPONSE] : emptyCrud)
+        duks: defPage(state, DUK_PAGE_RESPONSE),
+        filter: defCrud(state, DUK_FILTER_PARAM_RESPONSE),
+        // duks: (state[DUK_PAGE_RESPONSE] ? state[DUK_PAGE_RESPONSE] : emptyContentPage),
+        // filter: (state[DUK_FILTER_PARAM_RESPONSE] ? state[DUK_FILTER_PARAM_RESPONSE] : emptyCrud)
     }
 }
 
