@@ -1,41 +1,30 @@
 import React, {Component, Fragment} from "react";
 import {Bar} from "react-chartjs-2";
-import {defCrud, defList} from "../../application/AppConstant";
+import {defList} from "../../application/AppConstant";
 import {
-    CUTI_CALCULATE_DAY_RESPONSE,
-    CUTI_LOAD_USER_RESPONSE,
-    CUTI_QUOTA_RESPONSE,
-    CUTI_SUBMIT_RESPONSE,
-    DASHBOARD_JABATAN_NAIK_PANGKAT, DASHBOARD_JABATAN_NAIK_PANGKAT_RESPONSE,
-    DASHBOARD_JENIS_JABATAN_JENIS_KELAMIN_RESPONSE,
-    HOLIDAYS_LOAD_FUTURE_RESPONSE
+    DASHBOARD_JABATAN_JENIS_KELAMIN_RESPONSE, DASHBOARD_JABATAN_PANGKAT_RESPONSE
 } from "../../redux/constants/reducActionTypes";
 import {connect} from "react-redux";
 import {
-    calculateDays,
-    cutiQuota,
-    loadCutiUserLogin,
-    loadHolidaysFuture,
-    requestCuti
-} from "../../redux/actions/reduxActionCuti";
-import {dashboardJabatanNaikPangkat, dashboardJenisJabatanJenisKelamin} from "../../redux/actions/reduxActionDashboard";
-import AddIcon from "@material-ui/icons/Add";
+    dashboardJabatanJenisKelamin, dashboardJabatanPangkat
+} from "../../redux/actions/reduxActionDashboard";
 import {color} from "../../application/AppCommons";
-import moment from "moment";
 
-class DashboardKenaikanPangkat extends Component {
+class JabatanPangkat extends Component {
 
     componentDidMount() {
-        this.props.dashboardJabatanNaikPangkat()
+        this.props.dashboardJabatanPangkat()
     }
 
     buildLabel(data) {
-        let tahuns = []
-        let tahun = moment().year();
-        for (let i = tahun; i <= tahun + 5; i++) {
-            tahuns.push(i)
-        }
-        return tahuns
+        //let labels = ['iv/c', 'iv/b', 'iv/a', 'iii/d', 'iii/c', 'iii/b', 'iii/a', 'ii/d', 'ii/c', 'ii/b', 'ii/a']
+        let labels = [
+            'i/a', 'i/b', 'i/c', 'i/d',
+            'ii/a', 'ii/b', 'ii/c', 'ii/d',
+            'iii/a', 'iii/b', 'iii/c', 'iii/d',
+            'iv/a', 'iv/b', 'iv/c', 'iv/d', 'iv/e',
+        ]
+        return labels
     }
 
     buildData(data) {
@@ -47,38 +36,39 @@ class DashboardKenaikanPangkat extends Component {
         data.result.map((o, i) => {
             dataset.push({
                 label: o.jabatan.name,
-                data: this.buildDataTahun(o.naik_pangkat_tahuns),
-                backgroundColor: colors[i]
+                data: []
             })
         })
-        return dataset
-    }
-
-    buildDataTahun(data) {
-        let dataset = []
-        data.map((o, i) => {
-            dataset.push(o.jumlah)
+        let a3 = 0;
+        data.result.map((o, i) => {
+            let tmp = []
+            o.pangkats.map((p, x) => {
+                if (x === 8) {
+                    a3 = a3 + p.jumlah
+                    console.log(o.jabatan.name,p.pangkat, p.jumlah)
+                }
+                tmp.push(p.jumlah)
+            })
+            // console.log(o.jabatan.name, tmp)
+            dataset[i].data = tmp
+            dataset[i].backgroundColor = colors[i]
         })
+        console.log("total a3 ", a3)
+        let labels = [
+            'i/a', 'i/b', 'i/c', 'i/d',
+            'ii/a', 'ii/b', 'ii/c', 'ii/d',
+            'iii/a', 'iii/b', 'iii/c', 'iii/d',
+            'iv/a', 'iv/b', 'iv/c', 'iv/d', 'iv/e',
+        ]
+        // let datasetVal = []
+        // labels.map((o, i) => {
+        //     datasetVal.push({
+        //         label: o,
+        //         data: dataset[i],
+        //         backgroundColor: colors[i]
+        //     })
+        // })
         return dataset
-    }
-
-    buildTableHeader() {
-        const {data} = this.props
-        let tahuns = []
-        let tahun = moment().year();
-        for (let i = tahun; i <= tahun + 5; i++) {
-            tahuns.push(i)
-        }
-        return (
-            <Fragment>
-                <th>No</th>
-                <th>Jabatan</th>
-                {tahuns.map((o, i) =>
-                    <th>{o}</th>
-                )}
-                <th>Total</th>
-            </Fragment>
-        )
     }
 
     buildTableRow() {
@@ -89,10 +79,10 @@ class DashboardKenaikanPangkat extends Component {
                     data.result.map((o, i) =>
                         <tr key={i}>
                             <td>{i + 1}</td>
-                            <td>{o.jabatan.name}</td>
-                            {o.naik_pangkat_tahuns.map((np, i) =>
-                                <td>{np.jumlah}</td>
-                            )}
+                            <td>{o.jenis_jabatan}</td>
+                            <td>{o.laki_laki}</td>
+                            <td>{o.perempuan}</td>
+                            <td>{(o.perempuan + o.laki_laki)}</td>
                         </tr>
                     )
                 }
@@ -109,7 +99,7 @@ class DashboardKenaikanPangkat extends Component {
         const options = {
             legend: {
                 position: 'left',
-                display:false
+                display: false
             },
             maintainAspectRatio: true,
             scales: {
@@ -122,7 +112,7 @@ class DashboardKenaikanPangkat extends Component {
                 ],
             },
         }
-
+        // console.log(data)
         return (
             <Fragment>
                 <div className="row">
@@ -131,15 +121,19 @@ class DashboardKenaikanPangkat extends Component {
                             <div className="card-body">
                                 <div className="row">
                                     <div className="col">
-                                        <h4 className="card-title">Rekapitulasi Jumlah PNS Direktorat SMA Naik
-                                            Pangkat</h4>
+                                        <h4 className="card-title">Rekapitulasi Jumlah PNS Direktorat SMA Berdasarkan
+                                            Jabatan dan Pangkat</h4>
                                     </div>
-                                    <div className="col-md-12 col-sm-12" hidden={true}>
-                                        <div className="table-responsive">
+                                    <div className="col-md-12 col-sm-12">
+                                        <div className="table-responsive" hidden={true}>
                                             <table className="table table-hover">
                                                 <thead>
                                                 <tr>
-                                                    {this.buildTableHeader()}
+                                                    <th>No</th>
+                                                    <th>Jabatan</th>
+                                                    <th>Laki-Laki</th>
+                                                    <th>Perempuan</th>
+                                                    <th>Jumlah</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -158,7 +152,7 @@ class DashboardKenaikanPangkat extends Component {
                                         />
                                         <p className="text-muted mt-3 mb-0">
                                             <i className="mdi mdi-alert-octagon mr-1" aria-hidden="true"/>
-                                            Rekapitulasi Jumlah PNS Direktorat SMA Naik Pangkat
+                                            Rekapitulasi Jumlah PNS Direktorat SMA Berdasarkan Jabatan dan Pangkat
                                         </p>
                                     </div>
                                 </div>
@@ -175,10 +169,10 @@ class DashboardKenaikanPangkat extends Component {
 
 function mapStateToProps(state) {
     return {
-        data: defList(state, DASHBOARD_JABATAN_NAIK_PANGKAT_RESPONSE)
+        data: defList(state, DASHBOARD_JABATAN_PANGKAT_RESPONSE)
     }
 }
 
 export default connect(mapStateToProps, {
-    dashboardJabatanNaikPangkat
-})(DashboardKenaikanPangkat);
+    dashboardJabatanPangkat
+})(JabatanPangkat);

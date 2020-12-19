@@ -26,9 +26,6 @@ class JenisJabatanJenisKelamin extends Component {
 
     buildLabel(data) {
         let labels = ['Laki-Laki', 'Perempuan', 'Jumlah']
-        // data.result.map(o => {
-        //     labels.push(o.jenis_jabatan)
-        // })
         return labels
     }
 
@@ -74,7 +71,7 @@ class JenisJabatanJenisKelamin extends Component {
             labels: this.buildLabel(data),
             datasets: this.buildData(data),
         }
-
+        console.log(values)
         const options = {
             maintainAspectRatio: true,
             scales: {

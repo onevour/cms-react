@@ -56,7 +56,6 @@ class EmployeeDataDigital extends Component {
 
     renderTable(userDocument) {
         let result = userDocument.result.filter(item => item.approval === 2)
-        // console.log(result)
         return (
             result.map((o, i) =>
                 <tr key={i}>
@@ -115,7 +114,6 @@ class EmployeeDataDigital extends Component {
 
 }
 
-// export default EmployeeDataDigital;
 function mapStateToProps(state) {
     return {
         masterDocument: state.masterDocument.result,

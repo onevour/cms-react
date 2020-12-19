@@ -3,7 +3,7 @@ import "react-datetime/css/react-datetime.css";
 import {
     PANGKAT_PAGE_RESPONSE
 } from "../../redux/constants/reducActionTypes";
-import {emptyContentPage} from "../../application/AppConstant";
+import {defPage, emptyContentPage} from "../../application/AppConstant";
 import {connect} from "react-redux";
 import {pagePangkat} from "../../redux/actions/reduxActionMasterPangkat";
 import {Redirect} from "react-router-dom";
@@ -124,7 +124,8 @@ class PangkatKenaikanPegawai extends Component {
 
 function mapStateToProps(state) {
     return {
-        pangkats: (state[PANGKAT_PAGE_RESPONSE] ? state[PANGKAT_PAGE_RESPONSE] : emptyContentPage)
+        pangkats: defPage(state, PANGKAT_PAGE_RESPONSE)
+        // pangkats: (state[PANGKAT_PAGE_RESPONSE] ? state[PANGKAT_PAGE_RESPONSE] : emptyContentPage)
     }
 }
 

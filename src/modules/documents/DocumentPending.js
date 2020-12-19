@@ -208,7 +208,7 @@ class DocumentPending extends Component {
                                 path: o.path
                             })
                         }}>
-                    <i className="mdi mdi-24px mdi-file-pdf-box"/>
+                    <i className="mdi mdi-24px mdi-magnify-plus-outline"/>
                 </button>
             </>
         )

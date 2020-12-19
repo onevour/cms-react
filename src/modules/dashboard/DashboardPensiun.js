@@ -7,7 +7,7 @@ import {
     CUTI_QUOTA_RESPONSE,
     CUTI_SUBMIT_RESPONSE,
     DASHBOARD_JABATAN_NAIK_PANGKAT, DASHBOARD_JABATAN_NAIK_PANGKAT_RESPONSE,
-    DASHBOARD_JENIS_JABATAN_JENIS_KELAMIN_RESPONSE,
+    DASHBOARD_JENIS_JABATAN_JENIS_KELAMIN_RESPONSE, DASHBOARD_PENSIUN_RESPONSE,
     HOLIDAYS_LOAD_FUTURE_RESPONSE
 } from "../../redux/constants/reducActionTypes";
 import {connect} from "react-redux";
@@ -18,15 +18,19 @@ import {
     loadHolidaysFuture,
     requestCuti
 } from "../../redux/actions/reduxActionCuti";
-import {dashboardJabatanNaikPangkat, dashboardJenisJabatanJenisKelamin} from "../../redux/actions/reduxActionDashboard";
+import {
+    dashboardJabatanNaikPangkat,
+    dashboardJenisJabatanJenisKelamin,
+    dashboardPensiun
+} from "../../redux/actions/reduxActionDashboard";
 import AddIcon from "@material-ui/icons/Add";
 import {color} from "../../application/AppCommons";
 import moment from "moment";
 
-class DashboardKenaikanPangkat extends Component {
+class DashboardPensiun extends Component {
 
     componentDidMount() {
-        this.props.dashboardJabatanNaikPangkat()
+        this.props.dashboardPensiun()
     }
 
     buildLabel(data) {
@@ -131,8 +135,7 @@ class DashboardKenaikanPangkat extends Component {
                             <div className="card-body">
                                 <div className="row">
                                     <div className="col">
-                                        <h4 className="card-title">Rekapitulasi Jumlah PNS Direktorat SMA Naik
-                                            Pangkat</h4>
+                                        <h4 className="card-title">Rekapitulasi Jumlah PNS Direktorat SMA Pensiun</h4>
                                     </div>
                                     <div className="col-md-12 col-sm-12" hidden={true}>
                                         <div className="table-responsive">
@@ -158,7 +161,7 @@ class DashboardKenaikanPangkat extends Component {
                                         />
                                         <p className="text-muted mt-3 mb-0">
                                             <i className="mdi mdi-alert-octagon mr-1" aria-hidden="true"/>
-                                            Rekapitulasi Jumlah PNS Direktorat SMA Naik Pangkat
+                                            Rekapitulasi Jumlah PNS Direktorat SMA Pensiun
                                         </p>
                                     </div>
                                 </div>
@@ -175,10 +178,10 @@ class DashboardKenaikanPangkat extends Component {
 
 function mapStateToProps(state) {
     return {
-        data: defList(state, DASHBOARD_JABATAN_NAIK_PANGKAT_RESPONSE)
+        data: defList(state, DASHBOARD_PENSIUN_RESPONSE)
     }
 }
 
 export default connect(mapStateToProps, {
-    dashboardJabatanNaikPangkat
-})(DashboardKenaikanPangkat);
+    dashboardPensiun
+})(DashboardPensiun);

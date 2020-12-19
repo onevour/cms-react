@@ -6,6 +6,8 @@ import JabatanJenisKelamin from "./JabatanJenisKelamin";
 import DashboardKenaikanPangkat from "./DashboardKenaikanPangkat";
 import DashboardJabatanPendidikan from "./DashboardJabatanPendidikan";
 import DashboardJabatanUsia from "./DashboardJabatanUsia";
+import DashboardPensiun from "./DashboardPensiun";
+import JabatanPangkat from "./JabatanPangkat";
 
 class Dashboard extends Component {
 
@@ -15,7 +17,9 @@ class Dashboard extends Component {
                 <JenisJabatanJenisKelamin/>
                 <DashboardJabatanPendidikan/>
                 <DashboardKenaikanPangkat/>
+                <DashboardPensiun/>
                 <JabatanJenisKelamin/>
+                <JabatanPangkat/>
                 <DashboardJabatanUsia/>
             </Fragment>
         );

@@ -2,13 +2,13 @@ import {
     DASHBOARD_JABATAN_JENIS_KELAMIN,
     DASHBOARD_JABATAN_JENIS_KELAMIN_RESPONSE,
     DASHBOARD_JABATAN_NAIK_PANGKAT,
-    DASHBOARD_JABATAN_NAIK_PANGKAT_RESPONSE,
+    DASHBOARD_JABATAN_NAIK_PANGKAT_RESPONSE, DASHBOARD_JABATAN_PANGKAT, DASHBOARD_JABATAN_PANGKAT_RESPONSE,
     DASHBOARD_JABATAN_PENDIDIKAN,
     DASHBOARD_JABATAN_PENDIDIKAN_RESPONSE,
     DASHBOARD_JABATAN_USIA,
     DASHBOARD_JABATAN_USIA_RESPONSE,
     DASHBOARD_JENIS_JABATAN_JENIS_KELAMIN,
-    DASHBOARD_JENIS_JABATAN_JENIS_KELAMIN_RESPONSE,
+    DASHBOARD_JENIS_JABATAN_JENIS_KELAMIN_RESPONSE, DASHBOARD_PENSIUN, DASHBOARD_PENSIUN_RESPONSE,
     DOCUMENT_CRUD,
     DOCUMENT_CRUD_RESPONSE,
     DOCUMENT_PAGE,
@@ -76,6 +76,20 @@ export function dashboardJabatanNaikPangkat() {
     }
 }
 
+export function dashboardPensiun() {
+    const payload = {
+        url: "/dashboard/pensiun",
+        body: {}
+    }
+    return {
+        type: DASHBOARD_PENSIUN,
+        payload: payload,
+        method: GET,
+        response: DASHBOARD_PENSIUN_RESPONSE,
+        responseBody: {code: 0, result: {values: []}}
+    }
+}
+
 export function dashboardJabatanPendidikan() {
     const payload = {
         url: "/dashboard/jabatanpendidikan",
@@ -100,6 +114,20 @@ export function dashboardJabatanUsia() {
         payload: payload,
         method: GET,
         response: DASHBOARD_JABATAN_USIA_RESPONSE,
+        responseBody: {code: 0, result: {values: []}}
+    }
+}
+
+export function dashboardJabatanPangkat() {
+    const payload = {
+        url: "/dashboard/jabatanpangkat",
+        body: {}
+    }
+    return {
+        type: DASHBOARD_JABATAN_PANGKAT,
+        payload: payload,
+        method: GET,
+        response: DASHBOARD_JABATAN_PANGKAT_RESPONSE,
         responseBody: {code: 0, result: {values: []}}
     }
 }

@@ -44,7 +44,7 @@ class EmployeeDataDigitalForm extends Component {
     componentDidUpdate(props) {
         // // console.log(this.props.uploadDocument)
         if (props.uploadDocument !== this.props.uploadDocument) {
-            swal("Cuti", "Pengajuan cuti berhasil!", "success");
+            swal("Dokumen", "Pengajuan dokumen berhasil!", "success");
             this.props.loadUserDocument()
         }
         if (props.userDocument !== this.props.userDocument) {

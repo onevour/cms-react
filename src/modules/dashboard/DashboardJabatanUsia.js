@@ -38,9 +38,6 @@ class DashboardJabatanUsia extends Component {
 
     buildLabel(data) {
         let labels = []
-        // data.result.map(o => {
-        //     labels.push(o.jenis_jabatan)
-        // })
         for (let i = 21; i <= 65; i++) {
             labels.push(i + ' Tahun')
         }
@@ -48,17 +45,34 @@ class DashboardJabatanUsia extends Component {
     }
 
     buildData(data) {
-        const colors = []
-        for (let i = 0; i < data.result.length; i++) {
-            colors.push(color())
-        }
+        const colors = [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(75, 192, 192)'
+        ]
         let dataset = []
+        let dataS = []
+        let dataF = []
+        let dataP = []
         data.result.map((o, i) => {
-            dataset.push({
-                label: o.usia,
-                data: this.buildDataTahun(o),
-                backgroundColor: colors[i]
-            })
+            dataS.push(o.jumlah_struktural)
+            dataF.push(o.jumlah_jft)
+            dataP.push(o.jumlah_pelaksana)
+        })
+        dataset.push({
+            label: 'S',
+            data: dataS,
+            backgroundColor: colors[0]
+        })
+        dataset.push({
+            label: 'FT',
+            data: dataF,
+            backgroundColor: colors[1]
+        })
+        dataset.push({
+            label: 'P',
+            data: dataP,
+            backgroundColor: colors[2]
         })
         return dataset
     }
@@ -112,6 +126,7 @@ class DashboardJabatanUsia extends Component {
             labels: this.buildLabel(data),
             datasets: this.buildData(data),
         }
+        console.log(values)
         const options = {
             maintainAspectRatio: true,
             scales: {
@@ -133,11 +148,12 @@ class DashboardJabatanUsia extends Component {
                             <div className="card-body">
                                 <div className="row">
                                     <div className="col">
-                                        <h4 className="card-title">Rekapitulasi Jumlah PNS Direktorat SMA Berdasarkan Usia</h4>
+                                        <h4 className="card-title">Rekapitulasi Jumlah PNS Direktorat SMA Berdasarkan
+                                            Usia</h4>
                                     </div>
                                 </div>
                                 <div className="row">
-                                    <div className="col-md-12 col-sm-12">
+                                    <div className="col-md-12 col-sm-12" hidden={true}>
                                         <div className="table-responsive">
                                             <table className="table table-hover">
                                                 <thead>
@@ -168,7 +184,6 @@ class DashboardJabatanUsia extends Component {
                     </div>
                 </div>
             </Fragment>
-
         )
     }
 }

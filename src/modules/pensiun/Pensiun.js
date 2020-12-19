@@ -145,7 +145,7 @@ class Pensiun extends Component {
                                         path: value.path
                                     })
                                 }}>
-                            <i className="mdi mdi-24px mdi-file-pdf-box"/>
+                            <i className="mdi mdi-24px mdi-magnify-plus-outline"/>
                         </button>
                     </>
                 )

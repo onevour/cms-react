@@ -111,6 +111,9 @@ class DashboardJabatanPendidikan extends Component {
             datasets: this.buildData(data),
         }
         const options = {
+            legend : {
+                display:false
+            },
             maintainAspectRatio: true,
             scales: {
                 yAxes: [

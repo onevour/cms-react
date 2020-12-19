@@ -156,7 +156,7 @@ class EmployeeDataPribadi extends Component {
                                             modalShow: true
                                         })
                                     }}>
-                                <i className="mdi mdi-24px mdi-file-pdf-box"/>
+                                <i className="mdi mdi-24px mdi-magnify-plus-outline"/>
                             </button>
                             <button type="button" style={{marginTop: -10}}
                                     className="btn btn-success btn-sm btn-option mr-2 float-right"

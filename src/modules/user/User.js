@@ -1,15 +1,11 @@
 import React, {Component, Fragment} from "react";
 import Pagination from "react-bootstrap-4-pagination";
 import {
-    BASE_URL, DUK_FILTER_PARAM, DUK_FILTER_PARAM_RESPONSE,
-    DUK_PAGE_RESPONSE, USER_PAGE_RESPONSE
+    USER_PAGE_RESPONSE
 } from "../../redux/constants/reducActionTypes";
-import {defPage, emptyContentPage, emptyCrud, MAX_PENSIUN, STATUS_PEGAWAI} from "../../application/AppConstant";
+import {defPage} from "../../application/AppConstant";
 import {connect} from "react-redux";
-import {listDuk, pageDuk, paramDuk} from "../../redux/actions/reduxActionMasterDUK";
-import {formatDate} from "../../application/AppCommons";
-import moment from "moment";
-import Select from "react-select";
+import {listDuk, paramDuk} from "../../redux/actions/reduxActionMasterDUK";
 import {pageUser} from "../../redux/actions/reduxActionUser";
 import {Redirect} from "react-router-dom";
 

@@ -18,9 +18,6 @@ class JabatanJenisKelamin extends Component {
 
     buildLabel(data) {
         let labels = ['Laki-Laki', 'Perempuan', 'Jumlah']
-        // data.result.map(o => {
-        //     labels.push(o.jenis_jabatan)
-        // })
         return labels
     }
 
@@ -66,6 +63,10 @@ class JabatanJenisKelamin extends Component {
             datasets: this.buildData(data),
         }
         const options = {
+            legend: {
+                position: 'left',
+                display:false
+            },
             maintainAspectRatio: true,
             scales: {
                 yAxes: [

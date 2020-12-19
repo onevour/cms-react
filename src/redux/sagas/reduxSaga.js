@@ -49,7 +49,7 @@ import {
     DASHBOARD_JABATAN_JENIS_KELAMIN,
     DASHBOARD_JABATAN_NAIK_PANGKAT,
     DASHBOARD_JABATAN_PENDIDIKAN,
-    DASHBOARD_JABATAN_USIA
+    DASHBOARD_JABATAN_USIA, DASHBOARD_JABATAN_PANGKAT, DASHBOARD_PENSIUN
 } from "../constants/reducActionTypes";
 
 import {getData, postData} from "../../application/ApiRequest";
@@ -112,6 +112,8 @@ export default function* watcherSaga() {
     yield takeEvery(DASHBOARD_JABATAN_NAIK_PANGKAT, masterDocumentType)
     yield takeEvery(DASHBOARD_JABATAN_PENDIDIKAN, masterDocumentType)
     yield takeEvery(DASHBOARD_JABATAN_USIA, masterDocumentType)
+    yield takeEvery(DASHBOARD_JABATAN_PANGKAT, masterDocumentType)
+    yield takeEvery(DASHBOARD_PENSIUN, masterDocumentType)
 }
 
 

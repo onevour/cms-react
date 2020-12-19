@@ -1,11 +1,11 @@
 import React, {Component, Fragment} from "react";
-import {formatDate, formatYear, getFileExtension} from "../../../application/AppCommons";
+import {formatYear, getFileExtension} from "../../../application/AppCommons";
 import swal from "sweetalert";
 import {BASE_URL, USER_CRUD_RESPONSE, USER_RESPONSE} from "../../../redux/constants/reducActionTypes";
 import Datetime from "react-datetime";
 import {emptyCrud} from "../../../application/AppConstant";
 import {connect} from "react-redux";
-import {removeCredit, removeSKP, updateCredit, updateSKP, userProfile} from "../../../redux/actions/reduxActionUser";
+import {removeCredit, updateCredit, userProfile} from "../../../redux/actions/reduxActionUser";
 
 class EmployeeAngkaKreditForm extends Component {
 

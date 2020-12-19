@@ -156,7 +156,7 @@ class ViewEmployeeDataPribadi extends Component {
                                             modalShow: true
                                         })
                                     }}>
-                                <i className="mdi mdi-24px mdi-file-pdf-box"/>
+                                <i className="mdi mdi-24px mdi-magnify-plus-outline"/>
                             </button>
                         </div>
                     </div>

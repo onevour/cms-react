@@ -4,6 +4,7 @@ import EmployeeDataKepegawaian from "../../profile/kepegawaian/EmployeeDataKepeg
 import EmployeeDataRiwayat from "../../profile/riwayat/EmployeeDataRiwayat";
 import ViewEmployeeDataPribadi from "./ViewEmployeeDataPribadi";
 import ViewEmployeeDataKepegawaian from "./ViewEmployeeDataKepegawaian";
+import ViewEmployeeDataRiwayat from "./ViewEmployeeDataRiwayat";
 
 class ViewEmployee extends Component {
 
@@ -44,7 +45,7 @@ class ViewEmployee extends Component {
                         </div>
 
                         <div className="card mb-3">
-                            <EmployeeDataRiwayat/>
+                            <ViewEmployeeDataRiwayat/>
                         </div>
                     </div>
 
