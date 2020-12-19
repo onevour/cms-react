@@ -457,13 +457,14 @@ export function renderMenu() {
     let user = JSON.parse(localStorage.getItem('user'))
     if (!user) return []
     // console.log(user.role)
-    if ('PEJABAT PUSAT' === user.role) {
+    if (user.role.includes('PEJABAT')) {
         return menuPejabat
     }
-    if ('KEPALA UNIT' === user.role) {
+    if (user.role.includes('KEPALA')) {
+        // return menuPejabat
         return menuAtasan
     }
-    if ('STAFF ADMIN' === user.role) {
+    if (user.role.includes('ADMIN')) {
         return menuAdmin
     }
     if ('STAFF' === user.role) {
