@@ -34,11 +34,8 @@ class DashboardJabatanPendidikan extends Component {
     }
 
     buildLabel(data) {
-        let labels = ['SD', 'SMP', 'SMA', 'D3', 'S1', 'S2', 'S3']
-        // data.result.map(o => {
-        //     labels.push(o.jenis_jabatan)
-        // })
-        return labels
+        return ['SD', 'SMP', 'SMA', 'D3', 'S1', 'S2', 'S3']
+        // return labels
     }
 
     buildData(data) {
@@ -49,7 +46,7 @@ class DashboardJabatanPendidikan extends Component {
         let dataset = []
         data.result.map((o, i) => {
             dataset.push({
-                label: o.jabatan.name,
+                label: o.jabatan.jenis_jabatan,
                 data: this.buildDataTahun(o.pendidikans),
                 backgroundColor: colors[i]
             })
@@ -128,8 +125,7 @@ class DashboardJabatanPendidikan extends Component {
 
         return (
             <Fragment>
-                <div className="row">
-                    <div className="col-md-12 col-sm-12 grid-margin stretch-card">
+                    <div className="col-md-6 col-sm-6 grid-margin stretch-card">
                         <div className="card">
                             <div className="card-body">
                                 <div className="row">
@@ -154,7 +150,6 @@ class DashboardJabatanPendidikan extends Component {
                             </div>
                         </div>
                     </div>
-                </div>
             </Fragment>
 
         )

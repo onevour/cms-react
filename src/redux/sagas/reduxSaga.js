@@ -49,7 +49,7 @@ import {
     DASHBOARD_JABATAN_JENIS_KELAMIN,
     DASHBOARD_JABATAN_NAIK_PANGKAT,
     DASHBOARD_JABATAN_PENDIDIKAN,
-    DASHBOARD_JABATAN_USIA, DASHBOARD_JABATAN_PANGKAT, DASHBOARD_PENSIUN
+    DASHBOARD_JABATAN_USIA, DASHBOARD_JABATAN_PANGKAT, DASHBOARD_PENSIUN, DASHBOARD_KODE_JABATAN_JENIS_KELAMIN
 } from "../constants/reducActionTypes";
 
 import {getData, postData} from "../../application/ApiRequest";
@@ -107,6 +107,7 @@ export default function* watcherSaga() {
     yield takeEvery(USER_HISTORY_PANGKAT_LIST, masterDocumentType);
 
     // dashboard
+    yield takeEvery(DASHBOARD_KODE_JABATAN_JENIS_KELAMIN, masterDocumentType)
     yield takeEvery(DASHBOARD_JENIS_JABATAN_JENIS_KELAMIN, masterDocumentType)
     yield takeEvery(DASHBOARD_JABATAN_JENIS_KELAMIN, masterDocumentType)
     yield takeEvery(DASHBOARD_JABATAN_NAIK_PANGKAT, masterDocumentType)

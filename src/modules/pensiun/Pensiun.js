@@ -1,6 +1,5 @@
 import React, {Component, Fragment} from "react";
 import moment from "moment-timezone";
-import {Button, Modal} from 'react-bootstrap'
 import "react-datetime/css/react-datetime.css";
 import {connect} from "react-redux";
 import {loadUserDocument, userUploadDocument} from "../../redux/actions/reduxActionDataDigital";

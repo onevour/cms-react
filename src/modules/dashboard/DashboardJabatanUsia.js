@@ -29,6 +29,7 @@ import {
 import AddIcon from "@material-ui/icons/Add";
 import {color} from "../../application/AppCommons";
 import moment from "moment";
+import {colors} from "@material-ui/core";
 
 class DashboardJabatanUsia extends Component {
 
@@ -45,36 +46,94 @@ class DashboardJabatanUsia extends Component {
     }
 
     buildData(data) {
-        const colors = [
-            'rgb(255, 99, 132)',
-            'rgb(54, 162, 235)',
-            'rgb(75, 192, 192)'
-        ]
+
+        const colors = []
+        for (let i = 0; i < data.result.length; i++) {
+            colors.push(color())
+        }
         let dataset = []
-        let dataS = []
-        let dataF = []
-        let dataP = []
         data.result.map((o, i) => {
-            dataS.push(o.jumlah_struktural)
-            dataF.push(o.jumlah_jft)
-            dataP.push(o.jumlah_pelaksana)
+            dataset.push({
+                label: o.jabatan.jenis_jabatan,
+                data: []
+            })
         })
-        dataset.push({
-            label: 'S',
-            data: dataS,
-            backgroundColor: colors[0]
+        data.result.map((o, i) => {
+            let tmp = []
+            o.jabatans.map((p, x) => {
+                tmp.push(p.jumlah)
+            })
+
+            dataset[i].data = tmp
+            dataset[i].backgroundColor = colors[i]
         })
-        dataset.push({
-            label: 'FT',
-            data: dataF,
-            backgroundColor: colors[1]
-        })
-        dataset.push({
-            label: 'P',
-            data: dataP,
-            backgroundColor: colors[2]
-        })
+        console.log(dataset)
         return dataset
+
+        // const colors = []
+        // if (data.result.length > 0) {
+        //     for (let x = 0; x < data.result[0].jabatans.length; x++) {
+        //         colors.push(color())
+        //     }
+        // } else {
+        //     return []
+        // }
+        // let dataset = [];
+        // data.result.map((o, i) => {
+        //     // dataset.push({
+        //     //     label: o.usia,
+        //     //     data: [],
+        //     //     backgroundColor: colors[i]
+        //     // })
+        // })
+        // data.result.map((o, i) => {
+        //     let tmp = []
+        //     o.jabatans.map((p, x) => {
+        //         tmp.push(p.jumlah)
+        //     })
+        //     // console.log(o.jabatan.name, tmp)
+        //     // dataset[i].data = tmp
+        //     // dataset[i].backgroundColor = colors[i]
+        // })
+        // return dataset;
+        // let dataset = []
+        // let dataset = []
+        // data.result.map((o, i) => {
+        //     let data = []
+        //     o.jabatans.map((jabatan, x) => {
+        //         data.push(jabatan)
+        //     })
+        //     dataset.push({
+        //         label: o.usia,
+        //         data: data,
+        //         backgroundColor: colors[i]
+        //     })
+        // })
+        // return dataset
+        // let dataS = []
+        // let dataF = []
+        // let dataP = []
+        // data.result.map((o, i) => {
+        // dataS.push(o.jumlah_struktural)
+        // dataF.push(o.jumlah_jft)
+        // dataP.push(o.jumlah_pelaksana)
+        // })
+        // dataset.push({
+        //     label: 'S',
+        //     data: dataS,
+        //     backgroundColor: colors[0]
+        // })
+        // dataset.push({
+        //     label: 'FT',
+        //     data: dataF,
+        //     backgroundColor: colors[1]
+        // })
+        // dataset.push({
+        //     label: 'P',
+        //     data: dataP,
+        //     backgroundColor: colors[2]
+        // })
+        // return dataset
     }
 
     buildDataTahun(data) {

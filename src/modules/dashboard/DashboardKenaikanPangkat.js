@@ -46,7 +46,7 @@ class DashboardKenaikanPangkat extends Component {
         let dataset = []
         data.result.map((o, i) => {
             dataset.push({
-                label: o.jabatan.name,
+                label: o.jabatan.jenis_jabatan,
                 data: this.buildDataTahun(o.naik_pangkat_tahuns),
                 backgroundColor: colors[i]
             })
@@ -125,8 +125,8 @@ class DashboardKenaikanPangkat extends Component {
 
         return (
             <Fragment>
-                <div className="row">
-                    <div className="col-md-12 col-sm-12 grid-margin stretch-card">
+
+                    <div className="col-md-6 col-sm-6 grid-margin stretch-card">
                         <div className="card">
                             <div className="card-body">
                                 <div className="row">
@@ -165,7 +165,7 @@ class DashboardKenaikanPangkat extends Component {
                             </div>
                         </div>
                     </div>
-                </div>
+
             </Fragment>
 
         )

@@ -22,7 +22,7 @@ class MasterJabatanMap extends Component {
         this.handleChangeYear = this.handleChangeYear.bind(this)
     }
 
-    handleChangeYear(event){
+    handleChangeYear(event) {
         this.props.listJabatanMap({year: event.value})
     }
 
@@ -58,30 +58,21 @@ class MasterJabatanMap extends Component {
         return count
     }
 
-    renderTableSummary(jabatans,) {
-        //let newArray = jabatans.result.filter(item => item.jenis_jabatan === key);
-        let values = [
-            {
-                name: "JPT Pratama",
-                ketersediaan: 0,
-                kebutuhan: 0
-            },
-            {
-                name: "Jabatan Fungsional",
-                ketersediaan: this.totalType(jabatans, 'JF', 'ketersediaan'),
-                kebutuhan: this.totalType(jabatans, 'JF', 'kebutuhan')
-            },
-            {
-                name: "Pengawas",
-                ketersediaan: 0,
-                kebutuhan: 0
-            },
-            {
-                name: "Pelaksana",
-                ketersediaan: this.totalType(jabatans, 'P', 'ketersediaan'),
-                kebutuhan: this.totalType(jabatans, 'P', 'kebutuhan')
+    renderTableSummary(jabatans) {
+        let jabatansGroup = []
+        jabatans.result.map(item => {
+            if (!jabatansGroup.includes(item.jenis_jabatan)) {
+                jabatansGroup.push(item.jenis_jabatan)
             }
-        ]
+        })
+        let values = []
+        jabatansGroup.map(o => {
+            values.push({
+                name: o,
+                ketersediaan: this.totalType(jabatans, o, 'ketersediaan'),
+                kebutuhan: this.totalType(jabatans, o, 'kebutuhan')
+            })
+        })
         return (
             values.map((o, i) =>
                 <tr className="clickable" key={i}>
@@ -89,7 +80,7 @@ class MasterJabatanMap extends Component {
                     <td>{o.name}</td>
                     <td>{o.ketersediaan}</td>
                     <td>{o.kebutuhan}</td>
-                    <td>{o.ketersediaan- o.kebutuhan}</td>
+                    <td>{o.ketersediaan - o.kebutuhan}</td>
                 </tr>
             )
         )

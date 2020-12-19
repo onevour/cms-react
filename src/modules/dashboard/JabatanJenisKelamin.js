@@ -81,8 +81,8 @@ class JabatanJenisKelamin extends Component {
         // console.log(data)
         return (
             <Fragment>
-                <div className="row">
-                    <div className="col-md-12 col-sm-12 grid-margin stretch-card">
+
+                    <div className="col-md-6 col-sm-6 grid-margin stretch-card">
                         <div className="card">
                             <div className="card-body">
                                 <div className="row">
@@ -107,7 +107,7 @@ class JabatanJenisKelamin extends Component {
                             </div>
                         </div>
                     </div>
-                </div>
+
             </Fragment>
 
         )

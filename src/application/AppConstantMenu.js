@@ -3,7 +3,7 @@ export const menuAll = [
         id: 0,
         type: 1,
         name: "Dashboard",
-        icon: "menu-icon mdi mdi-account-check",
+        icon: "menu-icon mdi mdi-chart-areaspline",
         path: "/dashboard"
     },
     {
@@ -164,6 +164,13 @@ export const menuAll = [
 
 export const menuAdmin = [
     {
+        id: 0,
+        type: 1,
+        name: "Dashboard",
+        icon: "menu-icon mdi mdi-chart-areaspline",
+        path: "/dashboard"
+    },
+    {
         id: 1,
         type: 2,
         expand: false,
@@ -305,6 +312,13 @@ export const menuAdmin = [
 ]
 
 export const menuPejabat = [
+    {
+        id: 0,
+        type: 1,
+        name: "Dashboard",
+        icon: "menu-icon mdi mdi-chart-areaspline",
+        path: "/dashboard"
+    },
     {id: 5, type: 1, name: "Profile", icon: "menu-icon mdi mdi-account-card-details", path: "/profile"},
     {id: 6, type: 1, name: "Cuti", icon: "menu-icon mdi mdi-file-image", path: "/cuti"},
     {
@@ -358,6 +372,13 @@ export const menuPejabat = [
 ]
 
 export const menuAtasan = [
+    {
+        id: 0,
+        type: 1,
+        name: "Dashboard",
+        icon: "menu-icon mdi mdi-chart-areaspline",
+        path: "/dashboard"
+    },
     {id: 5, type: 1, name: "Profile", icon: "menu-icon mdi mdi-account-card-details", path: "/profile"},
     {id: 6, type: 1, name: "Cuti", icon: "menu-icon mdi mdi-file-image", path: "/cuti"},
     {
@@ -411,6 +432,13 @@ export const menuAtasan = [
 ]
 
 export const menuStaf = [
+    {
+        id: 0,
+        type: 1,
+        name: "Dashboard",
+        icon: "menu-icon mdi mdi-chart-areaspline",
+        path: "/dashboard"
+    },
     {id: 5, type: 1, name: "Profile", icon: "menu-icon mdi mdi-account-card-details", path: "/profile"},
     {id: 6, type: 1, name: "Cuti", icon: "menu-icon mdi mdi-file-image", path: "/cuti"},
     {
@@ -425,7 +453,7 @@ export const menuStaf = [
 ]
 
 export function renderMenu() {
-    return menuAll
+    // return menuAll
     let user = JSON.parse(localStorage.getItem('user'))
     if (!user) return []
     // console.log(user.role)

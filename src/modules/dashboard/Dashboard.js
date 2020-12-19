@@ -8,17 +8,23 @@ import DashboardJabatanPendidikan from "./DashboardJabatanPendidikan";
 import DashboardJabatanUsia from "./DashboardJabatanUsia";
 import DashboardPensiun from "./DashboardPensiun";
 import JabatanPangkat from "./JabatanPangkat";
+import KodeJabatanJenisKelamin from "./KodeJabatanJenisKelamin";
 
 class Dashboard extends Component {
 
     render() {
         return (
             <Fragment>
+                <KodeJabatanJenisKelamin/>
                 <JenisJabatanJenisKelamin/>
-                <DashboardJabatanPendidikan/>
-                <DashboardKenaikanPangkat/>
-                <DashboardPensiun/>
-                <JabatanJenisKelamin/>
+                <div className="row">
+                    <DashboardJabatanPendidikan/>
+                    <DashboardPensiun/>
+                </div>
+                <div className="row">
+                    <DashboardKenaikanPangkat/>
+                    <JabatanJenisKelamin/>
+                </div>
                 <JabatanPangkat/>
                 <DashboardJabatanUsia/>
             </Fragment>

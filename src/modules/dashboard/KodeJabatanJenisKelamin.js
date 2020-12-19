@@ -1,33 +1,47 @@
 import React, {Component, Fragment} from "react";
 import {Bar} from "react-chartjs-2";
-import {defList} from "../../application/AppConstant";
+import {defCrud, defList} from "../../application/AppConstant";
 import {
-    DASHBOARD_JABATAN_JENIS_KELAMIN_RESPONSE, DASHBOARD_JABATAN_PANGKAT_RESPONSE
+    CUTI_CALCULATE_DAY_RESPONSE,
+    CUTI_LOAD_USER_RESPONSE,
+    CUTI_QUOTA_RESPONSE,
+    CUTI_SUBMIT_RESPONSE,
+    DASHBOARD_JENIS_JABATAN_JENIS_KELAMIN_RESPONSE,
+    DASHBOARD_KODE_JABATAN_JENIS_KELAMIN_RESPONSE,
+    HOLIDAYS_LOAD_FUTURE_RESPONSE
 } from "../../redux/constants/reducActionTypes";
 import {connect} from "react-redux";
 import {
-    dashboardJabatanJenisKelamin, dashboardJabatanPangkat
+    calculateDays,
+    cutiQuota,
+    loadCutiUserLogin,
+    loadHolidaysFuture,
+    requestCuti
+} from "../../redux/actions/reduxActionCuti";
+import {
+    dashboardJenisJabatanJenisKelamin,
+    dashboardKodeJabatanJenisKelamin
 } from "../../redux/actions/reduxActionDashboard";
+import AddIcon from "@material-ui/icons/Add";
 import {color} from "../../application/AppCommons";
 
-class JabatanPangkat extends Component {
+class KodeJabatanJenisKelamin extends Component {
 
     componentDidMount() {
-        this.props.dashboardJabatanPangkat()
+        this.props.dashboardKodeJabatanJenisKelamin()
     }
 
     buildLabel(data) {
-        //let labels = ['iv/c', 'iv/b', 'iv/a', 'iii/d', 'iii/c', 'iii/b', 'iii/a', 'ii/d', 'ii/c', 'ii/b', 'ii/a']
-        let labels = [
-            'i/a', 'i/b', 'i/c', 'i/d',
-            'ii/a', 'ii/b', 'ii/c', 'ii/d',
-            'iii/a', 'iii/b', 'iii/c', 'iii/d',
-            'iv/a', 'iv/b', 'iv/c', 'iv/d', 'iv/e',
-        ]
+        let labels = ['Laki-Laki', 'Perempuan', 'Jumlah']
         return labels
     }
 
     buildData(data) {
+        // const colors = [
+        //     'rgb(255, 99, 132)',
+        //     'rgb(54, 162, 235)',
+        //     'rgb(75, 192, 192)'
+        // ]
         const colors = []
         for (let i = 0; i < data.result.length; i++) {
             colors.push(color())
@@ -35,35 +49,11 @@ class JabatanPangkat extends Component {
         let dataset = []
         data.result.map((o, i) => {
             dataset.push({
-                label: o.jabatan.jenis_jabatan,
-                data: []
+                label: o.jenis_jabatan,
+                data: [o.laki_laki, o.perempuan, (o.laki_laki + o.perempuan)],
+                backgroundColor: colors[i]
             })
         })
-        data.result.map((o, i) => {
-            let tmp = []
-            o.pangkats.map((p, x) => {
-                tmp.push(p.jumlah)
-            })
-
-            dataset[i].data = tmp
-            dataset[i].backgroundColor = colors[i]
-        })
-        console.log(dataset)
-        // console.log("total a3 ", a3)
-        // let labels = [
-        //     'i/a', 'i/b', 'i/c', 'i/d',
-        //     'ii/a', 'ii/b', 'ii/c', 'ii/d',
-        //     'iii/a', 'iii/b', 'iii/c', 'iii/d',
-        //     'iv/a', 'iv/b', 'iv/c', 'iv/d', 'iv/e',
-        // ]
-        // let datasetVal = []
-        // labels.map((o, i) => {
-        //     datasetVal.push({
-        //         label: o,
-        //         data: dataset[i],
-        //         backgroundColor: colors[i]
-        //     })
-        // })
         return dataset
     }
 
@@ -92,11 +82,8 @@ class JabatanPangkat extends Component {
             labels: this.buildLabel(data),
             datasets: this.buildData(data),
         }
+        console.log(values)
         const options = {
-            legend: {
-                position: 'left',
-                display: false
-            },
             maintainAspectRatio: true,
             scales: {
                 yAxes: [
@@ -108,7 +95,7 @@ class JabatanPangkat extends Component {
                 ],
             },
         }
-        // console.log(data)
+
         return (
             <Fragment>
                 <div className="row">
@@ -117,11 +104,12 @@ class JabatanPangkat extends Component {
                             <div className="card-body">
                                 <div className="row">
                                     <div className="col">
-                                        <h4 className="card-title">Rekapitulasi Jumlah PNS Direktorat SMA Berdasarkan
-                                            Jabatan dan Pangkat</h4>
+                                        <h4 className="card-title">Rekapitulasi Jumlah PNS Direktorat SMA Berdasarkan Jabatan</h4>
                                     </div>
-                                    <div className="col-md-12 col-sm-12">
-                                        <div className="table-responsive" hidden={true}>
+                                </div>
+                                <div className="row">
+                                    <div className="col-md-6 col-sm-6">
+                                        <div className="table-responsive">
                                             <table className="table table-hover">
                                                 <thead>
                                                 <tr>
@@ -138,9 +126,7 @@ class JabatanPangkat extends Component {
                                             </table>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-md-12 col-sm-12">
+                                    <div className="col-md-6 col-sm-6">
                                         <Bar data={values}
                                              width={100}
                                              height={50}
@@ -148,7 +134,7 @@ class JabatanPangkat extends Component {
                                         />
                                         <p className="text-muted mt-3 mb-0">
                                             <i className="mdi mdi-alert-octagon mr-1" aria-hidden="true"/>
-                                            Rekapitulasi Jumlah PNS Direktorat SMA Berdasarkan Jabatan dan Pangkat
+                                            Rekapitulasi Jumlah PNS Direktorat SMA Berdasarkan Jabatan
                                         </p>
                                     </div>
                                 </div>
@@ -162,13 +148,12 @@ class JabatanPangkat extends Component {
     }
 }
 
-
 function mapStateToProps(state) {
     return {
-        data: defList(state, DASHBOARD_JABATAN_PANGKAT_RESPONSE)
+        data: defList(state, DASHBOARD_KODE_JABATAN_JENIS_KELAMIN_RESPONSE)
     }
 }
 
 export default connect(mapStateToProps, {
-    dashboardJabatanPangkat
-})(JabatanPangkat);
+    dashboardKodeJabatanJenisKelamin
+})(KodeJabatanJenisKelamin);
