@@ -113,29 +113,7 @@ class AppHeader extends Component {
                                 </a>
                                 <div className={menuUserDropdownClass}
                                      aria-labelledby="UserDropdown">
-                                    <a className="dropdown-item p-0">
-                                        <div className="d-flex border-bottom">
-                                            <div className="py-3 px-4 d-flex align-items-center justify-content-center">
-                                                <i className="mdi mdi-bookmark-plus-outline mr-0 text-gray"/>
-                                            </div>
-                                            <div
-                                                className="py-3 px-4 d-flex align-items-center justify-content-center border-left border-right">
-                                                <i className="mdi mdi-account-outline mr-0 text-gray"/>
-                                            </div>
-                                            <div className="py-3 px-4 d-flex align-items-center justify-content-center">
-                                                <i className="mdi mdi-alarm-check mr-0 text-gray"/>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a className="dropdown-item mt-2">
-                                        Manage Accounts
-                                    </a>
-                                    <a className="dropdown-item">
-                                        Change Password
-                                    </a>
-                                    <a className="dropdown-item">
-                                        Check Inbox
-                                    </a>
+
                                     <a className="dropdown-item" onClick={this.logout}>
                                         Sign Out
                                     </a>
@@ -153,6 +131,30 @@ class AppHeader extends Component {
         }
     }
 }
+
+// <a className="dropdown-item p-0">
+//     <div className="d-flex border-bottom">
+//         <div className="py-3 px-4 d-flex align-items-center justify-content-center">
+//             <i className="mdi mdi-bookmark-plus-outline mr-0 text-gray"/>
+//         </div>
+//         <div
+//             className="py-3 px-4 d-flex align-items-center justify-content-center border-left border-right">
+//             <i className="mdi mdi-account-outline mr-0 text-gray"/>
+//         </div>
+//         <div className="py-3 px-4 d-flex align-items-center justify-content-center">
+//             <i className="mdi mdi-alarm-check mr-0 text-gray"/>
+//         </div>
+//     </div>
+// </a>
+// <a className="dropdown-item mt-2">
+//     Manage Accounts
+// </a>
+// <a className="dropdown-item">
+//     Change Password
+// </a>
+// <a className="dropdown-item">
+//     Check Inbox
+// </a>
 
 function mapStateToProps(state) {
 
