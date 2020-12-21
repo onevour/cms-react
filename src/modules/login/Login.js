@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {getData, login} from "../../redux/actions/reduxAction";
 import {defCrud} from "../../application/AppConstant";
 import {LOGIN_RESPONSE} from "../../redux/constants/reducActionTypes";
+import swal from "sweetalert";
 
 class Login extends Component {
 
@@ -18,6 +19,14 @@ class Login extends Component {
         this.handleUserChange = this.handleUserChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.dismissError = this.dismissError.bind(this);
+    }
+
+    componentDidUpdate(props) {
+        if (props.login_response !== this.props.login_response) {
+            if (200 !== props.login_response) {
+                this.setState({error: this.props.login_response.message})
+            }
+        }
     }
 
     dismissError() {
@@ -67,12 +76,6 @@ class Login extends Component {
                             <div className="col-lg-4 mx-auto">
                                 <div className="auto-form-wrapper">
                                     <form onSubmit={this.handleSubmit}>
-                                        {this.state.error &&
-                                        <label data-test="error" onClick={this.dismissError}>
-                                            <button onClick={this.dismissError}>✖</button>
-                                            {this.state.error}
-                                        </label>
-                                        }
                                         <div className="form-group">
                                             <label className="label">Username</label>
                                             <div className="input-group">
@@ -100,6 +103,11 @@ class Login extends Component {
                                                 </div>
                                             </div>
                                         </div>
+                                        {this.state.error &&
+                                        <label data-test="error" style={{color: "red", fontSize: 10}}>
+                                            {this.state.error}
+                                        </label>
+                                        }
                                         <div className="form-group" style={{marginTop: 30, marginBottom: 30}}>
                                             <p className="text-danger">{login.code > 200 ? login.message : ""}</p>
                                             <button className="btn btn-primary submit-btn btn-block">Login</button>
