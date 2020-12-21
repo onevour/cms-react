@@ -17,7 +17,7 @@ export const menuAll = [
 ]
 
 export function renderMenu() {
-    return menuAll
+    // return menuAll
     let user = JSON.parse(localStorage.getItem('user'))
-    return []
+    return menuAll
 }

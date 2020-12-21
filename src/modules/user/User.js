@@ -115,7 +115,7 @@ class User extends Component {
                     <div className="col-md-12 grid-margin stretch-card">
                         <div className="card">
                             <div className="card-body">
-                                <h4 className="card-title">Data Pegawai Test</h4>
+                                <h4 className="card-title">Data Pegawai</h4>
                                 <div className="row">
                                     <div className="col-md-9">
 
@@ -123,7 +123,7 @@ class User extends Component {
                                     <div className="col-md-3">
 
                                         <input type="text" className="form-control"
-                                               value={this.state.name}
+                                               value={name}
                                                onChange={this.handleChangeName}
                                                placeholder="Nama pegawai"/>
                                     </div>

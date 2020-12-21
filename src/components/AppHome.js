@@ -1,12 +1,8 @@
 import React, {Component, Fragment} from "react";
-import {Route} from "react-router-dom";
 import Navigation from "../modules/navigation/Navigation";
 import AppHeader from "./AppHeader";
 import AppFooter from "./AppFooter";
-import User from "../modules/user/User";
-import Dashboard from "../modules/dashboard/Dashboard";
-import SampleTable from "../modules/dashboard/SampleTable";
-import UserRoleForm from "../modules/user/UserRoleForm";
+import AppContent from "./AppContent";
 
 class AppHome extends Component {
 
@@ -20,10 +16,7 @@ class AppHome extends Component {
                     </nav>
                     <div className="main-panel">
                         <div className="content-wrapper">
-                            <Route path="/dashboard" component={Dashboard} exact/>
-                            <Route path="/sample/table" component={SampleTable} exact/>
-                            <Route path="/user" component={User} exact/>
-                            <Route path="/user/update" component={UserRoleForm} exact/>
+                            <AppContent/>
                         </div>
                         <AppFooter/>
                     </div>

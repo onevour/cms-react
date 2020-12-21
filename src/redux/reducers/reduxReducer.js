@@ -1,25 +1,24 @@
-import loginCutiReducer from "./reduxReducerCuti";
-import dataDigitalReducer from "./reduxReducerDataDigital";
-import {documentTypeReducer} from "./reduxReducerDocumentType";
-
-const initialState = {
-    // loginResponse: {code: 0},
-    cutiResponse: {code: 0},
-    cutiDaysResponse: {code: 0, result: 0},
-    cutiUserResponse: {code: 0, result: []},
-    cutiUpdateResponse: {code: 0},
-    holidaySubmitResponse: {code: 0},
-    holidayRemoveResponse: {code: 0},
-    holidaysResponse: {code: 0, result: []},
-    masterDocument: {code: 0, result: []},
-    uploadDocument: {code: 0, result: []},
-    userDocument: {code: 0, result: []}
-};
+const initialState = {}
 
 function rootReducer(state = initialState, action) {
-    state = loginCutiReducer(state, action)
-    state = dataDigitalReducer(state, action)
-    state = documentTypeReducer(state, action)
+    return reducerConverter(state, action);
+}
+
+/**
+ * parsing converter
+ * */
+function reducerConverter(state, action) {
+    // add default value
+    if (action.event === action.type) {
+        if (!(state.hasOwnProperty(action.event))) {
+            state[action.event] = null
+        }
+        if (action.event) {
+            return Object.assign({}, state, {
+                [action.event]: action.payload
+            })
+        }
+    }
     return state;
 }
 

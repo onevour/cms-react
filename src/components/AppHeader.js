@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom'
-import {Redirect} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import {Menu} from '@material-ui/icons';
 import logo from '../assets/icon.png';
 import {connect} from "react-redux";
-import {logout} from "../redux/actions/reduxAction";
+import {logout} from "../redux/actions/reduxActionLogin";
 
 class AppHeader extends Component {
 
@@ -88,12 +88,12 @@ class AppHeader extends Component {
             return (
                 <nav className="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
                     <div className="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
-                        <a className="navbar-brand brand-logo" href="#">
+                        <Link className="navbar-brand brand-logo" to="#">
                             {isLogin}
-                        </a>
-                        <a className="navbar-brand brand-logo-mini" href="#" >
+                        </Link>
+                        <Link className="navbar-brand brand-logo-mini" to="#" >
                             <img alt="logo" src={logo}/>
-                        </a>
+                        </Link>
                     </div>
                     <div className="navbar-menu-wrapper d-flex align-items-center">
                         <button id="navMenu" className="navbar-toggler navbar-toggler align-self-center" type="button"
@@ -105,18 +105,18 @@ class AppHeader extends Component {
                         <ul className="navbar-nav navbar-nav-right">
 
                             <li className={menuUserClass}>
-                                <a className="nav-link dropdown-toggle" id="UserDropdown" href="#"
+                                <Link className="nav-link dropdown-toggle" id="UserDropdown" to="#"
                                    data-toggle="dropdown"
                                    aria-expanded="false"
                                    onClick={this.showMenuUser}>
                                     <span className="profile-text">{user.nip}</span>
-                                </a>
+                                </Link>
                                 <div className={menuUserDropdownClass}
                                      aria-labelledby="UserDropdown">
 
-                                    <a className="dropdown-item" onClick={this.logout}>
+                                    <Link className="dropdown-item" onClick={this.logout} to="#">
                                         Sign Out
-                                    </a>
+                                    </Link>
                                 </div>
                             </li>
                         </ul>

@@ -4,7 +4,6 @@ import {
 } from "../../redux/constants/reducActionTypes";
 import {defCrud, ROLES} from "../../application/AppConstant";
 import {connect} from "react-redux";
-import {paramDuk} from "../../redux/actions/reduxActionMasterDUK";
 import Select from "react-select";
 import {pageUser, userUpdateRole} from "../../redux/actions/reduxActionUser";
 import {Redirect} from "react-router-dom";
@@ -162,4 +161,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, {pageUser, userUpdate: userUpdateRole, paramDuk})(UserRoleForm);
+export default connect(mapStateToProps, {pageUser, userUpdate: userUpdateRole})(UserRoleForm);

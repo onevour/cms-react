@@ -16772,3 +16772,7 @@ tr.clickable {
   width: auto;
   max-width: 50%;
 }
+
+.table th, .table td{
+  padding: 10px 10px!important;
+}

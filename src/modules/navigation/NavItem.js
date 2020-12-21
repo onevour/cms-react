@@ -18,12 +18,14 @@ class NavItem extends Component {
                 if (menu.type === 2) {
                     menu.expand = false
                     menu.selected = false
-                    menu.items.map((subMenu, i) => {
+                    menu.items.map((subMenu, j) => {
                         subMenu.selected = false
+                        return subMenu
                     })
                 } else {
                     menu.selected = menusSelected.id === menu.id
                 }
+                return menu
             })
 
         }
@@ -37,6 +39,7 @@ class NavItem extends Component {
                         menu.expand = false
                     }
                 }
+                return menu
             })
         }
         if (menusSelected.type === 3) {
@@ -52,10 +55,12 @@ class NavItem extends Component {
                         const isEqual = menusSelected.id === subMenu.id
                         subMenu.selected = isEqual
                         // if(super)
+                        return subMenu
                     })
                 } else {
                     menu.selected = false
                 }
+                return menu
             })
         }
 

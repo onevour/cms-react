@@ -1,34 +1,22 @@
 import {
-    CUTI_SUBMIT, CUTI_SUBMIT_RESPONSE,
-    LOGIN, LOGIN_RESPONSE,
-    LOGOUT, POST
+    GET,
+    POST
 } from "../constants/reducActionTypes";
 
-export function login(param) {
-    const payload = {
-        url:  "/user/login",
-        body: param
-    }
-    // return {type: LOGIN, payload: payload};
+export function buildPost(payload, actionKey, responseKey) {
     return {
-        type: LOGIN,
+        type: actionKey,
         payload: payload,
         method: POST,
-        response: LOGIN_RESPONSE
+        response: responseKey
     }
 }
 
-export function logout(param) {
-    const payload = {
-        url:  "/user/login",
-        body: param
-    }
-    // return {type: LOGIN, payload: payload};
+export function buildGet(payload, actionKey, responseKey) {
     return {
-        type: LOGIN,
+        type: actionKey,
         payload: payload,
-        method: POST,
-        response: LOGIN_RESPONSE
+        method: GET,
+        response: responseKey
     }
 }
-

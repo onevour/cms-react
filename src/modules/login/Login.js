@@ -1,23 +1,23 @@
 import React, {Component} from "react";
 import {Redirect} from 'react-router-dom';
 import {connect} from "react-redux";
-import {login} from "../../redux/actions/reduxAction";
+import {login} from "../../redux/actions/reduxActionLogin";
 import {defCrud} from "../../application/AppConstant";
 import {LOGIN_RESPONSE} from "../../redux/constants/reducActionTypes";
 
 class Login extends Component {
 
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             username: '',
             password: '',
             error: ''
-        };
-        this.handlePassChange = this.handlePassChange.bind(this);
-        this.handleUserChange = this.handleUserChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.dismissError = this.dismissError.bind(this);
+        }
+        this.handlePassChange = this.handlePassChange.bind(this)
+        this.handleUserChange = this.handleUserChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
+        this.dismissError = this.dismissError.bind(this)
     }
 
     componentDidUpdate(props) {
@@ -30,24 +30,24 @@ class Login extends Component {
     }
 
     dismissError() {
-        this.setState({error: ''});
+        this.setState({error: ''})
     }
 
     handleSubmit(evt) {
-        evt.preventDefault();
+        evt.preventDefault()
         if (!this.state.username) {
-            return this.setState({error: 'Username is required'});
+            return this.setState({error: 'Username is required'})
         }
 
         if (!this.state.password) {
-            return this.setState({error: 'Password is required'});
+            return this.setState({error: 'Password is required'})
         }
-        const param = this.state;
+        const {username, password} = this.state;
         const request = {
-            username: param.username,
-            password: param.password,
+            username: username,
+            password: password
         }
-        this.props.login(request);
+        this.props.login(request)
     }
 
     handleUserChange(e) {
@@ -61,6 +61,7 @@ class Login extends Component {
 
     render() {
         const {loginResponse} = this.props
+        console.log(loginResponse)
         if (loginResponse.code === 200 && loginResponse.result) {
             localStorage.setItem('user', JSON.stringify(loginResponse.result))
             return (
@@ -127,7 +128,6 @@ class Login extends Component {
             </div>
         )
     }
-
 }
 
 function mapStateToProps(state) {
@@ -138,4 +138,4 @@ function mapStateToProps(state) {
 
 export default connect(
     mapStateToProps, {login}
-)(Login);
+)(Login)
