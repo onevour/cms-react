@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom'
-import {Menu} from '@material-ui/icons';
 import {Redirect} from "react-router-dom";
-
+import {Menu} from '@material-ui/icons';
+import logo from '../assets/mini.png';
 import {connect} from "react-redux";
 import {logout} from "../redux/actions/reduxAction";
 
@@ -21,7 +21,7 @@ class AppHeader extends Component {
         this.showMenuUser = this.showMenuUser.bind(this)
         this.handleClickOutside = this.handleClickOutside.bind(this);
         this.logout = this.logout.bind(this);
-        this.state.isLogin = (this.state.user === null ? 0 : 1)
+        this.state.isLogin = (this.state.user === null ? 0 :"")
         document.body.className = "sidebar-icon-only"
     }
 
@@ -46,17 +46,18 @@ class AppHeader extends Component {
         // event.preventDefault()
         const domNode = ReactDOM.findDOMNode(this);
         if (!domNode || !domNode.contains(event.target)) {
-            // // console.log("outer, hide " + this.state.user)
             if ("nav-item dropdown d-none d-xl-inline-block" !== this.state.menuUserClass) {
                 this.setState({menuUserClass: "nav-item dropdown d-none d-xl-inline-block"})
                 this.setState({menuUserDropdownClass: "dropdown-menu dropdown-menu-right navbar-dropdown"})
-                // console.log("hide menu profile")
             }
-        } else // console.log("inner")
-        return true
+        } else {
+            return true
+        }
     }
 
-    minimizeBNavBody() {
+    minimizeBNavBody(e) {
+        e.preventDefault()
+        console.log("click")
         if (document.body.className === "sidebar-icon-only") {
             document.body.className = ""
         } else {
@@ -65,6 +66,7 @@ class AppHeader extends Component {
     }
 
     showMenuUser(e) {
+        console.log("show menu")
         e.preventDefault()
         if ("nav-item dropdown d-none d-xl-inline-block show" === this.state.menuUserClass) {
             this.setState({menuUserClass: "nav-item dropdown d-none d-xl-inline-block"})
@@ -73,7 +75,6 @@ class AppHeader extends Component {
             this.setState({menuUserClass: "nav-item dropdown d-none d-xl-inline-block show"})
             this.setState({menuUserDropdownClass: "dropdown-menu dropdown-menu-right navbar-dropdown show"})
         }
-        // console.log("show menu")
     }
 
     render() {
@@ -84,15 +85,14 @@ class AppHeader extends Component {
                 <Redirect to='/'/>
             )
         } else {
-
             return (
                 <nav className="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
                     <div className="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
-                        <a className="navbar-brand brand-logo" href="index.html">
+                        <a className="navbar-brand brand-logo" href="#">
                             {isLogin}
                         </a>
-                        <a className="navbar-brand brand-logo-mini" href="index.html">
-
+                        <a className="navbar-brand brand-logo-mini" href="#" >
+                            <img alt="logo" src={logo}/>
                         </a>
                     </div>
                     <div className="navbar-menu-wrapper d-flex align-items-center">
