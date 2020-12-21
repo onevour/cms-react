@@ -3,7 +3,7 @@ import {
     MASTER_DOCUMENT_RESPONSE,
     USER_DOCUMENT_RESPONSE
 } from "../constants/reducActionTypes";
-import {getData, postData} from "../../application/ApiRequest";
+import {getData, postData} from "../../application/http/ApiRequest";
 
 export function* masterDocument(action) {
     try {

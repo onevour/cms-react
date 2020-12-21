@@ -1,25 +1,6 @@
-import {JENIS_CUTI} from "./AppConstant";
-import moment from "moment";
 import React from "react";
+import moment from "moment";
 import ReactDOM from "react-dom";
-
-export function cutiLabel(index) {
-    return JENIS_CUTI.map((o, i) => {
-        if (index === o.value) {
-            return o.label;
-        }
-    })
-}
-
-export function formatStatusFamily(value) {
-    if (null === value || undefined === value) return '-'
-    if ('SAUDARAKANDUNG' === value) return 'SAUDARA KANDUNG'
-    if ('BAPAKMERTUA' === value) return 'BAPAK MERTUA'
-    if ('IBUMERTUA' === value) return 'IBU MERTUA'
-    if ('BAPAKKANDUNG' === value) return 'BAPAK KANDUNG'
-    if ('IBUKANDUNG' === value) return 'IBU KANDUNG'
-    return value
-}
 
 export function formatYear(value) {
     if (null === value || undefined === value) return '-'
@@ -36,34 +17,9 @@ export function formatDateTime(value) {
     return moment(value).format('DD MMM YYYY hh:mm') //dd mmm yyyy
 }
 
-export function formatStatusCuti(value) {
-    if (undefined === value) return <label className="badge badge-info">Unknown</label>
-    if (value === 1) {
-        return <label className="badge badge-info">Batal</label>
-    }
-    if (value === 2) {
-        return <label className="badge badge-danger">Ditolak</label>
-    }
-    if (value === 3) {
-        return <label className="badge badge-warning">In progress</label>
-    }
-    if (value === 4) {
-        return <label className="badge badge-warning">Approve</label>
-    } else return <label className="badge badge-success">Approved</label>
-}
-
 export function usernameTrim(value) {
     if (null === value || undefined === value) return 'Unknown'
     const max = 18
-    if (value.length > max) {
-        return value.substr(0, max - 3).concat("...");
-    }
-    return value
-}
-
-export function jabatanTrim(value) {
-    if (null === value || undefined === value) return 'Unknown'
-    const max = 15
     if (value.length > max) {
         return value.substr(0, max - 3).concat("...");
     }
@@ -87,7 +43,6 @@ export function clearInput(domRef) {
         var event = new Event('input', {bubbles: true});
         native(element, null)
         element.dispatchEvent(event)
-        // console.log("trigger event")
     }
 
 }
@@ -120,18 +75,6 @@ export function getFileExtension(filename) {
 
 export function numberOnly(value) {
     return Number(value) || '' === value
-    // try {
-    // let val = parseInt(value);
-    // Number.isInteger(value)
-    // if (Number.isInteger(parseInt(value)) && !Number.isNaN(parseInt(value))) {
-    //     // console.log(value)
-    //     return value
-    // } else {
-    // return ''
-    // }
-    // } catch (e) {
-    // ignore
-    // }
 }
 
 export function color() {
@@ -140,4 +83,7 @@ export function color() {
     var g = num >> 8 & 255;
     var b = num & 255;
     return 'rgb(' + r + ', ' + g + ', ' + b + ')';
+}
+
+export class jabatanTrim {
 }

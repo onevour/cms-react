@@ -1,7 +1,3 @@
-import {CUTI_CANCEL_SUBMIT_RESPONSE} from "../redux/constants/reducActionTypes";
-
-export const MAX_PENSIUN = 58
-
 export const ROLES = [
     {
         "value": "STAFF",
@@ -22,66 +18,6 @@ export const ROLES = [
         "value": "KEPALA UNIT",
         "label": "KEPALA UNIT",
         "description": "Admin Satker Presensi"
-    },
-    {
-        "value": "SEKRETARIS SUB UNIT",
-        "label": "SEKRETARIS SUB UNIT",
-        "description": "Pejabat Satker"
-    },
-    {
-        "value": "SEKRETARIS KEPALA UNIT",
-        "label": "SEKRETARIS KEPALA UNIT",
-        "description": "Admin Pusat Simpeg"
-    },
-    {
-        "value": "PEJABAT",
-        "label": "PEJABAT",
-        "description": "Pejabat Pusat Simpeg"
-    }
-]
-
-export const STATUS_PEGAWAI = [
-    {
-        value: 0,
-        label: "ALL"
-    }, {
-        value: 1,
-        label: "AKTIF"
-    }, {
-        value: 2,
-        label: "NON AKTIF"
-    }
-]
-
-// CUTI
-export const JENIS_CUTI = [
-    {
-        value: 1,
-        label: "TAHUNAN"
-    },
-    {
-        value: 2,
-        label: "BESAR"
-    },
-    {
-        value: 3,
-        label: "SAKIT"
-    },
-    {
-        value: 4,
-        label: "MELAHIRKAN"
-    },
-    {
-        value: 5,
-        label: "ALASAN PENTING"
-    },
-    {
-        value: 6,
-        label: "LUAR TANGGUNGAN NEGARA"
-    },
-    {
-        value: 7,
-        label: "MENEMANI ISTRI MELAHIRKAN"
     }
 ]
 

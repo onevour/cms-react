@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom'
 import {Redirect} from "react-router-dom";
 import {Menu} from '@material-ui/icons';
-import logo from '../assets/mini.png';
+import logo from '../assets/icon.png';
 import {connect} from "react-redux";
 import {logout} from "../redux/actions/reduxAction";
 

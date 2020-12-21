@@ -1,10 +1,9 @@
 import React, {Component} from "react";
 import {Redirect} from 'react-router-dom';
 import {connect} from "react-redux";
-import {getData, login} from "../../redux/actions/reduxAction";
+import {login} from "../../redux/actions/reduxAction";
 import {defCrud} from "../../application/AppConstant";
 import {LOGIN_RESPONSE} from "../../redux/constants/reducActionTypes";
-import swal from "sweetalert";
 
 class Login extends Component {
 
@@ -22,10 +21,11 @@ class Login extends Component {
     }
 
     componentDidUpdate(props) {
-        if (props.login_response !== this.props.login_response) {
-            if (200 !== props.login_response) {
-                this.setState({error: this.props.login_response.message})
-            }
+        if (props.loginResponse === this.props.loginResponse) {
+            return
+        }
+        if (200 !== props.loginResponse) {
+            this.setState({error: this.props.loginResponse.message})
         }
     }
 
@@ -51,6 +51,7 @@ class Login extends Component {
     }
 
     handleUserChange(e) {
+        console.log(e.target.value)
         this.setState({username: e.target.value})
     }
 
@@ -59,13 +60,11 @@ class Login extends Component {
     }
 
     render() {
-        const {login_response} = this.props
-        // console.log(login_response)
-        if (login_response.code === 200 && login_response.result) {
-            localStorage.setItem('user', JSON.stringify(login_response.result))
-            // console.log("redirect to home")
+        const {loginResponse} = this.props
+        if (loginResponse.code === 200 && loginResponse.result) {
+            localStorage.setItem('user', JSON.stringify(loginResponse.result))
             return (
-                <Redirect to='/profile'/>
+                <Redirect to='/dashboard'/>
             )
         }
         return (
@@ -118,13 +117,11 @@ class Login extends Component {
                                 <ul className="auth-footer">
 
                                 </ul>
-                                <p className="footer-text text-center" style={{color: "#8BBBD1"}}>copyright © 2020
-                                    Direktorat SMA. All rights
+                                <p className="footer-text text-center" style={{color: "#8BBBD1"}}>Copyright © 2020
+                                    SphereDevOps. All rights
                                     reserved.</p>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
@@ -135,11 +132,9 @@ class Login extends Component {
 
 function mapStateToProps(state) {
     return {
-        login_response: defCrud(state, LOGIN_RESPONSE)
+        loginResponse: defCrud(state, LOGIN_RESPONSE)
     }
 }
-
-// export default Login
 
 export default connect(
     mapStateToProps, {login}

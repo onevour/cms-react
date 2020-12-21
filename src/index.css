@@ -14149,8 +14149,8 @@ input:focus {
   display: none; }
 .navbar.default-layout .navbar-brand-wrapper .brand-logo-mini img {
   width: calc(70px - 50px);
-  max-width: 100%;
-  height: 28px;
+  max-width: 32px;
+  height: 20px;
   margin: auto; }
 .navbar.default-layout .navbar-menu-wrapper {
   transition: width 0.25s ease;
@@ -16349,7 +16349,7 @@ ul li {
 /* === Landing screens === */
 /* Auth */
 .auth.auth-bg-1 {
-  background-image: url('assets/login_1.jpg');
+  background-image: url('assets/background.jpg');
   background-size: cover; }
 
 .auth.register-bg-1 {

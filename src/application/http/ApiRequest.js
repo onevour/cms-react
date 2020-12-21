@@ -1,4 +1,4 @@
-import {BASE_URL} from "../redux/constants/reducActionTypes";
+import {BASE_URL} from "../../redux/constants/reducActionTypes";
 
 export function getData(payload) {
     return fetch(BASE_URL + payload.url).then(response =>

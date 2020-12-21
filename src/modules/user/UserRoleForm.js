@@ -2,13 +2,12 @@ import React, {Component, Fragment} from "react";
 import {
     USER_CRUD_RESPONSE
 } from "../../redux/constants/reducActionTypes";
-import {emptyCrud, ROLES} from "../../application/AppConstant";
+import {defCrud, ROLES} from "../../application/AppConstant";
 import {connect} from "react-redux";
 import {paramDuk} from "../../redux/actions/reduxActionMasterDUK";
 import Select from "react-select";
 import {pageUser, userUpdateRole} from "../../redux/actions/reduxActionUser";
 import {Redirect} from "react-router-dom";
-
 
 class UserRoleForm extends Component {
 
@@ -111,7 +110,6 @@ class UserRoleForm extends Component {
 
     render() {
         const {user} = this.state
-        // console.log(user)
         return (
             <Fragment>
                 <div className="row">
@@ -160,7 +158,7 @@ class UserRoleForm extends Component {
 
 function mapStateToProps(state) {
     return {
-        crud: (state[USER_CRUD_RESPONSE] ? state[USER_CRUD_RESPONSE] : emptyCrud)
+        crud: defCrud(state, USER_CRUD_RESPONSE)
     }
 }
 

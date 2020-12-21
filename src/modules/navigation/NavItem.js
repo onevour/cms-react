@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {menuAdmin, menuAtasan, menuPejabat, renderMenu} from "../../application/AppConstantMenu";
+import {renderMenu} from "../../application/AppConstantMenu";
 
 class NavItem extends Component {
 
@@ -28,7 +28,6 @@ class NavItem extends Component {
 
         }
         if (menusSelected.type === 2) {
-            // menusSelected.expand = !(menusSelected.expand)
             this.state.navigation.map((menu, i) => {
                 const isEqual = menusSelected.id === menu.id
                 if (menu.type === 2) {
@@ -38,7 +37,6 @@ class NavItem extends Component {
                         menu.expand = false
                     }
                 }
-
             })
         }
         if (menusSelected.type === 3) {
@@ -124,7 +122,6 @@ class NavItem extends Component {
     }
 
     render() {
-        const {navigation} = this.state
         return (
             <>
                 {

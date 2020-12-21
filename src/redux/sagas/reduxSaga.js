@@ -52,7 +52,7 @@ import {
     DASHBOARD_JABATAN_USIA, DASHBOARD_JABATAN_PANGKAT, DASHBOARD_PENSIUN, DASHBOARD_KODE_JABATAN_JENIS_KELAMIN
 } from "../constants/reducActionTypes";
 
-import {getData, postData} from "../../application/ApiRequest";
+import {getData, postData} from "../../application/http/ApiRequest";
 import {masterDocumentType} from "./reduxSagaDocumentType";
 
 export default function* watcherSaga() {

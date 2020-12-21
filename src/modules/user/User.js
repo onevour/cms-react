@@ -1,13 +1,12 @@
 import React, {Component, Fragment} from "react";
+import {Redirect} from "react-router-dom";
 import Pagination from "react-bootstrap-4-pagination";
 import {
     USER_PAGE_RESPONSE
 } from "../../redux/constants/reducActionTypes";
 import {defPage} from "../../application/AppConstant";
-import {connect} from "react-redux";
-import {listDuk, paramDuk} from "../../redux/actions/reduxActionMasterDUK";
 import {pageUser} from "../../redux/actions/reduxActionUser";
-import {Redirect} from "react-router-dom";
+import {connect} from "react-redux";
 
 
 class User extends Component {
@@ -116,7 +115,7 @@ class User extends Component {
                     <div className="col-md-12 grid-margin stretch-card">
                         <div className="card">
                             <div className="card-body">
-                                <h4 className="card-title">Data Pegawai</h4>
+                                <h4 className="card-title">Data Pegawai Test</h4>
                                 <div className="row">
                                     <div className="col-md-9">
 
@@ -136,7 +135,6 @@ class User extends Component {
                                         <tbody>
                                         {this.renderTable(users)}
                                         </tbody>
-
                                     </table>
                                 </div>
                                 <Pagination
@@ -145,7 +143,6 @@ class User extends Component {
                                     showMax={5}
                                     onClick={this.changePage}
                                 />
-
                             </div>
                         </div>
                     </div>
@@ -162,4 +159,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, {pageUser, listDuk, paramDuk})(User);
+export default connect(mapStateToProps, {pageUser})(User);

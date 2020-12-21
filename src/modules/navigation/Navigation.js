@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import NavItem from "./NavItem";
-import {usernameTrim, jabatanTrim} from "../../application/AppCommons";
 
 class Navigation extends Component {
 
@@ -10,7 +9,7 @@ class Navigation extends Component {
             user: JSON.parse(localStorage.getItem('user'))
         }
     }
-    //style={{position: 'fixed'}}
+
     render() {
         const {user} = this.state
         return (
@@ -24,9 +23,9 @@ class Navigation extends Component {
                                      alt=""/>
                             </div>
                             <div className="text-wrapper">
-                                <p className="profile-name">{usernameTrim(user.nama)}</p>
+                                <p className="profile-name">{user.nama}</p>
                                 <div>
-                                    <small className="designation text-muted">{jabatanTrim(user.jabatan)}</small>
+                                    <small className="designation text-muted">{user.jabatan}</small>
                                     <span className="status-indicator online"/>
                                 </div>
                             </div>
