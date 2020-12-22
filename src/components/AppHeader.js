@@ -5,6 +5,8 @@ import {Menu} from '@material-ui/icons';
 import logo from '../assets/icon.png';
 import {connect} from "react-redux";
 import {logout} from "../redux/actions/reduxActionLogin";
+import {defCrud} from "../application/AppConstant";
+import {LOGIN_RESPONSE} from "../redux/constants/reducActionTypes";
 
 class AppHeader extends Component {
 
@@ -21,7 +23,7 @@ class AppHeader extends Component {
         this.showMenuUser = this.showMenuUser.bind(this)
         this.handleClickOutside = this.handleClickOutside.bind(this);
         this.logout = this.logout.bind(this);
-        this.state.isLogin = (this.state.user === null ? 0 :"")
+        this.state.isLogin = (this.state.user === null ? 0 : "")
         document.body.className = "sidebar-icon-only"
     }
 
@@ -80,7 +82,8 @@ class AppHeader extends Component {
     render() {
         const {loginResponse} = this.props
         const {isLogin, user, menuUserClass, menuUserDropdownClass} = this.state
-        if (loginResponse && loginResponse.code && loginResponse.code === 401) {
+        console.log(loginResponse)
+        if (loginResponse && loginResponse.code && (loginResponse.code === 401||loginResponse.code === 0)) {
             return (
                 <Redirect to='/'/>
             )
@@ -91,7 +94,7 @@ class AppHeader extends Component {
                         <Link className="navbar-brand brand-logo" to="#">
                             {isLogin}
                         </Link>
-                        <Link className="navbar-brand brand-logo-mini" to="#" >
+                        <Link className="navbar-brand brand-logo-mini" to="#">
                             <img alt="logo" src={logo}/>
                         </Link>
                     </div>
@@ -106,9 +109,9 @@ class AppHeader extends Component {
 
                             <li className={menuUserClass}>
                                 <Link className="nav-link dropdown-toggle" id="UserDropdown" to="#"
-                                   data-toggle="dropdown"
-                                   aria-expanded="false"
-                                   onClick={this.showMenuUser}>
+                                      data-toggle="dropdown"
+                                      aria-expanded="false"
+                                      onClick={this.showMenuUser}>
                                     <span className="profile-text">{user.nip}</span>
                                 </Link>
                                 <div className={menuUserDropdownClass}
@@ -159,7 +162,7 @@ class AppHeader extends Component {
 function mapStateToProps(state) {
 
     return {
-        loginResponse: state.loginResponse
+        loginResponse: defCrud(state, LOGIN_RESPONSE)
     }
 
 }
