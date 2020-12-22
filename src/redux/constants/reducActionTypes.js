@@ -1,4 +1,6 @@
-export const BASE_URL = "http://localhost:8081/api/v1"
+import {END_POINT} from "../../application/AppConstant";
+
+export const BASE_URL = END_POINT
 
 export const POST = 'POST'
 export const GET = 'GET'

@@ -1,3 +1,5 @@
+export const END_POINT = "http://localhost:8081/api/v1"
+
 export const ROLES = [
     {
         "value": "STAFF",

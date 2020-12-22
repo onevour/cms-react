@@ -4,8 +4,27 @@ import moment from "moment";
 
 class TableView extends Component {
 
-    // 1
-    renderTable(model) {
+    /**
+     * basic mode
+     {
+        fields:[]
+        values: rows,
+        element_total: 100,
+        page: 1,
+        page_total: 5,
+        changePage: this.changePage
+     }
+     * */
+    renderTable(model = {
+        fields: [],
+        values: [],
+        element_total: 1,
+        page: 1,
+        page_total: 1,
+        changePage: (row, o) => {
+            console.warn("not implement paging callback")
+        }
+    }) {
         return (
             <Fragment>
                 <div className="table-responsive">
@@ -16,9 +35,9 @@ class TableView extends Component {
                 </div>
 
                 <Pagination
-                    totalPages={model.totalPages}
-                    currentPage={model.currentPage}
-                    showMax={model.showMax}
+                    totalPages={model.element_total}
+                    currentPage={(model.page + 1)}
+                    showMax={model.page_total}
                     onClick={(page) => {
                         model.changePage(page)
                     }}
@@ -29,6 +48,9 @@ class TableView extends Component {
 
     // 2
     renderTableHeader(model = []) {
+        if (!model.fields) {
+            return <></>
+        }
         return (
             <tr>
                 {model.fields.map((o, i) => {
@@ -39,7 +61,7 @@ class TableView extends Component {
     }
 
     // 3
-    renderTableRows(model = []) {
+    renderTableRows(model) {
         return (
             <Fragment>
                 {model.values.map((o, i) => {
@@ -73,7 +95,6 @@ class TableView extends Component {
 
     render() {
         const {model} = this.props
-        console.log(model)
         return this.renderTable(model)
     }
 }

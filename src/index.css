@@ -16731,6 +16731,15 @@ ul.pagination {margin-top: 16px;}
   border-bottom-width: 0px;
   border-left-width: 0px;
   border-right-width: 0px;
+  height: 33.5px;
+}
+
+.select-tmd div {
+  /*height: 33.5px;*/
+}
+
+.select-tmd div div {
+  /*height: 33.5px;*/
 }
 
 .rdtPicker{
@@ -16773,6 +16782,10 @@ tr.clickable {
   max-width: 50%;
 }
 
-.table th, .table td{
-  padding: 10px 10px!important;
+.table th, .table td {
+  padding: 10px 25px!important;
+}
+
+.table td button {
+  padding: 3px!important;
 }

@@ -15,9 +15,20 @@ class SampleTable extends Component {
         this.changePage = this.changePage.bind(this);
     }
 
+    /*
+     * basic mode
+     {
+        fields:[]
+        values: rows,
+        totalPages: 100,
+        currentPage: page,
+        showMax: 5,
+        changePage: this.changePage
+     }
+     * */
     sampleDataTable() {
         const {page} = this.state
-        const rows = dummyData(10);
+        const rows = dummyData(10)
         return {
             fields: [
                 {
@@ -27,11 +38,11 @@ class SampleTable extends Component {
                             <Fragment>
                                 <button type="button" className="btn btn-primary btn-sm mr-2" onClick={(row) => {
                                     console.log("update")
-                                }}><i className="mdi mdi-18px mdi-delete-circle"/>
+                                }}><i className="mdi mdi-24px mdi-delete-circle"/>
                                 </button>
                                 <button type="button" className="btn btn-danger btn-sm" onClick={(row) => {
                                     console.log("delete")
-                                }}><i className="mdi mdi-18px mdi-delete-circle"/>
+                                }}><i className="mdi mdi-24px mdi-delete-circle"/>
                                 </button>
                             </Fragment>
                         )
@@ -69,15 +80,14 @@ class SampleTable extends Component {
                 }
             ],
             values: rows,
-            totalPages: 100,
-            currentPage: page,
-            showMax: 5,
+            element_total: 100,
+            page: page,
+            page_total: 5,
             changePage: this.changePage
-        };
+        }
     }
 
     changePage(page) {
-        // console.log("page change ", page)
         this.setState({page: page})
     }
 

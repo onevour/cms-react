@@ -1,4 +1,3 @@
-import React from "react";
 import moment from "moment";
 import ReactDOM from "react-dom";
 
@@ -80,7 +79,7 @@ export function numberOnly(value) {
 export function color() {
     var num = Math.round(0xffffff * Math.random());
     var r = num >> 16;
-    var g = num >> 8 & 255;
+    var g = num >> 8 && 255;
     var b = num & 255;
     return 'rgb(' + r + ', ' + g + ', ' + b + ')';
 }
