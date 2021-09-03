@@ -1,73 +1,59 @@
 import React, {Component} from "react";
 import {Redirect} from 'react-router-dom';
 import {connect} from "react-redux";
-import {login} from "../../redux/actions/reduxActionLogin";
+import {login} from "../../application/plugins/redux/actions/reduxActionLogin";
 import {defCrud} from "../../application/AppConstant";
-import {LOGIN_RESPONSE} from "../../redux/constants/reducActionTypes";
+import swal from "sweetalert";
+import {LOGIN_RESPONSE} from "../../application/plugins/redux/constants/reducActionTypes";
+import {field, formColumnSingle} from "../../application/commons/form/AppFormBuilder";
+import AppForm from "../../application/commons/form/AppForm";
+import AppFormHandler from "../../application/commons/form/AppFormHandler";
 
 class Login extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            username: '',
-            password: '',
             error: ''
         }
-        this.handlePassChange = this.handlePassChange.bind(this)
-        this.handleUserChange = this.handleUserChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.dismissError = this.dismissError.bind(this)
     }
 
     componentDidUpdate(props) {
-        if (props.loginResponse === this.props.loginResponse) {
-            return
-        }
-        if (200 !== props.loginResponse) {
-            this.setState({error: this.props.loginResponse.message})
-        }
+        const handler = new AppFormHandler(this, props)
+        if (handler.isUpdate('login')) {
+            console.log("update")
+        } else console.log("no update")
     }
 
     dismissError() {
         this.setState({error: ''})
     }
 
-    handleSubmit(evt) {
-        evt.preventDefault()
-        if (!this.state.username) {
-            return this.setState({error: 'Username is required'})
+    handleSubmit(event) {
+        const form = new AppForm(this, event);
+        form.validateEmpty("username")
+        form.validateEmpty("password")
+        if (form.isError()) {
+            swal("Update profile", form.errorMessage(), "error")
+            return
         }
-
-        if (!this.state.password) {
-            return this.setState({error: 'Password is required'})
-        }
-        const {username, password} = this.state;
-        const request = {
-            username: username,
-            password: password
-        }
-        this.props.login(request)
-    }
-
-    handleUserChange(e) {
-        console.log(e.target.value)
-        this.setState({username: e.target.value})
-    }
-
-    handlePassChange(e) {
-        this.setState({password: e.target.value})
+        this.props.login(form.param())
     }
 
     render() {
-        const {loginResponse} = this.props
-        console.log(loginResponse)
-        if (loginResponse.code === 200 && loginResponse.result) {
-            localStorage.setItem('user', JSON.stringify(loginResponse.result))
+        const {login} = this.props
+        if (login.code === 200 && login.result) {
+            localStorage.setItem('user', JSON.stringify(login.result))
             return (
                 <Redirect to='/dashboard'/>
             )
         }
+        const fields = [
+            field('Username', 'text', 'username', 'Username'),
+            field('Password', 'password', 'password', 'Password')
+        ]
         return (
             <div className="container-scroller">
                 <div className="container-fluid page-body-wrapper full-page-wrapper auth-page">
@@ -76,38 +62,7 @@ class Login extends Component {
                             <div className="col-lg-4 mx-auto">
                                 <div className="auto-form-wrapper">
                                     <form onSubmit={this.handleSubmit}>
-                                        <div className="form-group">
-                                            <label className="label">Username</label>
-                                            <div className="input-group">
-                                                <input type="text" className="form-control" placeholder="Username"
-                                                       value={this.state.username}
-                                                       onChange={this.handleUserChange}/>
-                                                <div className="input-group-append">
-                                                    <span className="input-group-text">
-                                                        <i className="mdi mdi-check-circle-outline"/>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="form-group">
-                                            <label className="label">Password</label>
-                                            <div className="input-group">
-                                                <input type="password" className="form-control"
-                                                       placeholder="*********"
-                                                       value={this.state.password}
-                                                       onChange={this.handlePassChange}/>
-                                                <div className="input-group-append">
-                                                  <span className="input-group-text">
-                                                    <i className="mdi mdi-check-circle-outline"/>
-                                                  </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {this.state.error &&
-                                        <label data-test="error" style={{color: "red", fontSize: 10}}>
-                                            {this.state.error}
-                                        </label>
-                                        }
+                                        {formColumnSingle(this, fields)}
                                         <div className="form-group" style={{marginTop: 30, marginBottom: 30}}>
                                             <p className="text-danger">{login.code > 200 ? login.message : ""}</p>
                                             <button className="btn btn-primary submit-btn btn-block">Login</button>
@@ -119,8 +74,7 @@ class Login extends Component {
 
                                 </ul>
                                 <p className="footer-text text-center" style={{color: "#8BBBD1"}}>Copyright © 2020
-                                    SphereDevOps. All rights
-                                    reserved.</p>
+                                    SphereDevOps. All rights reserved.</p>
                             </div>
                         </div>
                     </div>
@@ -132,7 +86,7 @@ class Login extends Component {
 
 function mapStateToProps(state) {
     return {
-        loginResponse: defCrud(state, LOGIN_RESPONSE)
+        login: defCrud(state, LOGIN_RESPONSE)
     }
 }
 

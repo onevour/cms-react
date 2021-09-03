@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from "react";
-import Navigation from "../modules/navigation/Navigation";
+import Navigation from "../../modules/navigation/Navigation";
 import AppHeader from "./AppHeader";
 import AppFooter from "./AppFooter";
 import AppContent from "./AppContent";

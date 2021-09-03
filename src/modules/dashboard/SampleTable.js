@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from "react"
 import {dummyData} from "../../application/AppDummyJson";
 import {formatDate} from "../../application/AppCommons";
-import TableView from "../../plugins/TableView";
+import TableView from "../../application/plugins/ui/TableView";
 
 class SampleTable extends Component {
 

@@ -2,11 +2,11 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom'
 import {Link, Redirect} from "react-router-dom";
 import {Menu} from '@material-ui/icons';
-import logo from '../assets/icon.png';
+import logo from '../../assets/icon.png';
 import {connect} from "react-redux";
-import {logout} from "../redux/actions/reduxActionLogin";
-import {defCrud} from "../application/AppConstant";
-import {LOGIN_RESPONSE} from "../redux/constants/reducActionTypes";
+import {logout} from "../plugins/redux/actions/reduxActionLogin";
+import {defCrud} from "../AppConstant";
+import {LOGIN_RESPONSE} from "../plugins/redux/constants/reducActionTypes";
 
 class AppHeader extends Component {
 

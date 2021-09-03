@@ -3,9 +3,9 @@ import {Redirect} from "react-router-dom";
 import Pagination from "react-bootstrap-4-pagination";
 import {
     USER_PAGE_RESPONSE
-} from "../../redux/constants/reducActionTypes";
+} from "../../application/plugins/redux/constants/reducActionTypes";
 import {defPage} from "../../application/AppConstant";
-import {pageUser} from "../../redux/actions/reduxActionUser";
+import {pageUser} from "../../application/plugins/redux/actions/reduxActionUser";
 import {connect} from "react-redux";
 
 

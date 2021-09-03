@@ -3,7 +3,7 @@ import {
     GET,
     POST
 } from "../constants/reducActionTypes"
-import {getData, postData} from "../../application/http/ApiRequest"
+import {getData, postData} from "../../../commons/http/ApiRequest"
 
 export function* responseWorker(action) {
     try {

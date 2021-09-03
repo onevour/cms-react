@@ -1,9 +1,11 @@
-import {END_POINT} from "../../application/AppConstant";
+import {END_POINT} from "../../../AppConstant";
 
 export const BASE_URL = END_POINT
 
 export const POST = 'POST'
 export const GET = 'GET'
+export const PUT = 'PUT'
+export const DELETE = 'DELETE'
 
 // request
 export const LOGIN = "LOGIN"

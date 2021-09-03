@@ -1,11 +1,11 @@
 import React, {Component, Fragment} from "react";
 import {
     USER_CRUD_RESPONSE
-} from "../../redux/constants/reducActionTypes";
+} from "../../application/plugins/redux/constants/reducActionTypes";
 import {defCrud, ROLES} from "../../application/AppConstant";
 import {connect} from "react-redux";
 import Select from "react-select";
-import {pageUser, userUpdateRole} from "../../redux/actions/reduxActionUser";
+import {pageUser, userUpdateRole} from "../../application/plugins/redux/actions/reduxActionUser";
 import {Redirect} from "react-router-dom";
 
 class UserRoleForm extends Component {

@@ -1,4 +1,4 @@
-export const END_POINT = "http://localhost:8081/api/v1"
+export const END_POINT = "http://194.31.53.72:8020/api/v1/cms"
 
 export const ROLES = [
     {
@@ -93,4 +93,27 @@ export function defList(state, key) {
 
 export function defPage(state, key) {
     return state[key] ? state[key] : emptyContentPage
+}
+
+export const customStyles = {
+    option: (provided, state) => ({
+        ...provided,
+        // borderBottom: '2px dotted green',
+        // color: state.isSelected ? 'yellow' : 'black',
+        // backgroundColor: state.isSelected ? 'green' : 'white'
+    }),
+    control: (base, state) => ({
+        ...base,
+        border: '1px solid #f2f2f2',
+        boxShadow: 'none',
+        '&:hover': {
+            border: '1px solid #f2f2f2',
+        }
+    }),
+    placeholder: (defaultStyles) => {
+        return {
+            ...defaultStyles,
+            color: '#c9c8c8',
+        }
+    }
 }

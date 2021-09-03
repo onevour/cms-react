@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from "react";
 import {Modal} from "react-bootstrap";
-import {getFileExtension} from "../application/AppCommons";
+import {getFileExtension} from "../../AppCommons";
 import {PDFReader} from "reactjs-pdf-reader";
 import { ResponsiveImage, ResponsiveImageSize } from 'react-responsive-image';
 

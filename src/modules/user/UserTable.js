@@ -2,11 +2,11 @@ import React, {Component, Fragment} from "react";
 import {Redirect} from "react-router-dom";
 import {
     USER_PAGE_RESPONSE
-} from "../../redux/constants/reducActionTypes";
+} from "../../application/plugins/redux/constants/reducActionTypes";
 import {defPage} from "../../application/AppConstant";
-import {pageUser} from "../../redux/actions/reduxActionUser";
+import {pageUser} from "../../application/plugins/redux/actions/reduxActionUser";
 import {connect} from "react-redux";
-import TableView from "../../plugins/TableView";
+import TableView from "../../application/plugins/ui/TableView";
 
 class UserTable extends Component {
 

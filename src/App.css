@@ -36,3 +36,37 @@
     transform: rotate(360deg);
   }
 }
+
+
+.page-link {
+
+  cursor: default;
+  outline: 0 !important;
+}
+
+a:hover, a:active, a:focus {
+  outline: none;
+  border: 0;
+}
+
+
+.span-center {
+  display: inline-block;
+  margin-top: -9px!important;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: middle;
+}
+
+::-webkit-scrollbar{
+  height: 8px;
+  width: 4px;
+  border: 1px solid #d5d5d5;
+}
+
+::-webkit-scrollbar-thumb:horizontal{
+  background: lightgrey;
+  border-radius: 10px;
+}
+
+.container::-webkit-scrollbar {   display: none; }.container {   -ms-overflow-style: none; }

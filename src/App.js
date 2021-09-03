@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import AppRouting from "./components/AppRouting";
+import AppRouting from "./application/views/AppRouting";
 
 function App() {
     return (

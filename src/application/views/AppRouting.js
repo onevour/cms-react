@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
 import AppHome from "./AppHome";
-import Login from "../modules/login/Login";
+import Login from "../../modules/login/Login";
 
 class AppRouting extends Component {
 
