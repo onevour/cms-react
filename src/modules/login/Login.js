@@ -14,7 +14,6 @@ class Login extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            error: ''
         }
         this.handleSubmit = this.handleSubmit.bind(this)
         this.dismissError = this.dismissError.bind(this)
@@ -39,6 +38,7 @@ class Login extends Component {
             swal("Update profile", form.errorMessage(), "error")
             return
         }
+        form.errorMessageClear()
         this.props.login(form.param())
     }
 

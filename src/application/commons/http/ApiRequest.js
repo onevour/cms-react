@@ -1,7 +1,13 @@
 import {BASE_URL} from "../../plugins/redux/constants/reducActionTypes";
 
-export function header() {
-    const token = localStorage.getItem('token');
+export function header(url) {
+    if (url.includes("login") || url.includes("auth")) {
+        return {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+        }
+    }
+    const token = localStorage.getItem('token')
     return {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
@@ -9,18 +15,10 @@ export function header() {
     }
 }
 
-export function getOptions() {
-    const token = localStorage.getItem('token');
-    return {
-        method: 'GET',
-        headers: header()
-    };
-}
-
 export function getData(payload) {
     const requestOptions = {
         method: 'GET',
-        headers: header()
+        headers: header(payload.url)
     };
     return fetch(BASE_URL + payload.url, requestOptions).then(response =>
         response.json()
@@ -28,10 +26,9 @@ export function getData(payload) {
 }
 
 export function postData(payload) {
-    const token = localStorage.getItem('token')
     const requestOptions = {
         method: 'POST',
-        headers: header(),
+        headers: header(payload.url),
         body: JSON.stringify(payload.body)
     }
     return fetch(BASE_URL + payload.url, requestOptions)
@@ -39,8 +36,8 @@ export function postData(payload) {
             if (!response.ok) {
                 console.log("error http", response)
                 return {
-                    code: response.status,
-                    message: response.statusText
+                    status_code: response.status,
+                    status_message: response.statusText
                 }
                 // throw new Error(response.status)
             } else return response.json()
