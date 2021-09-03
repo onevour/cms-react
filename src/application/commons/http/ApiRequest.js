@@ -3,14 +3,12 @@ import {BASE_URL} from "../../plugins/redux/constants/reducActionTypes";
 export function header(url) {
     if (url.includes("login") || url.includes("auth")) {
         return {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
+            'Content-Type': 'application/json'
         }
     }
     const token = localStorage.getItem('token')
     return {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
         'Authorization': 'Bearer ' + token
     }
 }
@@ -35,11 +33,12 @@ export function postData(payload) {
         .then(response => {
             if (!response.ok) {
                 console.log("error http", response)
-                return {
-                    status_code: response.status,
-                    status_message: response.statusText
-                }
+                // return {
+                //     status_code: response.status,
+                //     status_message: response.statusText
+                // }
                 // throw new Error(response.status)
+                return response.json()
             } else return response.json()
         }).catch(function (error) {
             console.log("error", error);

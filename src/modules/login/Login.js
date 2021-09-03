@@ -13,16 +13,20 @@ class Login extends Component {
 
     constructor(props) {
         super(props)
-        this.state = {
-        }
+        this.state = {}
         this.handleSubmit = this.handleSubmit.bind(this)
         this.dismissError = this.dismissError.bind(this)
     }
 
     componentDidUpdate(props) {
         const handler = new AppFormHandler(this, props)
-        if (handler.isUpdate('login')) {
+        if (handler.isUpdate('login_response')) {
+            // const user = handler.value('login').data.access_token
+            // success
+            // const error = {"error": handler.value('login').status_message}
+            // this.setState({error: handler.value('login').status_message})
             console.log("update")
+            // success
         } else console.log("no update")
     }
 
@@ -43,9 +47,11 @@ class Login extends Component {
     }
 
     render() {
-        const {login} = this.props
-        if (login.code === 200 && login.result) {
-            localStorage.setItem('user', JSON.stringify(login.result))
+        const {login_response} = this.props
+        console.log(login_response)
+        if (login_response.status_code == 200 && login_response.data) {
+            localStorage.setItem('user', JSON.stringify(login_response.data))
+            localStorage.setItem('token', login_response.data.access_token)
             return (
                 <Redirect to='/dashboard'/>
             )
@@ -64,7 +70,7 @@ class Login extends Component {
                                     <form onSubmit={this.handleSubmit}>
                                         {formColumnSingle(this, fields)}
                                         <div className="form-group" style={{marginTop: 30, marginBottom: 30}}>
-                                            <p className="text-danger">{login.code > 200 ? login.message : ""}</p>
+                                            <p className="text-danger">{login_response.status_code > 200 ? login_response.status_message : ""}</p>
                                             <button className="btn btn-primary submit-btn btn-block">Login</button>
                                         </div>
                                     </form>
@@ -86,7 +92,7 @@ class Login extends Component {
 
 function mapStateToProps(state) {
     return {
-        login: defCrud(state, LOGIN_RESPONSE)
+        login_response: defCrud(state, LOGIN_RESPONSE)
     }
 }
 

@@ -1,27 +1,25 @@
 import React, {Component, Fragment} from "react";
 import {Redirect} from "react-router-dom";
+import Pagination from "react-bootstrap-4-pagination";
 import {
     USER_PAGE_RESPONSE
 } from "../../application/plugins/redux/constants/reducActionTypes";
 import {defPage} from "../../application/AppConstant";
 import {pageUser} from "../../application/plugins/redux/actions/reduxActionUser";
 import {connect} from "react-redux";
-import TableView from "../../application/plugins/ui/TableView";
 
-class UserTable extends Component {
+
+class UserBak extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            name: '',
             page: 0,
             filter: '',
             directBody: null,
             direct: false
         };
         this.changePage = this.changePage.bind(this)
-        this.renderOption = this.renderOption.bind(this)
-        this.updateUser = this.updateUser.bind(this)
         this.handleChangeName = this.handleChangeName.bind(this)
     }
 
@@ -32,12 +30,12 @@ class UserTable extends Component {
         })
     }
 
+
     componentDidUpdate(props) {
-        if (props.crud === this.props.crud) {
-            return
+        if (props.crud !== this.props.crud) {
+            this.setState({id: 0, name: ''})
+            this.props.pageUser({filter: "", page: this.state.page})
         }
-        this.setState({id: 0, name: ''})
-        this.props.pageUser({filter: '', page: this.state.page})
     }
 
     changePage(page) {
@@ -58,6 +56,24 @@ class UserTable extends Component {
         this.props.pageUser(request)
     }
 
+    renderHeader() {
+        return (
+            <thead>
+            <tr>
+                <th>Opsi</th>
+                <th>Role</th>
+                <th>NIP</th>
+                <th>Nama</th>
+            </tr>
+            </thead>
+
+        )
+    }
+
+    updateUser(o) {
+        this.setState({directBody: o, direct: true})
+    }
+
     renderRedirect() {
         if (this.state.direct) {
             return <Redirect to={{
@@ -67,55 +83,32 @@ class UserTable extends Component {
         }
     }
 
-    updateUser(o) {
-        this.setState({directBody: o, direct: true})
-    }
-
-    renderOption(row, o) {
+    renderOption(o) {
         return (
             <button type="button"
                     className="btn btn-warning btn-sm btn-option"
-                    onClick={() => this.updateUser(row)}>
+                    onClick={() => this.updateUser(o)}>
                 <i className="mdi mdi-24px mdi-pencil"/>
             </button>
         )
     }
 
-    buildTable() {
-        const {users} = this.props
-        console.log(users)
-        if (!users.data || !users.data.users) {
-            return
-        }
-        console.log(users.data.users)
-        const tmp =  Object.assign({
-            fields: [
-                {
-                    title: "OPTION",
-                    format: this.renderOption
-                },
-                {
-                    title: "ROLE",
-                    key: "username"
-                },
-                {
-                    title: "NIP",
-                    key: "email"
-                },
-                {
-                    title: "NAMA",
-                    key: "phone"
-                }
-            ],
-        }, users.data.users)
-        console.log(tmp)
-        tmp.values = users.data.users
-        return tmp
-
+    renderTable(users) {
+        return (
+            users.result.values.map((o, i) =>
+                <tr className="clickable" key={i}>
+                    <td>{this.renderOption(o)}</td>
+                    <td>{o.role}</td>
+                    <td>{o.nip}</td>
+                    <td>{o.nama}</td>
+                </tr>
+            )
+        )
     }
 
     render() {
-        const {name} = this.state
+        const {page, name} = this.state
+        const {users} = this.props
         return (
             <Fragment>
                 <div className="row">
@@ -128,13 +121,28 @@ class UserTable extends Component {
 
                                     </div>
                                     <div className="col-md-3">
+
                                         <input type="text" className="form-control"
                                                value={name}
                                                onChange={this.handleChangeName}
-                                               placeholder="Search"/>
+                                               placeholder="Nama pegawai"/>
                                     </div>
                                 </div>
-                                <TableView model={this.buildTable()}/>
+
+                                <div className="table-responsive">
+                                    <table className="table table-hover">
+                                        {this.renderHeader()}
+                                        <tbody>
+                                        {this.renderTable(users)}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <Pagination
+                                    totalPages={users.result.page_total}
+                                    currentPage={(page + 1)}
+                                    showMax={5}
+                                    onClick={this.changePage}
+                                />
                             </div>
                         </div>
                     </div>
@@ -151,4 +159,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, {pageUser})(UserTable);
+export default connect(mapStateToProps, {pageUser})(UserBak);

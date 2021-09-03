@@ -6,7 +6,7 @@ import {
     USER_PAGE,
     USER_PAGE_RESPONSE
 } from "../constants/reducActionTypes";
-import {buildPost} from "./reduxAction";
+import {buildGet, buildPost} from "./reduxAction";
 
 export function listUser(param) {
     const payload = {
@@ -18,10 +18,10 @@ export function listUser(param) {
 
 export function pageUser(param) {
     const payload = {
-        url: "/user/page",
+        url: "/user?page=1&q=",
         body: param
     }
-    return buildPost(payload, USER_PAGE, USER_PAGE_RESPONSE)
+    return buildGet(payload, USER_PAGE, USER_PAGE_RESPONSE)
 }
 
 export function userUpdateRole(param) {

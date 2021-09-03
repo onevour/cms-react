@@ -5,8 +5,12 @@ class AppFormHandler {
         this.props = props
     }
 
-    isUpdate(props, key) {
+    isUpdate(key) {
         return (this.component.props[key] !== this.props[key])
+    }
+
+    value(key) {
+        return this.props[key]
     }
 
 }

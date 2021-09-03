@@ -73,7 +73,7 @@ export const emptyContentList = {
 }
 
 export const emptyContentPage = {
-    code: 0, result: {
+    code: 0, data: {
         values: [], element_total: 0,
         page: 0,
         page_total: 1,

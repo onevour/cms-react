@@ -8,7 +8,7 @@ import {pageUser} from "../../application/plugins/redux/actions/reduxActionUser"
 import {connect} from "react-redux";
 import TableView from "../../application/plugins/ui/TableView";
 
-class UserTable extends Component {
+class UserTableBak extends Component {
 
     constructor(props) {
         super(props);
@@ -83,12 +83,7 @@ class UserTable extends Component {
 
     buildTable() {
         const {users} = this.props
-        console.log(users)
-        if (!users.data || !users.data.users) {
-            return
-        }
-        console.log(users.data.users)
-        const tmp =  Object.assign({
+        return Object.assign({
             fields: [
                 {
                     title: "OPTION",
@@ -96,22 +91,18 @@ class UserTable extends Component {
                 },
                 {
                     title: "ROLE",
-                    key: "username"
+                    key: "role"
                 },
                 {
                     title: "NIP",
-                    key: "email"
+                    key: "nip"
                 },
                 {
                     title: "NAMA",
-                    key: "phone"
+                    key: "nama"
                 }
             ],
-        }, users.data.users)
-        console.log(tmp)
-        tmp.values = users.data.users
-        return tmp
-
+        }, users.result)
     }
 
     render() {
@@ -151,4 +142,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, {pageUser})(UserTable);
+export default connect(mapStateToProps, {pageUser})(UserTableBak);
