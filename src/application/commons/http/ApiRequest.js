@@ -31,24 +31,47 @@ export function postData(payload) {
     }
     return fetch(BASE_URL + payload.url, requestOptions)
         .then(response => {
-            if (!response.ok) {
-                console.log("error http", response)
-                // return {
-                //     status_code: response.status,
-                //     status_message: response.statusText
-                // }
-                // throw new Error(response.status)
-                return response.json()
-            } else return response.json()
+            // if (!response.ok) {
+            //     console.log("error http", response)
+            //     return response.json()
+            // } else return response.json()
+            return response.json()
         }).catch(function (error) {
             console.log("error", error);
-            // return {
-            //     code: 500,
-            //     message: error
-            // }
             return Promise.reject()
         });
 }
+
+export function putData(payload) {
+    const requestOptions = {
+        method: 'PUT',
+        headers: header(payload.url),
+        body: JSON.stringify(payload.body)
+    }
+    return fetch(BASE_URL + payload.url, requestOptions)
+        .then(response => {
+            return response.json()
+        }).catch(function (error) {
+            console.log("error", error);
+            return Promise.reject()
+        });
+}
+
+export function deleteData(payload) {
+    const requestOptions = {
+        method: 'DELETE',
+        headers: header(payload.url),
+        body: JSON.stringify(payload.body)
+    }
+    return fetch(BASE_URL + payload.url, requestOptions)
+        .then(response => {
+            return response.json()
+        }).catch(function (error) {
+            console.log("error", error);
+            return Promise.reject()
+        });
+}
+
 
 export function downloadData(payload) {
     const requestOptions = {

@@ -6,28 +6,33 @@ import {
     USER_PAGE,
     USER_PAGE_RESPONSE
 } from "../constants/reducActionTypes";
-import {buildGet, buildPost} from "./reduxAction";
-
-export function listUser(param) {
-    const payload = {
-        url: "/user/list",
-        body: param
-    }
-    return buildPost(payload, USER_LIST, USER_LIST_RESPONSE)
-}
+import {buildDelete, buildGet, buildPost, buildPut} from "./reduxAction";
 
 export function pageUser(param) {
     const payload = {
-        url: "/user?page=1&q=",
+        url: "/user?page=1&q=" + param.filter,
         body: param
     }
     return buildGet(payload, USER_PAGE, USER_PAGE_RESPONSE)
 }
 
-export function userUpdateRole(param) {
+export function saveUser(is_create = true, param) {
     const payload = {
-        url: "/user/update/role",
+        url: "/user",
         body: param
     }
-    return buildPost(payload, USER_CRUD, USER_CRUD_RESPONSE)
+    if (is_create) {
+        return buildPost(payload, USER_CRUD, USER_CRUD_RESPONSE)
+    }
+    return buildPut(payload, USER_CRUD, USER_CRUD_RESPONSE)
+}
+
+export function removeUser(param) {
+    const payload = {
+        url: "/user/" + param
+    }
+    return buildDelete(payload, USER_CRUD, USER_CRUD_RESPONSE)
+}
+
+export class deleteUser {
 }

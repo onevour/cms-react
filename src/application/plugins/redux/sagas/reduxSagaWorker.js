@@ -1,9 +1,10 @@
 import {call, put} from "redux-saga/effects"
 import {
+    DELETE,
     GET,
-    POST
+    POST, PUT
 } from "../constants/reducActionTypes"
-import {getData, postData} from "../../../commons/http/ApiRequest"
+import {deleteData, getData, postData, putData} from "../../../commons/http/ApiRequest"
 
 export function* responseWorker(action) {
     try {
@@ -18,6 +19,24 @@ export function* responseWorker(action) {
         }
         if (POST === action.method) {
             const payloadResponse = yield call(postData, action.payload)
+            yield put({
+                type: action.response,
+                event: action.response,
+                payload: payloadResponse,
+                responseBody: action.responseBody
+            })
+        }
+        if (PUT === action.method) {
+            const payloadResponse = yield call(putData, action.payload)
+            yield put({
+                type: action.response,
+                event: action.response,
+                payload: payloadResponse,
+                responseBody: action.responseBody
+            })
+        }
+        if (DELETE === action.method) {
+            const payloadResponse = yield call(deleteData, action.payload)
             yield put({
                 type: action.response,
                 event: action.response,

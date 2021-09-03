@@ -1,6 +1,7 @@
 import {
+    DELETE,
     GET,
-    POST
+    POST, PUT
 } from "../constants/reducActionTypes";
 
 export function buildPost(payload, actionKey, responseKey) {
@@ -8,6 +9,24 @@ export function buildPost(payload, actionKey, responseKey) {
         type: actionKey,
         payload: payload,
         method: POST,
+        response: responseKey
+    }
+}
+
+export function buildPut(payload, actionKey, responseKey) {
+    return {
+        type: actionKey,
+        payload: payload,
+        method: PUT,
+        response: responseKey
+    }
+}
+
+export function buildDelete(payload, actionKey, responseKey) {
+    return {
+        type: actionKey,
+        payload: payload,
+        method: DELETE,
         response: responseKey
     }
 }

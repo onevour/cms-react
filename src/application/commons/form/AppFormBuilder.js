@@ -168,27 +168,6 @@ export function error(state, key) {
     return (<label data-test="error" style={{color: "red", fontSize: 10, marginTop: 10}}>{errorMessage}</label>)
 }
 
-// text field
-
-export function textFieldRTRW(state, key, isNumber, placeholder) {
-    let valueTmp = state.state[key]
-    if (!valueTmp) {
-        valueTmp = ''
-    }
-    return (
-        <input type="text" className="form-control" placeholder={placeholder}
-               value={valueTmp}
-               onChange={e => {
-                   if (isNumber) {
-                       updateValueNumber(e, state, key)
-                   } else {
-                       updateValueText(e, state, key)
-                   }
-               }}
-        />
-    );
-}
-
 export function textField(state, type, key, isNumber, placeholder) {
     let valueTmp = state.state[key]
     if (!valueTmp) {

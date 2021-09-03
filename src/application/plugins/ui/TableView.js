@@ -25,7 +25,7 @@ class TableView extends Component {
             console.warn("not implement paging callback")
         }
     }) {
-        console.log(model.values)
+        // console.log(model.values)
         return (
             <Fragment>
                 <div className="table-responsive">
@@ -54,8 +54,7 @@ class TableView extends Component {
 
     // 3
     renderTableRows(model) {
-        console.log(model.values)
-        if(!model.values) {
+        if (!model.values) {
             return (<Fragment/>)
         }
         return (

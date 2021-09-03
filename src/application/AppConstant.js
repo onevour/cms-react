@@ -64,8 +64,9 @@ export const MONTHS = [
 ]
 
 export const emptyCrud = {
-    code: 0,
-    result: null
+    status_code: 0,
+    status_message: '',
+    data: null
 }
 
 export const emptyContentList = {
