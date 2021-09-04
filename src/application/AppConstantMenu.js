@@ -12,6 +12,13 @@ export const menuAll = [
         name: "User",
         icon: "menu-icon mdi mdi-chart-areaspline",
         path: "/user"
+    },
+    {
+        id: 1,
+        type: 1,
+        name: "Role",
+        icon: "menu-icon mdi mdi-chart-areaspline",
+        path: "/role"
     }
 
 ]

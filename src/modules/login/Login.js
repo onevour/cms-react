@@ -1,14 +1,12 @@
-import React, {Component} from "react";
-import {Redirect} from 'react-router-dom';
+import React from "react";
 import {connect} from "react-redux";
-import {login} from "../../application/plugins/redux/actions/reduxActionLogin";
 import {defCrud} from "../../application/AppConstant";
 import swal from "sweetalert";
 import {LOGIN_RESPONSE} from "../../application/plugins/redux/constants/reducActionTypes";
 import {field, formColumnSingle} from "../../application/commons/form/AppFormBuilder";
 import AppForm from "../../application/commons/form/AppForm";
-import AppFormHandler from "../../application/commons/form/AppFormHandler";
 import BaseComponent from "../../application/base/BaseComponent";
+import {loginUser} from "../../application/plugins/redux/actions/reduxActionUser";
 
 class Login extends BaseComponent {
 
@@ -50,7 +48,7 @@ class Login extends BaseComponent {
             return
         }
         form.errorMessageClear()
-        this.props.login(form.param())
+        this.props.loginUser(form.param())
     }
 
     render() {
@@ -97,5 +95,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(
-    mapStateToProps, {login}
+    mapStateToProps, {loginUser}
 )(Login)

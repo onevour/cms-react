@@ -53,13 +53,15 @@ class BaseComponent extends Component {
     }
 
     nestedValue(row, index = 0, keys = []) {
-        if (keys.length - 1 < index) return ""
+        if (keys.length - 1 < index || row === undefined) return ""
         const key = keys[index]
         const value = row[key]
-        if (typeof value === 'object') {
-            return this.nestedValue(value, index + 1, keys)
+        if (value) {
+            if (typeof value === 'object') {
+                return this.nestedValue(value, index + 1, keys)
+            }
+            console.log("nested", value)
         }
-        console.log("nested", value)
         return value
     }
 

@@ -4,9 +4,9 @@ import {Link, Redirect} from "react-router-dom";
 import {Menu} from '@material-ui/icons';
 import logo from '../../assets/icon.png';
 import {connect} from "react-redux";
-import {logout} from "../plugins/redux/actions/reduxActionLogin";
 import {defCrud} from "../AppConstant";
 import {LOGIN_RESPONSE} from "../plugins/redux/constants/reducActionTypes";
+import {logoutUser} from "../plugins/redux/actions/reduxActionUser";
 
 class AppHeader extends Component {
 
@@ -83,7 +83,7 @@ class AppHeader extends Component {
         const {loginResponse} = this.props
         const {isLogin, user, menuUserClass, menuUserDropdownClass} = this.state
         console.log(loginResponse)
-        if (loginResponse && loginResponse.code && (loginResponse.code === 401||loginResponse.code === 0)) {
+        if (loginResponse && loginResponse.code && (loginResponse.code === 401 || loginResponse.code === 0)) {
             return (
                 <Redirect to='/'/>
             )
@@ -168,4 +168,4 @@ function mapStateToProps(state) {
 }
 
 // export default AppHeader;
-export default connect(mapStateToProps, {logout})(AppHeader);
+export default connect(mapStateToProps, {logoutUser})(AppHeader);
